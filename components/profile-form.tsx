@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { saveProfile, type ProfileActionState } from "@/app/profile/actions";
 
 const initialState: ProfileActionState = { success: false, message: "" };
@@ -19,6 +19,31 @@ const bodyDescription: Record<BodyType, { title: string; fit: string; material: 
   natural: { title: "내추럴", fit: "여유 있는 핏과 편안한 레이어드", material: "표면의 결이 느껴지는 소재" },
 };
 
+function PhotoSlot({ type, title, description }: { type: "face" | "body"; title: string; description: string }) {
+  const [preview, setPreview] = useState<string | null>(null);
+  const [fileName, setFileName] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
+
+  function selectFile(file: File | undefined) {
+    if (!file) return;
+    if (file.size > 12 * 1024 * 1024) { setError("12MB 이하의 사진을 선택해 주세요."); return; }
+    if (preview) URL.revokeObjectURL(preview);
+    setPreview(URL.createObjectURL(file));
+    setFileName(file.name);
+    setError("");
+  }
+
+  return <label className={preview ? "photo-slot has-preview" : "photo-slot"}>
+    <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => selectFile(event.target.files?.[0])} />
+    {preview ? <img src={preview} alt={`${title} 미리보기`} /> : <span className="photo-placeholder" aria-hidden="true">{type === "face" ? "◌" : "⌑"}</span>}
+    <span className="photo-copy"><b>{title}</b><small>{fileName || description}</small></span>
+    <span className="photo-action">{preview ? "사진 변경" : "사진 선택"}</span>
+    {error && <span className="photo-error">{error}</span>}
+  </label>;
+}
+
 export function ProfileForm() {
   const [state, formAction, pending] = useActionState(saveProfile, initialState);
   const [color, setColor] = useState("neutral");
@@ -35,6 +60,11 @@ export function ProfileForm() {
     <input type="hidden" name="personalColor" value={color} />
     <input type="hidden" name="bodyType" value={bodyType} />
     <input type="hidden" name="style" value={mood} />
+    <section className="analysis-section photo-intake">
+      <div className="analysis-heading"><p className="eyebrow">00 / PHOTO OPTIONAL</p><h2>사진으로 시작하는 나의 스타일</h2><p>셀카와 전신 사진은 AI 분석이 준비된 뒤 더 정교한 참고값으로 사용합니다. 현재 사진은 이 브라우저에서만 미리보기로 처리하며 서버와 데이터베이스에 저장하지 않습니다.</p></div>
+      <div className="photo-grid"><PhotoSlot type="face" title="자연광 셀카" description="필터·메이크업 없이, 얼굴이 잘 보이게" /><PhotoSlot type="body" title="전신 체형 사진" description="정면 전신이 보이게, 편한 옷차림으로" /></div>
+      <p className="fine-print">JPG · PNG · WEBP / 최대 12MB / 사진을 건너뛰어도 셀프 체크로 결과를 확인할 수 있어요.</p>
+    </section>
     <section className="analysis-section">
       <div className="analysis-heading"><p className="eyebrow">01 / COLOR</p><h2>나에게 어울리는 색</h2><p>AI 사진 분석은 다음 단계에서 추가합니다. 지금은 조명에 흔들리지 않는 셀프 체크 결과를 먼저 저장하세요.</p></div>
       <div className="choice-grid three">
