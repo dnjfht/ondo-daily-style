@@ -5,6 +5,20 @@ import { createClient, hasSupabaseEnv } from "@/lib/supabase/server";
 
 export type LoginActionState = { message: string; success: boolean; next?: string };
 
+function authErrorMessage(message: string) {
+  const normalized = message.toLowerCase();
+  if (normalized.includes("rate limit") || normalized.includes("rate_limit")) {
+    return "확인 이메일 발송 횟수가 잠시 제한됐어요. Supabase 무료 프로젝트는 메일 발송 한도가 있으니 잠시 후 다시 시도해 주세요.";
+  }
+  if (normalized.includes("email not confirmed")) {
+    return "아직 이메일 인증이 완료되지 않았어요. 받은편지함의 확인 링크를 먼저 열어 주세요.";
+  }
+  if (normalized.includes("signup is disabled") || normalized.includes("signups not allowed")) {
+    return "현재 회원가입이 허용되지 않은 상태입니다. Supabase의 Email 로그인 설정을 확인해 주세요.";
+  }
+  return "회원가입을 완료하지 못했습니다. 잠시 후 다시 시도해 주세요.";
+}
+
 function readCredentials(formData: FormData) {
   return {
     email: String(formData.get("email") ?? "").trim(),
@@ -36,7 +50,11 @@ export async function authenticate(_: LoginActionState, formData: FormData): Pro
   if (intent === "signup") {
     const origin = (await headers()).get("origin") ?? "http://localhost:3000";
     const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${origin}/auth/confirm` } });
-    if (error) return { success: false, message: error.message.includes("already") ? "이미 가입된 이메일입니다. 로그인을 선택해 주세요." : "회원가입을 완료하지 못했습니다. 잠시 후 다시 시도해 주세요." };
+    if (error) {
+      console.error("Supabase sign-up failed", { code: error.code, message: error.message });
+      if (error.message.toLowerCase().includes("already")) return { success: false, message: "이미 가입된 이메일입니다. 로그인하거나 비밀번호 설정 링크를 이용해 주세요." };
+      return { success: false, message: authErrorMessage(error.message) };
+    }
     if (data.session) return { success: true, message: "회원가입이 완료됐어요.", next: "/profile" };
     return { success: true, message: "확인 이메일을 보냈어요. 메일의 링크를 연 뒤 로그인해 주세요." };
   }
