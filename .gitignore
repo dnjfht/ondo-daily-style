@@ -1,0 +1,36 @@
+# Dependencies and build output
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+
+# Secrets: commit only the empty .env.example template
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local Supabase state and deployment settings
+.vercel/
+supabase/.temp/
+supabase/.branches/
+
+# Developer-only data: user uploads, source photos, local models and scratch work
+uploads/
+private-data/
+data/raw/
+models/
+work/
+outputs/
+*.sqlite
+*.sqlite3
+*.db
+
+# Editor and diagnostic files
+*.log
+.DS_Store
+Thumbs.db

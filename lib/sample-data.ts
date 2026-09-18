@@ -1,0 +1,43 @@
+import type { Outfit } from "@/lib/types";
+
+export const sampleOutfits: Outfit[] = [
+  {
+    id: "daily-knit-denim",
+    title: "가볍고 산뜻하게, 오늘의 데일리",
+    subtitle: "니트 셔츠와 스트레이트 데님",
+    styleTag: "데일리",
+    situation: "daily",
+    minTemp: 18,
+    maxTemp: 27,
+    imageUrl: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=1200&q=85",
+    colors: ["#EFF0E9", "#98AABD", "#26374C", "#4B3A33"],
+    reason: "낮에는 가볍고, 실내에서는 한 겹 더할 수 있는 조합이에요.",
+    items: ["얇은 셔츠", "통기성 좋은 반소매", "스트레이트 데님 + 스니커즈"],
+  },
+  {
+    id: "work-jacket",
+    title: "차분한 균형, 출근 룩",
+    subtitle: "라이트 재킷과 뉴트럴 톤 팬츠",
+    styleTag: "출근",
+    situation: "work",
+    minTemp: 16,
+    maxTemp: 24,
+    imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85",
+    colors: ["#E7E2D7", "#9DA7A2", "#354B43", "#211E1B"],
+    reason: "실내외 온도 차에 대응하면서도 단정한 인상을 유지해요.",
+    items: ["라이트 재킷", "코튼 셔츠", "와이드 슬랙스 + 로퍼"],
+  },
+  {
+    id: "date-layered",
+    title: "여유 있는 무드, 약속 룩",
+    subtitle: "부드러운 니트와 가벼운 레이어드",
+    styleTag: "데이트",
+    situation: "date",
+    minTemp: 15,
+    maxTemp: 23,
+    imageUrl: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=85",
+    colors: ["#E9E6DE", "#B59A86", "#5E7664", "#332B29"],
+    reason: "움직임이 편안한 실루엣과 은은한 색 조합을 골랐어요.",
+    items: ["가벼운 가디건", "소프트 니트", "롱 스커트 + 플랫 슈즈"],
+  },
+];
