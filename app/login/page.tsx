@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authenticate, type LoginActionState } from "./actions";
@@ -16,7 +15,7 @@ export default function LoginPage() {
   const passwordMode = mode === "login" || mode === "signup";
 
   return <main className="shell login-page">
-    <header className="topbar"><Link className="brand" href="/">ondo<sup>°</sup></Link><span>STYLING LAB / BETA</span></header>
+    <header className="topbar"><a className="brand" href="/">ondo<sup>°</sup></a><span>STYLING LAB / BETA</span></header>
     <section className="login-card">
       <p className="eyebrow">WELCOME TO ONDO</p>
       <h1>{mode === "signup" ? <>ONDO 계정을<br />만들어 보세요.</> : mode === "reset" ? <>비밀번호를<br />새로 설정하세요.</> : <>나만의 스타일을<br />저장해 보세요.</>}</h1>

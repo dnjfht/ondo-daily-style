@@ -9,7 +9,7 @@ const cities = ["seoul", "busan", "daegu", "jeju"] as const;
 const cityNames: Record<(typeof cities)[number], string> = { seoul: "서울", busan: "부산", daegu: "대구", jeju: "제주" };
 type Weather = { temperature: number; apparent: number; humidity: number; wind: number; city: string };
 
-export function OndoDashboard({ outfits }: { outfits: Outfit[] }) {
+export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signedIn: boolean }) {
   const [situation, setSituation] = useState<Situation>("daily");
   const [city, setCity] = useState<(typeof cities)[number]>("seoul");
   const [saved, setSaved] = useState<string[]>([]);
@@ -38,7 +38,7 @@ export function OndoDashboard({ outfits }: { outfits: Outfit[] }) {
     <header className="topbar">
       <Link className="brand" href="/">ondo<sup>°</sup></Link>
       <span className="brand-copy">오늘의 온도, 나의 스타일</span>
-      <div className="header-actions"><Link href="/profile">나의 스타일 분석</Link><Link href="/mypage">마이페이지</Link><Link className="login-link" href="/login">로그인</Link></div>
+      <div className="header-actions"><Link href="/profile">나의 스타일 분석</Link><Link href="/mypage">마이페이지</Link>{signedIn ? <span className="signed-in">로그인됨</span> : <Link className="login-link" href="/login">로그인</Link>}</div>
     </header>
 
     <section className="hero">
