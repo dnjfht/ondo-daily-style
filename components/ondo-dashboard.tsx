@@ -12,6 +12,7 @@ type Weather = { temperature: number; apparent: number; humidity: number; wind: 
 export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signedIn: boolean }) {
   const [situation, setSituation] = useState<Situation>("daily");
   const [city, setCity] = useState<(typeof cities)[number]>("seoul");
+  const [cityOpen, setCityOpen] = useState(false);
   const [saved, setSaved] = useState<string[]>([]);
   const [weather, setWeather] = useState<Weather>({ temperature: 25, apparent: 26, humidity: 59, wind: 2.16, city: "서울" });
   const [weatherLoading, setWeatherLoading] = useState(false);
@@ -43,7 +44,11 @@ export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signed
 
     <section className="hero">
       <div><p className="eyebrow">YOUR EVERYDAY, WELL DRESSED</p><h1>오늘, 뭐 입을까?</h1><p className="intro">날씨에 맞게, 나답게. 오늘의 코디를 만나보세요.</p></div>
-      <label className="city"><span aria-hidden="true">⌖</span><select value={city} onChange={(event) => setCity(event.target.value as (typeof cities)[number])} aria-label="날씨 지역">{cities.map((item) => <option key={item} value={item}>{cityNames[item]}</option>)}</select></label>
+      <div className={`city ${cityOpen ? "is-open" : ""}`}>
+        <span aria-hidden="true">⌖</span>
+        <button className="city-trigger" type="button" aria-haspopup="listbox" aria-expanded={cityOpen} onClick={() => setCityOpen((open) => !open)}>{cityNames[city]}<span aria-hidden="true">⌄</span></button>
+        {cityOpen && <div className="city-menu" role="listbox" aria-label="날씨 지역 선택">{cities.map((item) => <button className={item === city ? "selected" : ""} key={item} type="button" role="option" aria-selected={item === city} onClick={() => { setCity(item); setCityOpen(false); }}>{cityNames[item]}<span aria-hidden="true">{item === city ? "✓" : ""}</span></button>)}</div>}
+      </div>
     </section>
 
     <nav className="tabs" aria-label="ONDO 메뉴"><a className="active" href="#today">☼ 오늘의 코디</a><Link href="/profile">⌁ 나의 스타일 분석</Link></nav>
