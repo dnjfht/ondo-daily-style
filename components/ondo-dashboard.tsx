@@ -7,12 +7,14 @@ import type { Outfit, Situation } from "@/lib/types";
 const labels: Record<Situation, string> = { daily: "데일리", work: "출근", date: "데이트" };
 const cities = ["seoul", "busan", "daegu", "jeju"] as const;
 const cityNames: Record<(typeof cities)[number], string> = { seoul: "서울", busan: "부산", daegu: "대구", jeju: "제주" };
+const cityStorageKey = "ondo-selected-city";
 type Weather = { temperature: number; apparent: number; humidity: number; wind: number; city: string };
 
 export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signedIn: boolean }) {
   const [situation, setSituation] = useState<Situation>("daily");
   const [city, setCity] = useState<(typeof cities)[number]>("seoul");
   const [cityOpen, setCityOpen] = useState(false);
+  const [cityReady, setCityReady] = useState(false);
   const [saved, setSaved] = useState<string[]>([]);
   const [weather, setWeather] = useState<Weather>({ temperature: 25, apparent: 26, humidity: 59, wind: 2.16, city: "서울" });
   const [weatherLoading, setWeatherLoading] = useState(false);
@@ -31,6 +33,14 @@ export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signed
     } finally { setWeatherLoading(false); }
   }
 
+  useEffect(() => {
+    const storedCity = window.localStorage.getItem(cityStorageKey);
+    if (storedCity && cities.includes(storedCity as (typeof cities)[number])) setCity(storedCity as (typeof cities)[number]);
+    setCityReady(true);
+  }, []);
+  useEffect(() => {
+    if (cityReady) window.localStorage.setItem(cityStorageKey, city);
+  }, [city, cityReady]);
   useEffect(() => { void refreshWeather(); }, [city]);
   if (!lead) return null;
   const temperatureGap = 9;
@@ -46,7 +56,7 @@ export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signed
       <div><p className="eyebrow">YOUR EVERYDAY, WELL DRESSED</p><h1>오늘, 뭐 입을까?</h1><p className="intro">날씨에 맞게, 나답게. 오늘의 코디를 만나보세요.</p></div>
       <div className={`city ${cityOpen ? "is-open" : ""}`}>
         <span aria-hidden="true">⌖</span>
-        <button className="city-trigger" type="button" aria-haspopup="listbox" aria-expanded={cityOpen} onClick={() => setCityOpen((open) => !open)}>{cityNames[city]}<span aria-hidden="true">⌄</span></button>
+        <button className="city-trigger" type="button" aria-haspopup="listbox" aria-expanded={cityOpen} onClick={() => setCityOpen((open) => !open)}>{cityNames[city]}<span className="city-chevron" aria-hidden="true" /></button>
         {cityOpen && <div className="city-menu" role="listbox" aria-label="날씨 지역 선택">{cities.map((item) => <button className={item === city ? "selected" : ""} key={item} type="button" role="option" aria-selected={item === city} onClick={() => { setCity(item); setCityOpen(false); }}>{cityNames[item]}<span aria-hidden="true">{item === city ? "✓" : ""}</span></button>)}</div>}
       </div>
     </section>
