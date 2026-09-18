@@ -38,7 +38,7 @@ export function OndoDashboard({ outfits }: { outfits: Outfit[] }) {
     <header className="topbar">
       <Link className="brand" href="/">ondo<sup>°</sup></Link>
       <span className="brand-copy">오늘의 온도, 나의 스타일</span>
-      <div className="header-actions"><Link href="/profile">나의 스타일 분석</Link><Link className="login-link" href="/login">로그인</Link></div>
+      <div className="header-actions"><Link href="/profile">나의 스타일 분석</Link><Link href="/mypage">마이페이지</Link><Link className="login-link" href="/login">로그인</Link></div>
     </header>
 
     <section className="hero">
