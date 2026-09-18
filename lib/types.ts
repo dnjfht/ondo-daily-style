@@ -1,5 +1,11 @@
 export type Situation = "daily" | "work" | "date";
 
+export type ProductLink = {
+  label: string;
+  merchant: string;
+  url: string;
+};
+
 export type Outfit = {
   id: string;
   title: string;
@@ -12,4 +18,5 @@ export type Outfit = {
   colors: string[];
   reason: string;
   items: string[];
+  products?: ProductLink[];
 };

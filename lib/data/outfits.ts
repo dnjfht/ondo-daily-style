@@ -6,7 +6,7 @@ export async function getOutfits(situation?: Situation): Promise<Outfit[]> {
   if (!hasSupabaseEnv()) return situation ? sampleOutfits.filter((outfit) => outfit.situation === situation) : sampleOutfits;
 
   const supabase = await createClient();
-  const query = supabase.from("outfits").select("id,title,subtitle,style_tag,situation,min_temp,max_temp,image_url,colors,reason,outfit_items(name,position)").eq("is_published", true).order("created_at", { ascending: false }).limit(3);
+  const query = supabase.from("outfits").select("id,title,subtitle,style_tag,situation,min_temp,max_temp,image_url,colors,reason,product_links,outfit_items(name,position)").eq("is_published", true).order("created_at", { ascending: false }).limit(3);
   const { data, error } = situation ? await query.eq("situation", situation) : await query;
   if (error || !data?.length) return situation ? sampleOutfits.filter((outfit) => outfit.situation === situation) : sampleOutfits;
 
@@ -21,6 +21,7 @@ export async function getOutfits(situation?: Situation): Promise<Outfit[]> {
     imageUrl: outfit.image_url,
     colors: outfit.colors ?? [],
     reason: outfit.reason,
+    products: outfit.product_links ?? [],
     items: (outfit.outfit_items ?? []).sort((a: any, b: any) => a.position - b.position).map((item: any) => item.name),
   }));
 }

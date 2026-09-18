@@ -13,6 +13,10 @@ export const sampleOutfits: Outfit[] = [
     colors: ["#EFF0E9", "#98AABD", "#26374C", "#4B3A33"],
     reason: "낮에는 가볍고, 실내에서는 한 겹 더할 수 있는 조합이에요.",
     items: ["얇은 셔츠", "통기성 좋은 반소매", "스트레이트 데님 + 스니커즈"],
+    products: [
+      { label: "얇은 셔츠 둘러보기", merchant: "무신사", url: "https://www.musinsa.com/search/musinsa/goods?q=%EC%96%87%EC%9D%80%20%EC%85%94%EC%B8%A0" },
+      { label: "스트레이트 데님 둘러보기", merchant: "29CM", url: "https://www.29cm.co.kr/" },
+    ],
   },
   {
     id: "work-jacket",
@@ -26,6 +30,7 @@ export const sampleOutfits: Outfit[] = [
     colors: ["#E7E2D7", "#9DA7A2", "#354B43", "#211E1B"],
     reason: "실내외 온도 차에 대응하면서도 단정한 인상을 유지해요.",
     items: ["라이트 재킷", "코튼 셔츠", "와이드 슬랙스 + 로퍼"],
+    products: [{ label: "라이트 재킷 둘러보기", merchant: "무신사", url: "https://www.musinsa.com/search/musinsa/goods?q=%EB%9D%BC%EC%9D%B4%ED%8A%B8%20%EC%9E%AC%ED%82%B7" }],
   },
   {
     id: "date-layered",
@@ -39,5 +44,6 @@ export const sampleOutfits: Outfit[] = [
     colors: ["#E9E6DE", "#B59A86", "#5E7664", "#332B29"],
     reason: "움직임이 편안한 실루엣과 은은한 색 조합을 골랐어요.",
     items: ["가벼운 가디건", "소프트 니트", "롱 스커트 + 플랫 슈즈"],
+    products: [{ label: "가벼운 가디건 둘러보기", merchant: "29CM", url: "https://www.29cm.co.kr/" }],
   },
 ];

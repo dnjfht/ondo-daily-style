@@ -1,5 +1,11 @@
+import Link from "next/link";
 import { ProfileForm } from "@/components/profile-form";
 
 export default function ProfilePage() {
-  return <main className="shell profile-page"><header className="topbar"><a className="brand" href="/">ondo<sup>°</sup></a><span>STYLING LAB / BETA</span></header><a className="back" href="/">← 오늘의 코디</a><section className="profile-intro"><p className="eyebrow">FIND YOUR BALANCE</p><h1>나를 위한 색과 실루엣</h1><p>지금은 직접 선택으로 시작하고, 사진 분석 기능은 충분히 검증된 뒤 추가합니다.</p></section><section className="profile-panel"><div><p className="eyebrow">YOUR STYLE PROFILE</p><h2>나의 스타일 프로필</h2><p>결과보다 실제 착용감과 취향을 우선해 주세요. 언제든 수정할 수 있습니다.</p></div><ProfileForm /></section><p className="privacy-note">사진 분석 기능을 추가하더라도 원본 사진은 기본적으로 저장하지 않고, 분석 결과와 사용자가 수정한 최종 선택만 보관합니다.</p></main>;
+  return <main className="shell profile-page">
+    <header className="topbar"><Link className="brand" href="/">ondo<sup>°</sup></Link><div className="header-actions"><Link href="/">오늘의 코디</Link><Link href="/login">로그인</Link></div></header>
+    <section className="profile-intro"><p className="eyebrow">FIND YOUR BALANCE</p><h1>나의 스타일 분석</h1><p>퍼스널컬러, 골격 스타일, 취향을 바탕으로 오늘의 날씨에 어울리는 색과 핏을 추천합니다.</p></section>
+    <ProfileForm />
+    <p className="privacy-note">저장 범위: 최종 퍼스널컬러·골격 유형·취향 선택값. 사진 원본, 신체 치수, 문항별 세부 응답은 기본 저장하지 않습니다.</p>
+  </main>;
 }

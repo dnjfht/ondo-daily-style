@@ -17,6 +17,13 @@ export async function saveProfile(_: ProfileActionState, formData: FormData): Pr
     body_type: formData.get("bodyType"),
     preferred_style: formData.get("style"),
     preferred_city: formData.get("city"),
+    style_preferences: {
+      mood: formData.get("mood"),
+      silhouette: formData.get("silhouette"),
+      color_depth: formData.get("colorDepth"),
+      activity: formData.get("activity"),
+    },
+    analysis_completed_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   });
   if (error) return { success: false, message: "저장하지 못했습니다. 잠시 후 다시 시도해 주세요." };
