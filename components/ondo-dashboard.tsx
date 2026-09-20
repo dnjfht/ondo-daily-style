@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Outfit, Situation } from "@/lib/types";
+import { recommendOutfit } from "@/lib/recommendation";
 
 const labels: Record<Situation, string> = { daily: "데일리", work: "출근", date: "데이트" };
 const cities = ["seoul", "busan", "daegu", "jeju"] as const;
@@ -31,11 +32,8 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
   const [saved, setSaved] = useState<string[]>([]);
   const [weather, setWeather] = useState<Weather>({ temperature: 25, apparent: 26, humidity: 59, wind: 2.16, city: "서울" });
   const [weatherLoading, setWeatherLoading] = useState(false);
-  const visibleOutfits = useMemo(() => {
-    const matched = outfits.filter((outfit) => outfit.situation === situation);
-    return matched.length ? matched : outfits;
-  }, [outfits, situation]);
-  const lead = visibleOutfits[0];
+  const recommendationProfile = styleProfile ? { personalColor: styleProfile.personalColorAiResult ?? styleProfile.personalColor, bodyType: styleProfile.bodyTypeAiResult ?? styleProfile.bodyType, preferredStyle: styleProfile.preferredStyle, stylePreferences: styleProfile.stylePreferences } : null;
+  const lead = useMemo(() => recommendOutfit(situation, weather.apparent, recommendationProfile), [situation, weather.apparent, styleProfile]);
 
   async function refreshWeather() {
     setWeatherLoading(true);
@@ -55,12 +53,11 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
     if (cityReady) window.localStorage.setItem(cityStorageKey, city);
   }, [city, cityReady]);
   useEffect(() => { void refreshWeather(); }, [city]);
-  if (!lead) return null;
   const temperatureGap = 9;
   const personalColor = styleProfile?.personalColorAiResult ?? styleProfile?.personalColor;
   const bodyType = styleProfile?.bodyTypeAiResult ?? styleProfile?.bodyType;
-  const colorPhotoPending = styleProfile?.personalColorSource === "photo_pending";
-  const bodyPhotoPending = styleProfile?.bodyTypeSource === "photo_pending";
+  const colorExpertResult = Boolean(styleProfile?.personalColorAiResult && styleProfile?.personalColorSource === "ai");
+  const bodyExpertResult = Boolean(styleProfile?.bodyTypeAiResult && styleProfile?.bodyTypeSource === "ai");
   const hasAnalysis = Boolean(styleProfile?.analysisCompletedAt);
   const popularFallback = Boolean(styleProfile?.preferredStyle === "unknown" || ["silhouette", "color_depth"].some((key) => styleProfile?.stylePreferences?.[key] === "unknown"));
 
@@ -94,8 +91,8 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
       <article className="feature-edit">
         <div className="feature-heading"><div><p className="eyebrow">TODAY&apos;S EDIT</p><h2>{lead.title}</h2></div><span>{labels[situation]}</span></div>
         <div className="feature-body">
-          <div className="feature-image" style={{ backgroundImage: `url(${lead.imageUrl})` }}><p>STYLE INSPIRATION · 참고 이미지</p></div>
-          <div className="feature-copy"><p>{lead.reason}</p><ol>{lead.items.map((item, index) => <li key={item}><span>0{index + 1}</span><div><b>{["OUTER", "TOP", "BOTTOM & SHOES"][index] ?? "ITEM"}</b><h3>{item}</h3><small>{index === 0 ? `체감 ${weather.apparent}° 기준 · 실내와 저녁에 걸쳐요` : index === 1 ? "오늘의 활동량에 맞춘 편안한 소재" : "걷기 좋은 균형 잡힌 조합"}</small></div></li>)}</ol>
+          <div className="feature-image" style={{ backgroundImage: `url(${lead.imageUrl})` }}><p>PERSONALIZED STYLE GUIDE · 상품 사진 연동 준비 중</p></div>
+          <div className="feature-copy"><p>{lead.reason}</p><ol>{lead.items.map((item, index) => <li key={item}><span>0{index + 1}</span><div><b>{["OUTER", "TOP", "BOTTOM", "SHOES", "BAG & CAP"][index] ?? "ITEM"}</b><h3>{item}</h3><small>{index === 0 ? `체감 ${weather.apparent}°와 ${styleProfile ? "저장한 스타일 결과" : "기본 인기 룩"}을 함께 반영했어요` : index === 1 ? "상의·하의·신발·가방을 각각 고를 수 있어요" : "다른 쇼핑몰의 유사 상품도 함께 비교해 보세요"}</small></div></li>)}</ol>
             <div className="swatches">{lead.colors.map((color) => <i key={color} style={{ background: color }} />)}<span>기본 컬러 조합</span></div>
             <div className="product-links">{lead.products?.map((product) => <a key={product.label} href={product.url} target="_blank" rel="noreferrer">{product.merchant} · {product.label} ↗</a>)}</div>
           </div>
@@ -103,7 +100,7 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
       </article>
     </section>
 
-    <section className="make-yours"><div><p className="eyebrow">MAKE IT YOURS</p><h2>오늘의 무드는?</h2><div className="situation-picker" role="group" aria-label="코디 상황">{(Object.keys(labels) as Situation[]).map((key) => <button className={situation === key ? "selected" : ""} key={key} onClick={() => setSituation(key)} type="button">{labels[key]}</button>)}</div></div><div className="profile-status"><span>퍼스널컬러 <b>{hasAnalysis ? `${colorLabels[personalColor ?? ""] ?? "미설정"} 톤${colorPhotoPending ? " · AI 사진 분석 대기" : " · 설문 결과"}` : "아직 분석 전이에요"}</b></span><span>골격 스타일 유형 <b>{hasAnalysis ? `${bodyLabels[bodyType ?? ""] ?? "미설정"}${bodyPhotoPending ? " · AI 사진 분석 대기" : " · 셀프 체크"}` : "나에게 맞는 핏 찾기"}</b></span></div><Link className="primary" href="/profile">{hasAnalysis ? "내 스타일 재분석하기" : "내 스타일 분석하기"} ↗</Link><p>{popularFallback ? "취향이 ‘잘 모르겠음’인 항목은 인기 있는 기본 룩을 우선 추천해요." : hasAnalysis ? "저장한 분석 결과를 바탕으로 추천 색상과 핏을 조정해요." : "분석 결과를 적용하면 추천 색상과 핏이 달라져요."}</p></section>
+    <section className="make-yours"><div><p className="eyebrow">MAKE IT YOURS</p><h2>오늘의 무드는?</h2><div className="situation-picker" role="group" aria-label="코디 상황">{(Object.keys(labels) as Situation[]).map((key) => <button className={situation === key ? "selected" : ""} key={key} onClick={() => setSituation(key)} type="button">{labels[key]}</button>)}</div></div><div className="profile-status"><span>퍼스널컬러 <b>{hasAnalysis ? `${colorLabels[personalColor ?? ""] ?? "미설정"} 톤 · ${colorExpertResult ? "전문 진단" : "셀프 체크"}` : "아직 분석 전이에요"}</b></span><span>골격 스타일 유형 <b>{hasAnalysis ? `${bodyLabels[bodyType ?? ""] ?? "미설정"} · ${bodyExpertResult ? "전문 진단" : "셀프 체크"}` : "나에게 맞는 핏 찾기"}</b></span></div><Link className="primary" href="/profile">{hasAnalysis ? "내 스타일 재분석하기" : "내 스타일 분석하기"} ↗</Link><p>{popularFallback ? "취향이 ‘잘 모르겠음’인 항목은 인기 있는 기본 룩을 우선 추천해요." : hasAnalysis ? "저장한 셀프 체크 결과를 바탕으로 추천 색상과 핏을 조정해요." : "분석 결과를 적용하면 추천 색상과 핏이 달라져요."}</p></section>
 
     <section className="why-look"><p className="eyebrow">WHY THIS LOOK</p><h2>이렇게 입으면 좋아요.</h2><div><p><b>01</b> 체감온도 {weather.apparent}°에 맞춰 한 겹 가볍게 걸칠 아이템을 추천해요.</p><p><b>02</b> 습도 {weather.humidity}%. 땀과 습기에 편안한 소재를 비교해보세요.</p><p><b>03</b> 오늘의 일교차 {temperatureGap}°. 저녁까지 대응할 수 있는 조합이에요.</p></div></section>
 
