@@ -62,6 +62,11 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
   const bodyExpertResult = Boolean(styleProfile?.bodyTypeAiResult && styleProfile?.bodyTypeSource === "ai");
   const hasAnalysis = Boolean(styleProfile?.analysisCompletedAt);
   const popularFallback = Boolean(styleProfile?.preferredStyle === "unknown" || ["silhouette", "color_depth"].some((key) => styleProfile?.stylePreferences?.[key] === "unknown"));
+  const productGroups = useMemo(() => {
+    const groups = new Map<string, NonNullable<Outfit["products"]>>();
+    for (const product of lead.products ?? []) groups.set(product.merchant, [...(groups.get(product.merchant) ?? []), product]);
+    return [...groups.entries()];
+  }, [lead.products]);
 
   return <main className="shell">
     <header className="topbar">
@@ -96,7 +101,7 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
           <div className="feature-image" style={{ backgroundImage: `url(${lead.imageUrl})` }}><p>PERSONALIZED STYLE GUIDE</p></div>
           <div className="feature-copy"><p>{lead.reason}</p><ol>{lead.items.map((item, index) => <li key={item}><span>0{index + 1}</span><div><b>{["OUTER", "TOP", "BOTTOM", "SHOES", "BAG & CAP"][index] ?? "ITEM"}</b><h3>{item}</h3><small>{index === 0 ? <>체감 {weather.apparent}°와 {styleProfile ? "저장한 스타일 결과" : "기본 인기 룩"}을 함께 반영했어요<br /><a className="search-result-link" href={lead.products?.[0]?.url} target="_blank" rel="noreferrer">네이버 쇼핑에서 검색 결과로 이동 ↗</a></> : index === 1 ? "상의·하의·신발·가방을 각각 고를 수 있어요" : "다른 쇼핑몰의 유사 상품도 함께 비교해 보세요"}</small></div></li>)}</ol>
             <div className="swatches">{lead.colors.map((color) => <i key={color} style={{ background: color }} />)}<span>기본 컬러 조합</span></div>
-            <div className="product-links">{lead.products?.map((product) => <a key={product.label} href={product.url} target="_blank" rel="noreferrer">{product.merchant} · {product.label} ↗</a>)}</div>
+            <div className="product-groups">{productGroups.map(([merchant, products]) => <section className="merchant-search-group" key={merchant}><p>{merchant}</p><div className="merchant-search-links">{products.map((product) => <a key={product.label} href={product.url} target="_blank" rel="noreferrer">{product.label} ↗</a>)}</div></section>)}</div>
           </div>
         </div>
       </article>
