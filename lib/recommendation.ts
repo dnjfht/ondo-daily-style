@@ -37,7 +37,11 @@ function wConceptSearchUrl(query: string) { return `https://display.wconcept.co.
 function eqlSearchUrl(query: string) { return `https://www.eqlstore.com/public/search/view?searchWord=${encodeURIComponent(query)}&tabContent0=`; }
 function ssfSearchUrl(query: string) { return `https://www.ssfshop.com/search/result?keyword=${encodeURIComponent(query)}`; }
 
-export function recommendOutfit(situation: Situation, temperature: number, profile: StyleSignals | null): Outfit {
+export function recommendOutfit(situation: Situation, temperature: number, profile: StyleSignals | null, variationSeed = 0): Outfit {
+  // 날짜를 시드로 삼아 하루 동안에는 같은 결과를 유지하면서, 다음 날에는
+  // 날씨 조건을 벗어나지 않는 다른 상품군을 제안합니다.
+  const variation = Math.abs(variationSeed) % 3;
+  const pick = <T,>(options: readonly T[]) => options[variation % options.length];
   const mood = profile?.preferredStyle && imageByMood[profile.preferredStyle] ? profile.preferredStyle : "minimal";
   const body = profile?.bodyType ?? "balanced";
   const color = profile?.personalColor ?? "neutral";
@@ -50,12 +54,36 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
   const details = copy[situation];
   // 긴 문장은 검색 결과가 비기 쉬워, 외부 쇼핑몰에는 색상과 실제 상품군만 전달합니다.
   // 성별·연령대·상황은 상품군 선정과 네이버 쇼핑의 상세 검색어에 함께 반영합니다.
-  const topCategory = profile?.gender === "female" ? (temperature >= 23 ? "반팔 블라우스" : "블라우스") : (temperature >= 23 ? "반팔 셔츠" : "셔츠");
-  const outerCategory = temperature < 12 ? "코트" : temperature < 17 ? "재킷" : "가디건";
+  const topCategory = profile?.gender === "female"
+    ? temperature >= 23
+      ? pick(["반팔 블라우스", "린넨 셔츠", "니트 반팔"])
+      : pick(["블라우스", "긴팔 셔츠", "가디건 세트"])
+    : temperature >= 23
+      ? pick(["반팔 셔츠", "니트 반팔", "카라 티셔츠"])
+      : pick(["셔츠", "긴팔 티셔츠", "얇은 니트"]);
+  const outerCategory = temperature < 12
+    ? pick(["코트", "패딩 재킷", "울 재킷"])
+    : temperature < 17
+      ? pick(["재킷", "트렌치코트", "가죽 재킷"])
+      : pick(["가디건", "데님 재킷", "얇은 셔츠 재킷"]);
   const colorTerm = searchColors[color] ?? searchColors.neutral;
-  const bottomCategory = situation === "work" ? "슬랙스" : situation === "date" && profile?.gender === "female" ? "롱 스커트" : "데님 팬츠";
-  const shoesCategory = situation === "work" ? "로퍼" : situation === "date" && profile?.gender === "female" ? "플랫슈즈" : "스니커즈";
-  const accessoryCategory = situation === "work" ? "토트백" : situation === "date" ? (profile?.gender === "female" ? "미니 숄더백" : "미니 크로스백") : mood === "street" || mood === "casual" ? "볼캡" : (profile?.gender === "female" ? "숄더백" : "크로스백");
+  const bottomCategory = situation === "work"
+    ? pick(["슬랙스", "세미 와이드 팬츠", "테이퍼드 팬츠"])
+    : situation === "date" && profile?.gender === "female"
+      ? pick(["롱 스커트", "미디 스커트", "와이드 데님"])
+      : pick(["데님 팬츠", "코튼 팬츠", "와이드 팬츠"]);
+  const shoesCategory = situation === "work"
+    ? pick(["로퍼", "플랫슈즈", "단정한 스니커즈"])
+    : situation === "date" && profile?.gender === "female"
+      ? pick(["플랫슈즈", "메리제인", "로우힐"])
+      : pick(["스니커즈", "캔버스화", "러닝화"]);
+  const accessoryCategory = situation === "work"
+    ? pick(["토트백", "숄더백", "백팩"])
+    : situation === "date"
+      ? profile?.gender === "female" ? pick(["미니 숄더백", "미니 토트백", "클러치백"]) : pick(["미니 크로스백", "레더 토트백", "메신저백"])
+      : mood === "street" || mood === "casual"
+        ? pick(["볼캡", "나일론 백팩", "크로스백"])
+        : profile?.gender === "female" ? pick(["숄더백", "토트백", "버킷백"]) : pick(["크로스백", "토트백", "캔버스백"]);
   const searchItems: { category: ProductCategory; label: string; term: string }[] = [
     ...(hasOuter ? [{ category: "outer" as const, label: "아우터", term: outerCategory }] : []),
     { category: "top", label: "상의", term: topCategory },
@@ -74,6 +102,7 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
     { merchant: "SSF샵", createUrl: ssfSearchUrl, query: simpleQuery },
   ];
   return {
+    // 저장 키에는 날짜와 도시도 포함되므로, 룩 ID는 기존 저장 항목과 호환되게 유지합니다.
     id: `personal-${situation}-${mood}-${color}-${body}-${temperature < 20 ? "cool" : "warm"}`,
     title: `${colorNames[color] ?? colorNames.neutral} ${details.title}`,
     subtitle: `${mood} · ${shape} 핏`, styleTag: situation === "daily" ? "데일리" : situation === "work" ? "출근" : "데이트",

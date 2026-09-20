@@ -26,6 +26,12 @@ export type Outfit = {
 export type SavedLookSnapshot = Pick<Outfit, "id" | "title" | "subtitle" | "styleTag" | "situation" | "imageUrl" | "colors" | "reason" | "items"> & {
   lookKey: string;
   products: ProductLink[];
+  stylePreferences: {
+    mood: string;
+    silhouette: string;
+    colorDepth: string;
+    activity: string;
+  };
   savedAt: string;
   weather: {
     city: string;

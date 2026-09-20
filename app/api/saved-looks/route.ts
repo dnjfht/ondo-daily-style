@@ -9,13 +9,14 @@ function parseLook(value: unknown): SavedLookSnapshot | null {
   const look = value as Partial<SavedLookSnapshot>;
   const strings = (input: unknown) => Array.isArray(input) && input.every((item) => typeof item === "string");
   const products = look.products;
+  const stylePreferences = look.stylePreferences;
   const weather = look.weather;
 
   if (
     typeof look.id !== "string" || typeof look.lookKey !== "string" || typeof look.title !== "string" || typeof look.subtitle !== "string" ||
     typeof look.styleTag !== "string" || !situations.includes(look.situation as Situation) ||
     typeof look.imageUrl !== "string" || typeof look.reason !== "string" || typeof look.savedAt !== "string" ||
-    !strings(look.colors) || !strings(look.items) || !Array.isArray(products) || !products.every((product) => product && typeof product === "object" && typeof product.label === "string" && typeof product.merchant === "string" && typeof product.url === "string") || !weather || typeof weather !== "object" ||
+    !strings(look.colors) || !strings(look.items) || !Array.isArray(products) || !products.every((product) => product && typeof product === "object" && typeof product.label === "string" && typeof product.merchant === "string" && typeof product.url === "string") || !stylePreferences || typeof stylePreferences !== "object" || typeof stylePreferences.mood !== "string" || typeof stylePreferences.silhouette !== "string" || typeof stylePreferences.colorDepth !== "string" || typeof stylePreferences.activity !== "string" || !weather || typeof weather !== "object" ||
     typeof weather.city !== "string" || typeof weather.temperature !== "number" ||
     typeof weather.apparent !== "number" || typeof weather.humidity !== "number" || typeof weather.wind !== "number"
   ) return null;
