@@ -18,6 +18,11 @@ const imageByMood: Record<string, Record<Situation, string>> = {
   classic: { daily: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=85", work: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85", date: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=1200&q=85" },
   street: { daily: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=85", work: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=85", date: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=85" },
 };
+export const situationLookImages: Record<Situation, string> = {
+  daily: "/outfits/daily-look.png",
+  work: "/outfits/work-look.png",
+  date: "/outfits/date-look.png",
+};
 
 const copy: Record<Situation, { title: string; base: string; top: string; bottom: string; shoes: string; accessory: string }> = {
   daily: { title: "가볍고 균형 잡힌 데일리 룩", base: "움직임이 편안하면서도 색과 핏의 중심이 잡히는 조합", top: "레이어드 가능한 상의", bottom: "편안한 하의", shoes: "많이 걷기 좋은 신발", accessory: "가벼운 가방 또는 캡" },
@@ -71,7 +76,7 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
     id: `personal-${situation}-${mood}-${color}-${body}-${temperature < 20 ? "cool" : "warm"}`,
     title: `${colorNames[color] ?? colorNames.neutral} ${details.title}`,
     subtitle: `${mood} · ${shape} 핏`, styleTag: situation === "daily" ? "데일리" : situation === "work" ? "출근" : "데이트",
-    situation, minTemp: temperature - 4, maxTemp: temperature + 4, imageUrl: imageByMood[mood][situation],
+    situation, minTemp: temperature - 4, maxTemp: temperature + 4, imageUrl: situationLookImages[situation],
     colors: color === "warm" ? ["#F1E9DC", "#C79D76", "#62554B", "#314536"] : color === "cool" ? ["#EDF0F2", "#9EAFBE", "#34465E", "#2D3340"] : ["#F0F0EB", "#A1AAA5", "#454C49", "#2F3E38"],
     reason: `${details.base}이에요. ${genderQuery}${ageQuery ? ` ${ageQuery}` : ""} 기준과 현재 ${temperature}°에는 ${climateLayer}를 더해 조절해 보세요.`,
     items: [`${outerCategory} · ${shape} 핏`, `${topCategory} · ${colorNames[color] ?? colorNames.neutral}`, `${bottomCategory} · ${shape} 실루엣`, shoesCategory, accessoryCategory],
