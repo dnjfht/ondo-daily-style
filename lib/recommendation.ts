@@ -1,4 +1,4 @@
-import type { Outfit, Situation } from "@/lib/types";
+import type { Outfit, ProductCategory, Situation } from "@/lib/types";
 
 export type StyleSignals = {
   personalColor: string | null;
@@ -44,23 +44,24 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
   const silhouette = profile?.stylePreferences?.silhouette ?? "balanced";
   const genderQuery = profile?.gender === "female" ? "여성" : profile?.gender === "male" ? "남성" : "유니섹스";
   const ageQuery = profile?.ageRange ? ageLabels[profile.ageRange] ?? "" : "";
-  const climateLayer = temperature < 12 ? "보온 레이어" : temperature < 20 ? "가벼운 아우터" : "통기성 레이어";
+  const hasOuter = temperature < 20;
+  const climateAdvice = temperature < 12 ? "보온 아우터를 더해" : temperature < 20 ? "가벼운 아우터로 일교차에 대비해" : "아우터 없이 통기성 좋은 상의 중심으로";
   const shape = body === "wave" ? "허리선을 살린" : body === "natural" ? "여유 있는" : body === "straight" ? "정돈된 정핏" : silhouette === "relaxed" ? "여유 있는" : "균형 잡힌";
   const details = copy[situation];
   // 긴 문장은 검색 결과가 비기 쉬워, 외부 쇼핑몰에는 색상과 실제 상품군만 전달합니다.
   // 성별·연령대·상황은 상품군 선정과 네이버 쇼핑의 상세 검색어에 함께 반영합니다.
   const topCategory = profile?.gender === "female" ? (temperature >= 23 ? "반팔 블라우스" : "블라우스") : (temperature >= 23 ? "반팔 셔츠" : "셔츠");
-  const outerCategory = temperature < 12 ? "코트" : temperature < 20 ? "재킷" : "바람막이";
+  const outerCategory = temperature < 12 ? "코트" : temperature < 17 ? "재킷" : "가디건";
   const colorTerm = searchColors[color] ?? searchColors.neutral;
   const bottomCategory = situation === "work" ? "슬랙스" : situation === "date" && profile?.gender === "female" ? "롱 스커트" : "데님 팬츠";
   const shoesCategory = situation === "work" ? "로퍼" : situation === "date" && profile?.gender === "female" ? "플랫슈즈" : "스니커즈";
   const accessoryCategory = situation === "work" ? "토트백" : situation === "date" ? (profile?.gender === "female" ? "미니 숄더백" : "미니 크로스백") : mood === "street" || mood === "casual" ? "볼캡" : (profile?.gender === "female" ? "숄더백" : "크로스백");
-  const searchItems = [
-    { category: "아우터", term: outerCategory },
-    { category: "상의", term: topCategory },
-    { category: "하의", term: bottomCategory },
-    { category: "신발", term: shoesCategory },
-    { category: "가방·캡", term: accessoryCategory },
+  const searchItems: { category: ProductCategory; label: string; term: string }[] = [
+    ...(hasOuter ? [{ category: "outer" as const, label: "아우터", term: outerCategory }] : []),
+    { category: "top", label: "상의", term: topCategory },
+    { category: "bottom", label: "하의", term: bottomCategory },
+    { category: "shoes", label: "신발", term: shoesCategory },
+    { category: "accessory", label: "가방·캡", term: accessoryCategory },
   ];
   const naverQuery = (term: string) => `${genderQuery} ${ageQuery} ${colorTerm} ${term}`.trim();
   const simpleQuery = (term: string) => `${colorTerm} ${term}`;
@@ -78,11 +79,12 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
     subtitle: `${mood} · ${shape} 핏`, styleTag: situation === "daily" ? "데일리" : situation === "work" ? "출근" : "데이트",
     situation, minTemp: temperature - 4, maxTemp: temperature + 4, imageUrl: situationLookImages[situation],
     colors: color === "warm" ? ["#F1E9DC", "#C79D76", "#62554B", "#314536"] : color === "cool" ? ["#EDF0F2", "#9EAFBE", "#34465E", "#2D3340"] : ["#F0F0EB", "#A1AAA5", "#454C49", "#2F3E38"],
-    reason: `${details.base}이에요. ${genderQuery}${ageQuery ? ` ${ageQuery}` : ""} 기준과 현재 ${temperature}°에는 ${climateLayer}를 더해 조절해 보세요.`,
-    items: [`${outerCategory} · ${shape} 핏`, `${topCategory} · ${colorNames[color] ?? colorNames.neutral}`, `${bottomCategory} · ${shape} 실루엣`, shoesCategory, accessoryCategory],
-    products: merchants.flatMap(({ merchant, createUrl, query }) => searchItems.map(({ category, term }) => ({
+    reason: `${details.base}이에요. ${genderQuery}${ageQuery ? ` ${ageQuery}` : ""} 기준과 현재 ${temperature}°에는 ${climateAdvice} 조절해 보세요.`,
+    items: [hasOuter ? `${outerCategory} · ${shape} 핏` : "아우터 없이 가볍게", `${topCategory} · ${colorNames[color] ?? colorNames.neutral}`, `${bottomCategory} · ${shape} 실루엣`, shoesCategory, accessoryCategory],
+    products: merchants.flatMap(({ merchant, createUrl, query }) => searchItems.map(({ category, label, term }) => ({
       merchant,
-      label: `${category} · ${term} 검색 결과`,
+      category,
+      label: `${label} · ${term} 검색 결과`,
       url: createUrl(query(term)),
     }))),
   };

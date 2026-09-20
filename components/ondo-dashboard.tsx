@@ -25,6 +25,7 @@ type StyleProfile = {
 };
 const colorLabels: Record<string, string> = { warm: "웜", cool: "쿨", neutral: "뉴트럴" };
 const bodyLabels: Record<string, string> = { straight: "스트레이트", wave: "웨이브", natural: "내추럴" };
+const itemCategoryKeys = ["outer", "top", "bottom", "shoes", "accessory"] as const;
 
 export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Outfit[]; signedIn: boolean; styleProfile: StyleProfile | null }) {
   const [situation, setSituation] = useState<Situation>("daily");
@@ -62,6 +63,7 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
   const bodyExpertResult = Boolean(styleProfile?.bodyTypeAiResult && styleProfile?.bodyTypeSource === "ai");
   const hasAnalysis = Boolean(styleProfile?.analysisCompletedAt);
   const popularFallback = Boolean(styleProfile?.preferredStyle === "unknown" || ["silhouette", "color_depth"].some((key) => styleProfile?.stylePreferences?.[key] === "unknown"));
+  const needsOuter = weather.apparent < 20;
   const naverProductLinks = useMemo(() => (lead.products ?? []).filter((product) => product.merchant === "네이버 쇼핑"), [lead.products]);
   const productGroups = useMemo(() => {
     const groups = new Map<string, NonNullable<Outfit["products"]>>();
@@ -96,14 +98,14 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
         <div className="weather-main"><strong>{weather.temperature}°</strong><span>{weather.city} · 가볍게 나서기 좋은 날</span><i aria-hidden="true">☼</i></div>
         <div className="weather-stats"><span><b>{weather.humidity}%</b>습도</span><span><b>{weather.wind} m/s</b>바람</span><span><b>{weather.apparent}°</b>체감온도</span></div>
         <div className="temperature-line"><span>최저 {weather.temperature - 7}°</span><i /><span>최고 {weather.temperature + 2}°</span></div>
-        <p className="weather-note"><b>WEATHER NOTE</b>일교차가 커요. 벗어서 들기 쉬운 겉옷을 챙겨요.</p>
+        <p className="weather-note"><b>WEATHER NOTE</b>{needsOuter ? "일교차가 커요. 벗어서 들기 쉬운 겉옷을 챙겨요." : "따뜻한 날이에요. 통기성 좋은 상의로 가볍게 입어요."}</p>
       </aside>
 
       <article className="feature-edit">
         <div className="feature-heading"><div><p className="eyebrow">TODAY&apos;S EDIT</p><h2>{lead.title}</h2></div><span>{labels[situation]}</span></div>
         <div className="feature-body">
           <div className="feature-image" style={{ backgroundImage: `url(${lead.imageUrl})` }}><p>PERSONALIZED STYLE GUIDE</p></div>
-          <div className="feature-copy"><p>{lead.reason}</p><ol>{lead.items.map((item, index) => <li key={item}><span>0{index + 1}</span><div><b>{["OUTER", "TOP", "BOTTOM", "SHOES", "BAG & CAP"][index] ?? "ITEM"}</b><h3>{item}</h3><small>{index === 0 ? `체감 ${weather.apparent}°와 ${styleProfile ? "저장한 스타일 결과" : "기본 인기 룩"}을 함께 반영했어요` : index === 1 ? "상의·하의·신발·가방을 각각 고를 수 있어요" : "다른 쇼핑몰의 유사 상품도 함께 비교해 보세요"}{naverProductLinks[index] && <><br /><a className="search-result-link" href={naverProductLinks[index].url} target="_blank" rel="noreferrer">네이버 쇼핑에서 검색 결과로 이동 ↗</a></>}</small></div></li>)}</ol>
+          <div className="feature-copy"><p>{lead.reason}</p><ol>{lead.items.map((item, index) => { const naverProductLink = naverProductLinks.find((product) => product.category === itemCategoryKeys[index]); return <li key={item}><span>0{index + 1}</span><div><b>{["OUTER", "TOP", "BOTTOM", "SHOES", "BAG & CAP"][index] ?? "ITEM"}</b><h3>{item}</h3><small>{index === 0 ? (needsOuter ? `체감 ${weather.apparent}°와 ${styleProfile ? "저장한 스타일 결과" : "기본 인기 룩"}을 함께 반영했어요` : `체감 ${weather.apparent}°에는 아우터 없이 상의 중심으로 추천해요`) : index === 1 ? "상의·하의·신발·가방을 각각 고를 수 있어요" : "다른 쇼핑몰의 유사 상품도 함께 비교해 보세요"}{naverProductLink && <><br /><a className="search-result-link" href={naverProductLink.url} target="_blank" rel="noreferrer">네이버 쇼핑에서 검색 결과로 이동 ↗</a></>}</small></div></li>; })}</ol>
             <div className="swatches">{lead.colors.map((color) => <i key={color} style={{ background: color }} />)}<span>기본 컬러 조합</span></div>
             <div className="product-groups">{productGroups.map(([merchant, products]) => <section className="merchant-search-group" key={merchant}><p>{merchant}</p><div className="merchant-search-links">{products.map((product) => <a key={product.label} href={product.url} target="_blank" rel="noreferrer">{product.label} ↗</a>)}</div></section>)}</div>
           </div>
@@ -113,9 +115,9 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
 
     <section className="make-yours"><div><p className="eyebrow">MAKE IT YOURS</p><h2>오늘의 무드는?</h2><div className="situation-picker" role="group" aria-label="코디 상황">{(Object.keys(labels) as Situation[]).map((key) => <button className={situation === key ? "selected" : ""} key={key} onClick={() => setSituation(key)} type="button">{labels[key]}</button>)}</div></div><div className="profile-status"><span>퍼스널컬러 <b>{hasAnalysis ? `${colorLabels[personalColor ?? ""] ?? "미설정"} 톤 · ${colorExpertResult ? "전문 진단" : "셀프 체크"}` : "아직 분석 전이에요"}</b></span><span>골격 스타일 유형 <b>{hasAnalysis ? `${bodyLabels[bodyType ?? ""] ?? "미설정"} · ${bodyExpertResult ? "전문 진단" : "셀프 체크"}` : "나에게 맞는 핏 찾기"}</b></span></div><Link className="primary" href="/profile">{hasAnalysis ? "내 스타일 재분석하기" : "내 스타일 분석하기"} ↗</Link><p>{popularFallback ? "취향이 ‘잘 모르겠음’인 항목은 인기 있는 기본 룩을 우선 추천해요." : hasAnalysis ? "저장한 셀프 체크 결과를 바탕으로 추천 색상과 핏을 조정해요." : "분석 결과를 적용하면 추천 색상과 핏이 달라져요."}</p></section>
 
-    <section className="why-look"><p className="eyebrow">WHY THIS LOOK</p><h2>이렇게 입으면 좋아요.</h2><div><p><b>01</b> 체감온도 {weather.apparent}°에 맞춰 한 겹 가볍게 걸칠 아이템을 추천해요.</p><p><b>02</b> 습도 {weather.humidity}%. 땀과 습기에 편안한 소재를 비교해보세요.</p><p><b>03</b> 오늘의 일교차 {temperatureGap}°. 저녁까지 대응할 수 있는 조합이에요.</p></div></section>
+    <section className="why-look"><p className="eyebrow">WHY THIS LOOK</p><h2>이렇게 입으면 좋아요.</h2><div><p><b>01</b>{needsOuter ? ` 체감온도 ${weather.apparent}°에 맞춰 한 겹 가볍게 걸칠 아이템을 추천해요.` : ` 체감온도 ${weather.apparent}°에는 아우터 없이 통기성 좋은 상의 중심으로 추천해요.`}</p><p><b>02</b> 습도 {weather.humidity}%. 땀과 습기에 편안한 소재를 비교해보세요.</p><p><b>03</b> 오늘의 일교차 {temperatureGap}°. 저녁까지 대응할 수 있는 조합이에요.</p></div></section>
 
-    <section className="more-looks"><div className="section-heading"><div><p className="eyebrow">MORE FOR TODAY</p><h2>다른 상황의 코디</h2></div><span>TOP 3</span></div><div className="outfit-grid">{outfits.filter((outfit) => outfit.id !== lead.id).slice(0, 2).map((outfit) => <article className="outfit-card" key={outfit.id}><div className="outfit-image" style={{ backgroundImage: `url(${situationLookImages[outfit.situation] ?? outfit.imageUrl})` }}><em>{outfit.styleTag}</em></div><div className="outfit-copy"><h3>{outfit.title}</h3><p>{outfit.reason}</p><button className={saved.includes(outfit.id) ? "saved" : ""} onClick={() => setSaved((items) => items.includes(outfit.id) ? items.filter((id) => id !== outfit.id) : [...items, outfit.id])} type="button">{saved.includes(outfit.id) ? "저장됨 ✓" : "저장하기 ♡"}</button></div></article>)}</div></section>
+    <section className="more-looks"><div className="section-heading"><div><p className="eyebrow">MORE FOR TODAY</p><h2>다른 상황의 코디</h2></div><span>TOP 3</span></div><div className="outfit-grid">{outfits.filter((outfit) => outfit.situation !== situation).slice(0, 2).map((outfit) => <article className="outfit-card" key={outfit.id}><div className="outfit-image" style={{ backgroundImage: `url(${situationLookImages[outfit.situation] ?? outfit.imageUrl})` }}><em>{outfit.styleTag}</em></div><div className="outfit-copy"><h3>{outfit.title}</h3><p>{outfit.reason}</p><button className={saved.includes(outfit.id) ? "saved" : ""} onClick={() => setSaved((items) => items.includes(outfit.id) ? items.filter((id) => id !== outfit.id) : [...items, outfit.id])} type="button">{saved.includes(outfit.id) ? "저장됨 ✓" : "저장하기 ♡"}</button></div></article>)}</div></section>
     <footer><Link className="brand" href="/">ondo<sup>°</sup></Link><span>당신의 하루에 어울리는 선택.</span><span>상품 정보는 제휴 또는 공식 카탈로그 연결 전의 MVP 예시입니다.</span></footer>
   </main>;
 }
