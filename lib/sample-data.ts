@@ -16,6 +16,8 @@ export const sampleOutfits: Outfit[] = [
     products: [
       { label: "얇은 셔츠 둘러보기", merchant: "무신사", url: "https://www.musinsa.com/search/musinsa/goods?q=%EC%96%87%EC%9D%80%20%EC%85%94%EC%B8%A0" },
       { label: "스트레이트 데님 둘러보기", merchant: "29CM", url: "https://www.29cm.co.kr/" },
+      { label: "데일리 셔츠 둘러보기", merchant: "W컨셉", url: "https://www.wconcept.co.kr/" },
+      { label: "데일리 룩 둘러보기", merchant: "EQL", url: "https://www.eqlstore.com/" },
     ],
   },
   {
@@ -30,7 +32,12 @@ export const sampleOutfits: Outfit[] = [
     colors: ["#E7E2D7", "#9DA7A2", "#354B43", "#211E1B"],
     reason: "실내외 온도 차에 대응하면서도 단정한 인상을 유지해요.",
     items: ["라이트 재킷", "코튼 셔츠", "와이드 슬랙스 + 로퍼"],
-    products: [{ label: "라이트 재킷 둘러보기", merchant: "무신사", url: "https://www.musinsa.com/search/musinsa/goods?q=%EB%9D%BC%EC%9D%B4%ED%8A%B8%20%EC%9E%AC%ED%82%B7" }],
+    products: [
+      { label: "라이트 재킷 둘러보기", merchant: "무신사", url: "https://www.musinsa.com/search/musinsa/goods?q=%EB%9D%BC%EC%9D%B4%ED%8A%B8%20%EC%9E%AC%ED%82%B7" },
+      { label: "오피스 룩 둘러보기", merchant: "W컨셉", url: "https://www.wconcept.co.kr/" },
+      { label: "뉴트럴 룩 둘러보기", merchant: "SSF샵", url: "https://www.ssfshop.com/" },
+      { label: "정돈된 룩 둘러보기", merchant: "29CM", url: "https://www.29cm.co.kr/" },
+    ],
   },
   {
     id: "date-layered",
@@ -44,6 +51,11 @@ export const sampleOutfits: Outfit[] = [
     colors: ["#E9E6DE", "#B59A86", "#5E7664", "#332B29"],
     reason: "움직임이 편안한 실루엣과 은은한 색 조합을 골랐어요.",
     items: ["가벼운 가디건", "소프트 니트", "롱 스커트 + 플랫 슈즈"],
-    products: [{ label: "가벼운 가디건 둘러보기", merchant: "29CM", url: "https://www.29cm.co.kr/" }],
+    products: [
+      { label: "가벼운 가디건 둘러보기", merchant: "29CM", url: "https://www.29cm.co.kr/" },
+      { label: "소프트 니트 둘러보기", merchant: "W컨셉", url: "https://www.wconcept.co.kr/" },
+      { label: "데이트 룩 둘러보기", merchant: "지그재그", url: "https://zigzag.kr/" },
+      { label: "플랫 슈즈 둘러보기", merchant: "EQL", url: "https://www.eqlstore.com/" },
+    ],
   },
 ];

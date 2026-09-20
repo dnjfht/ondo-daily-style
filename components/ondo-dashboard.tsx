@@ -9,8 +9,21 @@ const cities = ["seoul", "busan", "daegu", "jeju"] as const;
 const cityNames: Record<(typeof cities)[number], string> = { seoul: "서울", busan: "부산", daegu: "대구", jeju: "제주" };
 const cityStorageKey = "ondo-selected-city";
 type Weather = { temperature: number; apparent: number; humidity: number; wind: number; city: string };
+type StyleProfile = {
+  personalColor: string | null;
+  bodyType: string | null;
+  personalColorAiResult: string | null;
+  bodyTypeAiResult: string | null;
+  personalColorSource: string | null;
+  bodyTypeSource: string | null;
+  preferredStyle: string | null;
+  stylePreferences: Record<string, string> | null;
+  analysisCompletedAt: string | null;
+};
+const colorLabels: Record<string, string> = { warm: "웜", cool: "쿨", neutral: "뉴트럴" };
+const bodyLabels: Record<string, string> = { straight: "스트레이트", wave: "웨이브", natural: "내추럴" };
 
-export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signedIn: boolean }) {
+export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Outfit[]; signedIn: boolean; styleProfile: StyleProfile | null }) {
   const [situation, setSituation] = useState<Situation>("daily");
   const [city, setCity] = useState<(typeof cities)[number]>("seoul");
   const [cityOpen, setCityOpen] = useState(false);
@@ -44,6 +57,12 @@ export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signed
   useEffect(() => { void refreshWeather(); }, [city]);
   if (!lead) return null;
   const temperatureGap = 9;
+  const personalColor = styleProfile?.personalColorAiResult ?? styleProfile?.personalColor;
+  const bodyType = styleProfile?.bodyTypeAiResult ?? styleProfile?.bodyType;
+  const colorPhotoPending = styleProfile?.personalColorSource === "photo_pending";
+  const bodyPhotoPending = styleProfile?.bodyTypeSource === "photo_pending";
+  const hasAnalysis = Boolean(styleProfile?.analysisCompletedAt);
+  const popularFallback = Boolean(styleProfile?.preferredStyle === "unknown" || ["silhouette", "color_depth"].some((key) => styleProfile?.stylePreferences?.[key] === "unknown"));
 
   return <main className="shell">
     <header className="topbar">
@@ -84,7 +103,7 @@ export function OndoDashboard({ outfits, signedIn }: { outfits: Outfit[]; signed
       </article>
     </section>
 
-    <section className="make-yours"><div><p className="eyebrow">MAKE IT YOURS</p><h2>오늘의 무드는?</h2><div className="situation-picker" role="group" aria-label="코디 상황">{(Object.keys(labels) as Situation[]).map((key) => <button className={situation === key ? "selected" : ""} key={key} onClick={() => setSituation(key)} type="button">{labels[key]}</button>)}</div></div><div className="profile-status"><span>퍼스널컬러 <b>아직 분석 전이에요</b></span><span>골격 스타일 유형 <b>나에게 맞는 핏 찾기</b></span></div><Link className="primary" href="/profile">내 스타일 분석하기 ↗</Link><p>분석 결과를 적용하면 추천 색상과 핏이 달라져요.</p></section>
+    <section className="make-yours"><div><p className="eyebrow">MAKE IT YOURS</p><h2>오늘의 무드는?</h2><div className="situation-picker" role="group" aria-label="코디 상황">{(Object.keys(labels) as Situation[]).map((key) => <button className={situation === key ? "selected" : ""} key={key} onClick={() => setSituation(key)} type="button">{labels[key]}</button>)}</div></div><div className="profile-status"><span>퍼스널컬러 <b>{hasAnalysis ? `${colorLabels[personalColor ?? ""] ?? "미설정"} 톤${colorPhotoPending ? " · AI 사진 분석 대기" : " · 설문 결과"}` : "아직 분석 전이에요"}</b></span><span>골격 스타일 유형 <b>{hasAnalysis ? `${bodyLabels[bodyType ?? ""] ?? "미설정"}${bodyPhotoPending ? " · AI 사진 분석 대기" : " · 셀프 체크"}` : "나에게 맞는 핏 찾기"}</b></span></div><Link className="primary" href="/profile">{hasAnalysis ? "내 스타일 재분석하기" : "내 스타일 분석하기"} ↗</Link><p>{popularFallback ? "취향이 ‘잘 모르겠음’인 항목은 인기 있는 기본 룩을 우선 추천해요." : hasAnalysis ? "저장한 분석 결과를 바탕으로 추천 색상과 핏을 조정해요." : "분석 결과를 적용하면 추천 색상과 핏이 달라져요."}</p></section>
 
     <section className="why-look"><p className="eyebrow">WHY THIS LOOK</p><h2>이렇게 입으면 좋아요.</h2><div><p><b>01</b> 체감온도 {weather.apparent}°에 맞춰 한 겹 가볍게 걸칠 아이템을 추천해요.</p><p><b>02</b> 습도 {weather.humidity}%. 땀과 습기에 편안한 소재를 비교해보세요.</p><p><b>03</b> 오늘의 일교차 {temperatureGap}°. 저녁까지 대응할 수 있는 조합이에요.</p></div></section>
 
