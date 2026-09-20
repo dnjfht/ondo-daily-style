@@ -26,6 +26,9 @@ function readCredentials(formData: FormData) {
   };
 }
 
+const genders = new Set(["female", "male", "nonbinary", "prefer_not"]);
+const ageRanges = new Set(["10s", "20s", "30s", "40s", "50s", "60_plus", "prefer_not"]);
+
 export async function authenticate(_: LoginActionState, formData: FormData): Promise<LoginActionState> {
   const intent = String(formData.get("intent") ?? "login");
   const { email, password } = readCredentials(formData);
@@ -48,8 +51,11 @@ export async function authenticate(_: LoginActionState, formData: FormData): Pro
 
   if (password.length < 8) return { success: false, message: "비밀번호는 8자 이상으로 만들어 주세요." };
   if (intent === "signup") {
+    const gender = String(formData.get("gender") ?? "");
+    const ageRange = String(formData.get("ageRange") ?? "");
+    if (!genders.has(gender) || !ageRanges.has(ageRange)) return { success: false, message: "추천을 위한 성별과 연령대를 선택해 주세요." };
     const origin = (await headers()).get("origin") ?? "http://localhost:3000";
-    const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${origin}/auth/confirm` } });
+    const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${origin}/auth/confirm`, data: { gender, age_range: ageRange } } });
     if (error) {
       console.error("Supabase sign-up failed", { code: error.code, message: error.message });
       if (error.message.toLowerCase().includes("already")) return { success: false, message: "이미 가입된 이메일입니다. 로그인하거나 비밀번호 설정 링크를 이용해 주세요." };

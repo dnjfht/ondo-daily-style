@@ -55,6 +55,8 @@ export async function saveProfile(_: ProfileActionState, formData: FormData): Pr
     // AI 연결 후에는 일회성 분석 API가 결과만 반환하도록 연결합니다.
     personal_color_source: "survey",
     body_type_source: "survey",
+    gender: typeof user.user_metadata.gender === "string" ? user.user_metadata.gender : null,
+    age_range: typeof user.user_metadata.age_range === "string" ? user.user_metadata.age_range : null,
   };
   const { error } = await supabase.from("profiles").upsert(profile);
   if (error) return { success: false, message: "저장하지 못했습니다. 잠시 후 다시 시도해 주세요." };

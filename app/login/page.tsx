@@ -25,6 +25,7 @@ export default function LoginPage() {
         <input type="hidden" name="intent" value={mode} />
         <label>이메일<input required name="email" type="email" placeholder="you@example.com" autoComplete="email" /></label>
         {passwordMode && <label>비밀번호<input required name="password" type="password" minLength={8} placeholder="8자 이상" autoComplete={mode === "signup" ? "new-password" : "current-password"} /></label>}
+        {mode === "signup" && <div className="signup-demographics"><label>추천용 성별<select name="gender" required defaultValue=""><option value="" disabled>선택해 주세요</option><option value="female">여성</option><option value="male">남성</option><option value="nonbinary">논바이너리 / 유니섹스</option><option value="prefer_not">응답하지 않음</option></select></label><label>연령대<select name="ageRange" required defaultValue=""><option value="" disabled>선택해 주세요</option><option value="10s">10대</option><option value="20s">20대</option><option value="30s">30대</option><option value="40s">40대</option><option value="50s">50대</option><option value="60_plus">60대 이상</option><option value="prefer_not">응답하지 않음</option></select></label></div>}
         <button className="primary" type="submit" disabled={pending}>{pending ? "처리 중..." : mode === "signup" ? "이메일로 회원가입" : mode === "magic" ? "로그인 링크 보내기" : mode === "reset" ? "비밀번호 설정 링크 보내기" : "로그인"} ↗</button>
         {state.message && <p className={state.success ? "notice success" : "notice"}>{state.message}</p>}
       </form>
