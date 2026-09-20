@@ -9,7 +9,9 @@ const labels: Record<Situation, string> = { daily: "데일리", work: "출근", 
 const cities = ["seoul", "busan", "daegu", "jeju"] as const;
 const cityNames: Record<(typeof cities)[number], string> = { seoul: "서울", busan: "부산", daegu: "대구", jeju: "제주" };
 const cityStorageKey = "ondo-selected-city";
+const savedLooksStorageKey = "ondo-saved-look-snapshots";
 type Weather = { temperature: number; apparent: number; humidity: number; wind: number; city: string };
+type SavedLookSnapshot = Pick<Outfit, "id" | "title" | "subtitle" | "styleTag" | "situation" | "imageUrl" | "colors" | "reason" | "items"> & { savedAt: string; weather: Pick<Weather, "temperature" | "apparent" | "city"> };
 type StyleProfile = {
   personalColor: string | null;
   bodyType: string | null;
@@ -32,7 +34,8 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
   const [city, setCity] = useState<(typeof cities)[number]>("seoul");
   const [cityOpen, setCityOpen] = useState(false);
   const [cityReady, setCityReady] = useState(false);
-  const [saved, setSaved] = useState<string[]>([]);
+  const [savedLooks, setSavedLooks] = useState<Record<string, SavedLookSnapshot>>({});
+  const [savedLooksReady, setSavedLooksReady] = useState(false);
   const [weather, setWeather] = useState<Weather>({ temperature: 25, apparent: 26, humidity: 59, wind: 2.16, city: "서울" });
   const [weatherLoading, setWeatherLoading] = useState(false);
   const recommendationProfile = styleProfile ? { personalColor: styleProfile.personalColorAiResult ?? styleProfile.personalColor, bodyType: styleProfile.bodyTypeAiResult ?? styleProfile.bodyType, preferredStyle: styleProfile.preferredStyle, stylePreferences: styleProfile.stylePreferences, gender: styleProfile.gender, ageRange: styleProfile.ageRange } : null;
@@ -55,6 +58,19 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
   useEffect(() => {
     if (cityReady) window.localStorage.setItem(cityStorageKey, city);
   }, [city, cityReady]);
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(savedLooksStorageKey);
+      if (stored) setSavedLooks(JSON.parse(stored) as Record<string, SavedLookSnapshot>);
+    } catch {
+      window.localStorage.removeItem(savedLooksStorageKey);
+    } finally {
+      setSavedLooksReady(true);
+    }
+  }, []);
+  useEffect(() => {
+    if (savedLooksReady) window.localStorage.setItem(savedLooksStorageKey, JSON.stringify(savedLooks));
+  }, [savedLooks, savedLooksReady]);
   useEffect(() => { void refreshWeather(); }, [city]);
   const temperatureGap = 9;
   const personalColor = styleProfile?.personalColorAiResult ?? styleProfile?.personalColor;
@@ -73,6 +89,31 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
     }
     return [...groups.entries()];
   }, [lead.products]);
+  const isSaved = (outfit: Outfit) => Boolean(savedLooks[outfit.id]);
+  const toggleSavedLook = (outfit: Outfit) => {
+    setSavedLooks((current) => {
+      if (current[outfit.id]) {
+        const { [outfit.id]: _, ...remaining } = current;
+        return remaining;
+      }
+      return {
+        ...current,
+        [outfit.id]: {
+          id: outfit.id,
+          title: outfit.title,
+          subtitle: outfit.subtitle,
+          styleTag: outfit.styleTag,
+          situation: outfit.situation,
+          imageUrl: outfit.imageUrl,
+          colors: outfit.colors,
+          reason: outfit.reason,
+          items: outfit.items,
+          savedAt: new Date().toISOString(),
+          weather: { temperature: weather.temperature, apparent: weather.apparent, city: weather.city },
+        },
+      };
+    });
+  };
 
   return <main className="shell">
     <header className="topbar">
@@ -102,7 +143,7 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
       </aside>
 
       <article className="feature-edit">
-        <div className="feature-heading"><div><p className="eyebrow">TODAY&apos;S EDIT</p><h2>{lead.title}</h2></div><span>{labels[situation]}</span></div>
+        <div className="feature-heading"><div><p className="eyebrow">TODAY&apos;S EDIT</p><h2>{lead.title}</h2></div><div className="feature-actions"><span>{labels[situation]}</span><button className={isSaved(lead) ? "save-look-button saved" : "save-look-button"} onClick={() => toggleSavedLook(lead)} type="button">{isSaved(lead) ? "저장됨 ✓" : "저장하기 ♡"}</button></div></div>
         <div className="feature-body">
           <div className="feature-image" style={{ backgroundImage: `url(${lead.imageUrl})` }}><p>PERSONALIZED STYLE GUIDE</p></div>
           <div className="feature-copy"><p>{lead.reason}</p><ol>{lead.items.map((item, index) => { const naverProductLink = naverProductLinks.find((product) => product.category === itemCategoryKeys[index]); return <li key={item}><span>0{index + 1}</span><div><b>{["OUTER", "TOP", "BOTTOM", "SHOES", "BAG & CAP"][index] ?? "ITEM"}</b><h3>{item}</h3><small>{index === 0 ? (needsOuter ? `체감 ${weather.apparent}°와 ${styleProfile ? "저장한 스타일 결과" : "기본 인기 룩"}을 함께 반영했어요` : `체감 ${weather.apparent}°에는 아우터 없이 상의 중심으로 추천해요`) : index === 1 ? "상의·하의·신발·가방을 각각 고를 수 있어요" : "다른 쇼핑몰의 유사 상품도 함께 비교해 보세요"}{naverProductLink && <><br /><a className="search-result-link" href={naverProductLink.url} target="_blank" rel="noreferrer">네이버 쇼핑에서 검색 결과로 이동 ↗</a></>}</small></div></li>; })}</ol>
@@ -117,7 +158,7 @@ export function OndoDashboard({ outfits, signedIn, styleProfile }: { outfits: Ou
 
     <section className="why-look"><p className="eyebrow">WHY THIS LOOK</p><h2>이렇게 입으면 좋아요.</h2><div><p><b>01</b>{needsOuter ? ` 체감온도 ${weather.apparent}°에 맞춰 한 겹 가볍게 걸칠 아이템을 추천해요.` : ` 체감온도 ${weather.apparent}°에는 아우터 없이 통기성 좋은 상의 중심으로 추천해요.`}</p><p><b>02</b> 습도 {weather.humidity}%. 땀과 습기에 편안한 소재를 비교해보세요.</p><p><b>03</b> 오늘의 일교차 {temperatureGap}°. 저녁까지 대응할 수 있는 조합이에요.</p></div></section>
 
-    <section className="more-looks"><div className="section-heading"><div><p className="eyebrow">MORE FOR TODAY</p><h2>다른 상황의 코디</h2></div><span>TOP 3</span></div><div className="outfit-grid">{outfits.filter((outfit) => outfit.situation !== situation).slice(0, 2).map((outfit) => <article className="outfit-card" key={outfit.id}><div className="outfit-image" style={{ backgroundImage: `url(${situationLookImages[outfit.situation] ?? outfit.imageUrl})` }}><em>{outfit.styleTag}</em></div><div className="outfit-copy"><h3>{outfit.title}</h3><p>{outfit.reason}</p><button className={saved.includes(outfit.id) ? "saved" : ""} onClick={() => setSaved((items) => items.includes(outfit.id) ? items.filter((id) => id !== outfit.id) : [...items, outfit.id])} type="button">{saved.includes(outfit.id) ? "저장됨 ✓" : "저장하기 ♡"}</button></div></article>)}</div></section>
+    <section className="more-looks"><div className="section-heading"><div><p className="eyebrow">MORE FOR TODAY</p><h2>다른 상황의 코디</h2></div><span>TOP 3</span></div><div className="outfit-grid">{outfits.filter((outfit) => outfit.situation !== situation).slice(0, 2).map((outfit) => <article className="outfit-card" key={outfit.id}><div className="outfit-image" style={{ backgroundImage: `url(${situationLookImages[outfit.situation] ?? outfit.imageUrl})` }}><em>{outfit.styleTag}</em></div><div className="outfit-copy"><h3>{outfit.title}</h3><p>{outfit.reason}</p><button className={isSaved(outfit) ? "saved" : ""} onClick={() => toggleSavedLook(outfit)} type="button">{isSaved(outfit) ? "저장됨 ✓" : "저장하기 ♡"}</button></div></article>)}</div></section>
     <footer><Link className="brand" href="/">ondo<sup>°</sup></Link><span>당신의 하루에 어울리는 선택.</span><span>상품 정보는 제휴 또는 공식 카탈로그 연결 전의 MVP 예시입니다.</span></footer>
   </main>;
 }
