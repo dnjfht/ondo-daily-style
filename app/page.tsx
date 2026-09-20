@@ -5,6 +5,7 @@ import { createClient, hasSupabaseEnv } from "@/lib/supabase/server";
 export default async function Home() {
   const outfits = await getOutfits();
   let signedIn = false;
+  let savedLookKeys: string[] = [];
   let styleProfile: {
     personalColor: string | null;
     bodyType: string | null;
@@ -37,7 +38,9 @@ export default async function Home() {
         ageRange: data.age_range,
         analysisCompletedAt: data.analysis_completed_at,
       };
+      const { data: savedLooks } = await supabase.from("saved_looks").select("look_key").eq("user_id", user.id);
+      savedLookKeys = savedLooks?.map((look) => look.look_key) ?? [];
     }
   }
-  return <OndoDashboard outfits={outfits} signedIn={signedIn} styleProfile={styleProfile} />;
+  return <OndoDashboard outfits={outfits} signedIn={signedIn} styleProfile={styleProfile} savedLookKeys={savedLookKeys} />;
 }
