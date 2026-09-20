@@ -25,6 +25,7 @@ export type Outfit = {
 
 export type SavedLookSnapshot = Pick<Outfit, "id" | "title" | "subtitle" | "styleTag" | "situation" | "imageUrl" | "colors" | "reason" | "items"> & {
   lookKey: string;
+  products: ProductLink[];
   savedAt: string;
   weather: {
     city: string;
@@ -34,3 +35,6 @@ export type SavedLookSnapshot = Pick<Outfit, "id" | "title" | "subtitle" | "styl
     wind: number;
   };
 };
+
+export type SavedLookKeyEntry = { canonicalKey: string; storedKey: string };
+export type SavedLookRecord = SavedLookSnapshot & { databaseKey: string };

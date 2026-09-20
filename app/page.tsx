@@ -1,11 +1,13 @@
 import { OndoDashboard } from "@/components/ondo-dashboard";
 import { getOutfits } from "@/lib/data/outfits";
+import { cityCodeForName, savedLookKey } from "@/lib/saved-look";
 import { createClient, hasSupabaseEnv } from "@/lib/supabase/server";
+import type { SavedLookKeyEntry, SavedLookSnapshot } from "@/lib/types";
 
 export default async function Home() {
   const outfits = await getOutfits();
   let signedIn = false;
-  let savedLookKeys: string[] = [];
+  let savedLookEntries: SavedLookKeyEntry[] = [];
   let styleProfile: {
     personalColor: string | null;
     bodyType: string | null;
@@ -38,9 +40,14 @@ export default async function Home() {
         ageRange: data.age_range,
         analysisCompletedAt: data.analysis_completed_at,
       };
-      const { data: savedLooks } = await supabase.from("saved_looks").select("look_key").eq("user_id", user.id);
-      savedLookKeys = savedLooks?.map((look) => look.look_key) ?? [];
+      const { data: savedLooks } = await supabase.from("saved_looks").select("look_key,look,saved_at").eq("user_id", user.id);
+      savedLookEntries = (savedLooks ?? []).flatMap((row) => {
+        const look = row.look as Partial<SavedLookSnapshot>;
+        if (!look.id) return [];
+        const canonicalKey = savedLookKey(look.id, row.saved_at, cityCodeForName(look.weather?.city ?? "서울"));
+        return [{ canonicalKey, storedKey: row.look_key }];
+      });
     }
   }
-  return <OndoDashboard outfits={outfits} signedIn={signedIn} styleProfile={styleProfile} savedLookKeys={savedLookKeys} />;
+  return <OndoDashboard outfits={outfits} signedIn={signedIn} styleProfile={styleProfile} savedLookEntries={savedLookEntries} />;
 }
