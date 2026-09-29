@@ -71,7 +71,13 @@ export async function saveProfile(_: ProfileActionState, formData: FormData): Pr
     personal_color_source: "survey",
     body_type_source: "survey",
   };
-  const { error } = await supabase.from("profiles").upsert(profile);
+  let { error } = await supabase.from("profiles").upsert(profile);
+  // 원격 DB 마이그레이션 전에는 설문 원문 열이 없을 수 있습니다.
+  // 그 경우에도 계산된 골격 결과와 취향은 기존 프로필에 안전하게 저장합니다.
+  if (error && (error.code === "PGRST204" || error.message.includes("body_survey_answers"))) {
+    const { body_survey_answers: _, ...legacyProfile } = profile;
+    ({ error } = await supabase.from("profiles").upsert(legacyProfile));
+  }
   if (error) return { success: false, message: "저장하지 못했습니다. 잠시 후 다시 시도해 주세요." };
   revalidatePath("/");
   revalidatePath("/mypage");
