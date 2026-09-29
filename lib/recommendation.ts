@@ -5,13 +5,10 @@ export type StyleSignals = {
   bodyType: string | null;
   preferredStyle: string | null;
   stylePreferences: Record<string, string> | null;
-  gender: string | null;
-  ageRange: string | null;
 };
 
-const colorNames: Record<string, string> = { warm: "아이보리·카멜", cool: "네이비·쿨 그레이", neutral: "오프화이트·차콜" };
-const searchColors: Record<string, string> = { warm: "아이보리", cool: "네이비", neutral: "차콜" };
-const ageLabels: Record<string, string> = { "10s": "10대", "20s": "20대", "30s": "30대", "40s": "40대", "50s": "50대", "60_plus": "60대 이상" };
+const colorNames: Record<string, string> = { warm: "아이보리·카멜", cool: "네이비·쿨 그레이" };
+const searchColors: Record<string, string> = { warm: "아이보리", cool: "네이비" };
 const imageByMood: Record<string, Record<Situation, string>> = {
   minimal: { daily: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85", work: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=1200&q=85", date: "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=1200&q=85" },
   casual: { daily: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85", work: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1200&q=85", date: "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=1200&q=85" },
@@ -44,46 +41,41 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
   const pick = <T,>(options: readonly T[]) => options[variation % options.length];
   const mood = profile?.preferredStyle && imageByMood[profile.preferredStyle] ? profile.preferredStyle : "minimal";
   const body = profile?.bodyType ?? "balanced";
-  const color = profile?.personalColor ?? "neutral";
+  const color = profile?.personalColor === "cool" ? "cool" : "warm";
   const silhouette = profile?.stylePreferences?.silhouette ?? "balanced";
-  const genderQuery = profile?.gender === "female" ? "여성" : profile?.gender === "male" ? "남성" : "유니섹스";
-  const ageQuery = profile?.ageRange ? ageLabels[profile.ageRange] ?? "" : "";
+  const audienceQuery = "여성 20대";
   const hasOuter = temperature < 20;
   const climateAdvice = temperature < 12 ? "보온 아우터를 더해" : temperature < 20 ? "가벼운 아우터로 일교차에 대비해" : "아우터 없이 통기성 좋은 상의 중심으로";
   const shape = body === "wave" ? "허리선을 살린" : body === "natural" ? "여유 있는" : body === "straight" ? "정돈된 정핏" : silhouette === "relaxed" ? "여유 있는" : "균형 잡힌";
   const details = copy[situation];
   // 긴 문장은 검색 결과가 비기 쉬워, 외부 쇼핑몰에는 색상과 실제 상품군만 전달합니다.
-  // 성별·연령대·상황은 상품군 선정과 네이버 쇼핑의 상세 검색어에 함께 반영합니다.
-  const topCategory = profile?.gender === "female"
-    ? temperature >= 23
-      ? pick(["반팔 블라우스", "린넨 셔츠", "니트 반팔"])
-      : pick(["블라우스", "긴팔 셔츠", "가디건 세트"])
-    : temperature >= 23
-      ? pick(["반팔 셔츠", "니트 반팔", "카라 티셔츠"])
-      : pick(["셔츠", "긴팔 티셔츠", "얇은 니트"]);
+  // ONDO의 현재 추천 대상은 20대 여성으로 고정합니다.
+  const topCategory = temperature >= 23
+    ? pick(["반팔 블라우스", "린넨 셔츠", "니트 반팔"])
+    : pick(["블라우스", "긴팔 셔츠", "가디건 세트"]);
   const outerCategory = temperature < 12
     ? pick(["코트", "패딩 재킷", "울 재킷"])
     : temperature < 17
       ? pick(["재킷", "트렌치코트", "가죽 재킷"])
       : pick(["가디건", "데님 재킷", "얇은 셔츠 재킷"]);
-  const colorTerm = searchColors[color] ?? searchColors.neutral;
+  const colorTerm = searchColors[color] ?? searchColors.warm;
   const bottomCategory = situation === "work"
     ? pick(["슬랙스", "세미 와이드 팬츠", "테이퍼드 팬츠"])
-    : situation === "date" && profile?.gender === "female"
+    : situation === "date"
       ? pick(["롱 스커트", "미디 스커트", "와이드 데님"])
       : pick(["데님 팬츠", "코튼 팬츠", "와이드 팬츠"]);
   const shoesCategory = situation === "work"
     ? pick(["로퍼", "플랫슈즈", "단정한 스니커즈"])
-    : situation === "date" && profile?.gender === "female"
+    : situation === "date"
       ? pick(["플랫슈즈", "메리제인", "로우힐"])
       : pick(["스니커즈", "캔버스화", "러닝화"]);
   const accessoryCategory = situation === "work"
     ? pick(["토트백", "숄더백", "백팩"])
     : situation === "date"
-      ? profile?.gender === "female" ? pick(["미니 숄더백", "미니 토트백", "클러치백"]) : pick(["미니 크로스백", "레더 토트백", "메신저백"])
+      ? pick(["미니 숄더백", "미니 토트백", "클러치백"])
       : mood === "street" || mood === "casual"
         ? pick(["볼캡", "나일론 백팩", "크로스백"])
-        : profile?.gender === "female" ? pick(["숄더백", "토트백", "버킷백"]) : pick(["크로스백", "토트백", "캔버스백"]);
+        : pick(["숄더백", "토트백", "버킷백"]);
   const searchItems: { category: ProductCategory; label: string; term: string }[] = [
     ...(hasOuter ? [{ category: "outer" as const, label: "아우터", term: outerCategory }] : []),
     { category: "top", label: "상의", term: topCategory },
@@ -91,7 +83,7 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
     { category: "shoes", label: "신발", term: shoesCategory },
     { category: "accessory", label: "가방·캡", term: accessoryCategory },
   ];
-  const naverQuery = (term: string) => `${genderQuery} ${ageQuery} ${colorTerm} ${term}`.trim();
+  const naverQuery = (term: string) => `${audienceQuery} ${colorTerm} ${term}`;
   const simpleQuery = (term: string) => `${colorTerm} ${term}`;
   const merchants = [
     { merchant: "네이버 쇼핑", createUrl: naverShoppingUrl, query: naverQuery },
@@ -104,12 +96,12 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
   return {
     // 저장 키에는 날짜와 도시도 포함되므로, 룩 ID는 기존 저장 항목과 호환되게 유지합니다.
     id: `personal-${situation}-${mood}-${color}-${body}-${temperature < 20 ? "cool" : "warm"}`,
-    title: `${colorNames[color] ?? colorNames.neutral} ${details.title}`,
+    title: `${colorNames[color] ?? colorNames.warm} ${details.title}`,
     subtitle: `${mood} · ${shape} 핏`, styleTag: situation === "daily" ? "데일리" : situation === "work" ? "출근" : "데이트",
     situation, minTemp: temperature - 4, maxTemp: temperature + 4, imageUrl: situationLookImages[situation],
-    colors: color === "warm" ? ["#F1E9DC", "#C79D76", "#62554B", "#314536"] : color === "cool" ? ["#EDF0F2", "#9EAFBE", "#34465E", "#2D3340"] : ["#F0F0EB", "#A1AAA5", "#454C49", "#2F3E38"],
-    reason: `${details.base}이에요. ${genderQuery}${ageQuery ? ` ${ageQuery}` : ""} 기준과 현재 ${temperature}°에는 ${climateAdvice} 조절해 보세요.`,
-    items: [hasOuter ? `${outerCategory} · ${shape} 핏` : "아우터 없이 가볍게", `${topCategory} · ${colorNames[color] ?? colorNames.neutral}`, `${bottomCategory} · ${shape} 실루엣`, shoesCategory, accessoryCategory],
+    colors: color === "warm" ? ["#F1E9DC", "#C79D76", "#62554B", "#314536"] : ["#EDF0F2", "#9EAFBE", "#34465E", "#2D3340"],
+    reason: `${details.base}이에요. 20대 여성 기준과 현재 ${temperature}°에는 ${climateAdvice} 조절해 보세요.`,
+    items: [hasOuter ? `${outerCategory} · ${shape} 핏` : "아우터 없이 가볍게", `${topCategory} · ${colorNames[color] ?? colorNames.warm}`, `${bottomCategory} · ${shape} 실루엣`, shoesCategory, accessoryCategory],
     products: merchants.flatMap(({ merchant, createUrl, query }) => searchItems.map(({ category, label, term }) => ({
       merchant,
       category,

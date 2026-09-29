@@ -17,8 +17,6 @@ export default async function Home() {
     bodyTypeSource: string | null;
     preferredStyle: string | null;
     stylePreferences: Record<string, string> | null;
-    gender: string | null;
-    ageRange: string | null;
     analysisCompletedAt: string | null;
   } | null = null;
   if (hasSupabaseEnv()) {
@@ -26,7 +24,7 @@ export default async function Home() {
     const { data: { user } } = await supabase.auth.getUser();
     signedIn = Boolean(user);
     if (user) {
-      const { data } = await supabase.from("profiles").select("personal_color,body_type,personal_color_ai_result,body_type_ai_result,personal_color_source,body_type_source,preferred_style,style_preferences,gender,age_range,analysis_completed_at").eq("id", user.id).maybeSingle();
+      const { data } = await supabase.from("profiles").select("personal_color,body_type,personal_color_ai_result,body_type_ai_result,personal_color_source,body_type_source,preferred_style,style_preferences,analysis_completed_at").eq("id", user.id).maybeSingle();
       if (data) styleProfile = {
         personalColor: data.personal_color,
         bodyType: data.body_type,
@@ -36,8 +34,6 @@ export default async function Home() {
         bodyTypeSource: data.body_type_source,
         preferredStyle: data.preferred_style,
         stylePreferences: data.style_preferences as Record<string, string> | null,
-        gender: data.gender,
-        ageRange: data.age_range,
         analysisCompletedAt: data.analysis_completed_at,
       };
       const { data: savedLooks } = await supabase.from("saved_looks").select("look_key,look,saved_at").eq("user_id", user.id);

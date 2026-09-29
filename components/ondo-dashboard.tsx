@@ -21,11 +21,9 @@ type StyleProfile = {
   bodyTypeSource: string | null;
   preferredStyle: string | null;
   stylePreferences: Record<string, string> | null;
-  gender: string | null;
-  ageRange: string | null;
   analysisCompletedAt: string | null;
 };
-const colorLabels: Record<string, string> = { warm: "웜", cool: "쿨", neutral: "뉴트럴" };
+const colorLabels: Record<string, string> = { warm: "웜", cool: "쿨" };
 const bodyLabels: Record<string, string> = { straight: "스트레이트", wave: "웨이브", natural: "내추럴" };
 const itemCategoryKeys = ["outer", "top", "bottom", "shoes", "accessory"] as const;
 
@@ -41,7 +39,7 @@ export function OndoDashboard({ outfits, signedIn, styleProfile, savedLookEntrie
   const [weather, setWeather] = useState<Weather>({ temperature: 25, apparent: 26, humidity: 59, wind: 2.16, city: "서울" });
   const [weatherLoading, setWeatherLoading] = useState(false);
   const [dailyVariation] = useState(() => Number(seoulDateKey(new Date()).replaceAll("-", "")));
-  const recommendationProfile = styleProfile ? { personalColor: styleProfile.personalColorAiResult ?? styleProfile.personalColor, bodyType: styleProfile.bodyTypeAiResult ?? styleProfile.bodyType, preferredStyle: styleProfile.preferredStyle, stylePreferences: styleProfile.stylePreferences, gender: styleProfile.gender, ageRange: styleProfile.ageRange } : null;
+  const recommendationProfile = styleProfile ? { personalColor: styleProfile.personalColorAiResult ?? styleProfile.personalColor, bodyType: styleProfile.bodyTypeAiResult ?? styleProfile.bodyType, preferredStyle: styleProfile.preferredStyle, stylePreferences: styleProfile.stylePreferences } : null;
   const lead = useMemo(() => recommendOutfit(situation, weather.apparent, recommendationProfile, dailyVariation), [situation, weather.apparent, recommendationProfile, dailyVariation]);
   const liveOutfits = useMemo(() => (Object.keys(labels) as Situation[]).map((key, index) => recommendOutfit(key, weather.apparent, recommendationProfile, dailyVariation + index)), [weather.apparent, recommendationProfile, dailyVariation]);
 
