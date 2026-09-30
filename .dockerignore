@@ -1,0 +1,11 @@
+.git/
+.next/
+node_modules/
+ondo_skeleton_api/.venv/
+ondo_skeleton_api/__pycache__/
+ondo_personal_color_api/service/.venv/
+ondo_personal_color_api/service/__pycache__/
+ondo_personal_color_api/service/ONDO/
+ondo_personal_color_api/service/dataset/
+ondo_personal_color_api/service/outputs/
+*.log
