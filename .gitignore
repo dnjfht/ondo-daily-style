@@ -23,6 +23,7 @@ supabase/.branches/
 uploads/
 private-data/
 data/raw/
+data/catalog-import/
 models/
 work/
 outputs/

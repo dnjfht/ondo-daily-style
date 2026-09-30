@@ -1,0 +1,11 @@
+.venv/
+ONDO/
+dataset/
+outputs/
+__pycache__/
+*.log
+*.pyc
+check_*.py
+inspect_*.py
+make_*.py
+train_*.py

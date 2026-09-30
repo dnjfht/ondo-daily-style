@@ -3,11 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient, hasSupabaseEnv } from "@/lib/supabase/server";
-import { deriveBodyType, hasCompletedBodySurvey, isBodySurveyAnswer, isBodyType, type BodySurveyAnswer } from "@/lib/body-survey";
 
 export type ProfileActionState = { message: string; success: boolean };
 
 const allowedColors = new Set(["warm", "cool"]);
+const allowedBodyTypes = new Set(["straight", "wave", "natural"]);
 const allowedMoods = new Set(["minimal", "casual", "classic", "street", "unknown"]);
 const allowedSilhouettes = new Set(["balanced", "relaxed", "defined", "unknown"]);
 const allowedColorDepths = new Set(["neutral", "soft", "bold", "unknown"]);
@@ -19,11 +19,38 @@ function value(formData: FormData, name: string) {
   return typeof candidate === "string" ? candidate : "";
 }
 
-function bodyAnswers(formData: FormData) {
+type StoredSkeletonSelection = {
+  personaId: string;
+  answers: number[];
+  source: "survey" | "ai";
+  photoPersona?: {
+    p1: number;
+    axes: { center: number; waist?: number; frame?: number };
+    bodyLevel?: string;
+    photoReasons: string[];
+  };
+  result: {
+    type: "straight" | "wave" | "natural" | null;
+    typeKor: string;
+    conf: string;
+    reasons: string[];
+    note: string;
+    fit: Record<string, string> | null;
+  };
+};
+
+function skeletonSelection(formData: FormData): StoredSkeletonSelection | null {
   try {
-    const parsed = JSON.parse(value(formData, "bodySurveyAnswers")) as Record<string, unknown>;
-    return Object.fromEntries(Object.entries(parsed).filter(([, answer]) => isBodySurveyAnswer(answer))) as Record<string, BodySurveyAnswer>;
-  } catch { return {}; }
+    const parsed = JSON.parse(value(formData, "skeletonSelection")) as Partial<StoredSkeletonSelection>;
+    const result = parsed.result;
+    const answers = parsed.answers;
+    const validType = result?.type === null || allowedBodyTypes.has(String(result?.type));
+    const source = parsed.source === "ai" ? "ai" : parsed.source === "survey" ? "survey" : null;
+    const photo = parsed.photoPersona;
+    const validPhoto = !photo || (typeof photo === "object" && typeof photo.p1 === "number" && typeof photo.axes?.center === "number" && Array.isArray(photo.photoReasons) && photo.photoReasons.every((reason) => typeof reason === "string"));
+    if (!result || typeof parsed.personaId !== "string" || !source || (source === "ai" && !photo) || !validPhoto || !Array.isArray(answers) || answers.length !== 11 || !answers.every((answer) => Number.isInteger(answer) && answer >= 1 && answer <= 4) || !validType || typeof result.typeKor !== "string" || typeof result.conf !== "string" || !Array.isArray(result.reasons) || !result.reasons.every((reason) => typeof reason === "string") || typeof result.note !== "string" || (result.fit !== null && (typeof result.fit !== "object" || Array.isArray(result.fit)))) return null;
+    return { personaId: parsed.personaId, answers, source, photoPersona: photo as StoredSkeletonSelection["photoPersona"], result: { type: result.type as StoredSkeletonSelection["result"]["type"], typeKor: result.typeKor, conf: result.conf, reasons: result.reasons, note: result.note, fit: result.fit as Record<string, string> | null } };
+  } catch { return null; }
 }
 
 export async function saveProfile(_: ProfileActionState, formData: FormData): Promise<ProfileActionState> {
@@ -33,29 +60,31 @@ export async function saveProfile(_: ProfileActionState, formData: FormData): Pr
   if (!user) return { success: false, message: "프로필을 저장하려면 먼저 로그인해야 합니다." };
 
   const personalColor = value(formData, "personalColor");
-  const suppliedBodyType = value(formData, "bodyType");
-  const surveyAnswers = bodyAnswers(formData);
-  const professionalDiagnosis = value(formData, "professionalDiagnosis");
-  const selfDiagnosis = value(formData, "selfDiagnosis");
+  const personalColorSourceValue = value(formData, "personalColorSource");
+  const personalColorAiResult = value(formData, "personalColorAiResult");
+  const personalColorSource = personalColorSourceValue === "ai" && personalColorAiResult === personalColor ? "ai" : "survey";
+  const skeleton = skeletonSelection(formData);
   const mood = value(formData, "mood");
   const silhouette = value(formData, "silhouette");
   const colorDepth = value(formData, "colorDepth");
   const activity = value(formData, "activity");
   const city = value(formData, "city");
-  if (!allowedColors.has(personalColor) || !hasCompletedBodySurvey(surveyAnswers) || !isBodySurveyAnswer(professionalDiagnosis) || !isBodySurveyAnswer(selfDiagnosis) || !allowedMoods.has(mood) || !allowedSilhouettes.has(silhouette) || !allowedColorDepths.has(colorDepth) || !allowedActivity.has(activity) || !allowedCities.has(city)) {
-    return { success: false, message: "사진은 선택 사항이에요. 사진 외의 모든 설문 문항에 답한 뒤 결과를 저장해 주세요." };
+  if (!allowedColors.has(personalColor) || !skeleton || !allowedMoods.has(mood) || !allowedSilhouettes.has(silhouette) || !allowedColorDepths.has(colorDepth) || !allowedActivity.has(activity) || !allowedCities.has(city)) {
+    return { success: false, message: "골격 인물을 고르고 11개 문항의 결과를 확인한 뒤, 다른 설문 항목도 모두 선택해 주세요." };
   }
-  const bodyType = deriveBodyType(surveyAnswers, professionalDiagnosis, selfDiagnosis);
-  if (!isBodyType(suppliedBodyType) || suppliedBodyType !== bodyType) return { success: false, message: "체형 설문 결과를 다시 계산해 주세요." };
 
   const profile = {
     id: user.id,
     personal_color: personalColor,
-    body_type: bodyType,
+    // 판정 보류(null)면 추천기가 골격 가점 없이 동작합니다.
+    body_type: skeleton.result.type,
     body_survey_answers: {
-      answers: surveyAnswers,
-      professional_diagnosis: professionalDiagnosis,
-      self_diagnosis: selfDiagnosis,
+      module: "ondo-skeleton-v3",
+      persona_id: skeleton.personaId,
+      answers: skeleton.answers,
+      result: skeleton.result,
+      source: skeleton.source,
+      photo_signal: skeleton.source === "ai" ? skeleton.photoPersona : null,
     },
     preferred_style: mood,
     preferred_city: city,
@@ -67,9 +96,11 @@ export async function saveProfile(_: ProfileActionState, formData: FormData): Pr
     },
     analysis_completed_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    // Python AI 모델이 연결되기 전에는 사진을 전송·보관하지 않고 설문 결과만 사용합니다.
-    personal_color_source: "survey",
-    body_type_source: "survey",
+    personal_color_ai_result: personalColorSource === "ai" ? personalColor : null,
+    // 사진 원본·경로는 저장하지 않고, 사진+설문의 최종 골격 결과만 보관합니다.
+    body_type_ai_result: skeleton.source === "ai" ? skeleton.result.type : null,
+    personal_color_source: personalColorSource,
+    body_type_source: skeleton.source,
   };
   let { error } = await supabase.from("profiles").upsert(profile);
   // 원격 DB 마이그레이션 전에는 설문 원문 열이 없을 수 있습니다.

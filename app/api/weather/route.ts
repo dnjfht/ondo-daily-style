@@ -10,12 +10,19 @@ const cities: Record<string, { latitude: number; longitude: number; label: strin
 export async function GET(request: Request) {
   const cityKey = new URL(request.url).searchParams.get("city") ?? "seoul";
   const city = cities[cityKey] ?? cities.seoul;
-  const params = new URLSearchParams({ latitude: String(city.latitude), longitude: String(city.longitude), current: "temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code", timezone: "Asia/Seoul" });
+  const params = new URLSearchParams({
+    latitude: String(city.latitude),
+    longitude: String(city.longitude),
+    current: "temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code,precipitation",
+    daily: "temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum",
+    forecast_days: "1",
+    timezone: "Asia/Seoul",
+  });
   try {
     const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, { next: { revalidate: 900 } });
     if (!response.ok) throw new Error("weather request failed");
     const data = await response.json();
-    return NextResponse.json({ city: city.label, current: data.current, fetchedAt: new Date().toISOString() });
+    return NextResponse.json({ city: city.label, current: data.current, daily: data.daily, fetchedAt: new Date().toISOString() });
   } catch {
     return NextResponse.json({ city: city.label, current: null, message: "날씨를 불러오지 못했습니다." }, { status: 503 });
   }

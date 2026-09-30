@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.log
+*.bat
+CODEX_*.txt
+models/*.part*

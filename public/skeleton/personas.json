@@ -1,0 +1,2573 @@
+{
+ "version": "skeleton-v3.3",
+ "count": 69,
+ "personas": [
+  {
+   "id": "s1_straight_01",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.131,
+    "waist_hip": 0.772,
+    "knee_thigh": 0.63,
+    "shoulder_h": 0.232,
+    "knee_h": 0.0687
+   },
+   "axes": {
+    "center": -0.498,
+    "waist": -0.191,
+    "frame": -0.636
+   },
+   "p1": 0.402561,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.911,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.302,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_02",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.184,
+    "waist_hip": 0.684,
+    "knee_thigh": 0.63,
+    "shoulder_h": 0.237,
+    "knee_h": 0.0642
+   },
+   "axes": {
+    "center": 0.673,
+    "waist": -1,
+    "frame": 1
+   },
+   "p1": -0.069365,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. 웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.881,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.122,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_03",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_03.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.099,
+    "waist_hip": 0.862,
+    "knee_thigh": 0.644,
+    "shoulder_h": 0.235,
+    "knee_h": 0.0723
+   },
+   "axes": {
+    "center": -0.995,
+    "waist": 1,
+    "frame": -1
+   },
+   "p1": 0.198012,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.945,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.051,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_04",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_04.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.21,
+    "waist_hip": 0.874,
+    "knee_thigh": 0.624,
+    "shoulder_h": 0.238,
+    "knee_h": 0.0634
+   },
+   "axes": {
+    "center": 1,
+    "waist": 1,
+    "frame": 1
+   },
+   "p1": -1,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.926,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.077,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_05",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_05.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.14,
+    "waist_hip": 0.692,
+    "knee_thigh": 0.585,
+    "shoulder_h": 0.228,
+    "knee_h": 0.0624
+   },
+   "axes": {
+    "center": -0.889,
+    "waist": -1,
+    "frame": -0.212
+   },
+   "p1": 0.797786,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.962,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.048,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_06",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_06.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.151,
+    "waist_hip": 0.741,
+    "knee_thigh": 0.589,
+    "shoulder_h": 0.232,
+    "knee_h": 0.0615
+   },
+   "axes": {
+    "center": -0.498,
+    "waist": -0.439,
+    "frame": 0.353
+   },
+   "p1": 0.304215,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.846,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.117,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_07",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_07.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.137,
+    "waist_hip": 0.744,
+    "knee_thigh": 0.68,
+    "shoulder_h": 0.238,
+    "knee_h": 0.0737
+   },
+   "axes": {
+    "center": 0.602,
+    "waist": -0.905,
+    "frame": -1
+   },
+   "p1": 0.321016,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.958,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.102,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_08",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_08.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.174,
+    "waist_hip": 0.694,
+    "knee_thigh": 0.589,
+    "shoulder_h": 0.24,
+    "knee_h": 0.0639
+   },
+   "axes": {
+    "center": 0.318,
+    "waist": -1,
+    "frame": 1
+   },
+   "p1": 0.07263,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. "
+   },
+   "quality": {
+    "min_visibility": 0.965,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.108,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_09",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_09.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.145,
+    "waist_hip": 0.781,
+    "knee_thigh": 0.589,
+    "shoulder_h": 0.226,
+    "knee_h": 0.0618
+   },
+   "axes": {
+    "center": -0.711,
+    "waist": 0.182,
+    "frame": -0.494
+   },
+   "p1": 0.310418,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.968,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.394,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_straight_10",
+   "set": "set1",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s1_straight_10.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.173,
+    "waist_hip": 0.73,
+    "knee_thigh": 0.646,
+    "shoulder_h": 0.232,
+    "knee_h": 0.0648
+   },
+   "axes": {
+    "center": 0.318,
+    "waist": -0.625,
+    "frame": 0.353
+   },
+   "p1": 0.052172,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. "
+   },
+   "quality": {
+    "min_visibility": 0.919,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.262,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_01",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.12,
+    "waist_hip": 0.811,
+    "knee_thigh": 0.632,
+    "shoulder_h": 0.227,
+    "knee_h": 0.0658
+   },
+   "axes": {
+    "center": -1,
+    "waist": 0.586,
+    "frame": -0.636
+   },
+   "p1": 0.292734,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.863,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.132,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_02",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.162,
+    "waist_hip": 0.833,
+    "knee_thigh": 0.632,
+    "shoulder_h": 0.232,
+    "knee_h": 0.0657
+   },
+   "axes": {
+    "center": 0.07,
+    "waist": 0.928,
+    "frame": 0.071
+   },
+   "p1": -0.413149,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.935,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.071,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_03",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_03.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.143,
+    "waist_hip": 0.724,
+    "knee_thigh": 0.623,
+    "shoulder_h": 0.228,
+    "knee_h": 0.0641
+   },
+   "axes": {
+    "center": -0.782,
+    "waist": -0.703,
+    "frame": -0.212
+   },
+   "p1": 0.636412,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.953,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.194,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_04",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_04.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.092,
+    "waist_hip": 0.838,
+    "knee_thigh": 0.632,
+    "shoulder_h": 0.229,
+    "knee_h": 0.0687
+   },
+   "axes": {
+    "center": -1,
+    "waist": 0.834,
+    "frame": -1
+   },
+   "p1": 0.266221,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.934,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.074,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_05",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_05.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.166,
+    "waist_hip": 0.811,
+    "knee_thigh": 0.633,
+    "shoulder_h": 0.237,
+    "knee_h": 0.0641
+   },
+   "axes": {
+    "center": 0.034,
+    "waist": 0.648,
+    "frame": 1
+   },
+   "p1": -0.473006,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.92,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.251,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_06",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_06.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.163,
+    "waist_hip": 0.736,
+    "knee_thigh": 0.664,
+    "shoulder_h": 0.216,
+    "knee_h": 0.0614
+   },
+   "axes": {
+    "center": -0.072,
+    "waist": -0.517,
+    "frame": -1
+   },
+   "p1": 0.435503,
+   "photoReasons": [
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.911,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.275,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_07",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_07.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.16,
+    "waist_hip": 0.659,
+    "knee_thigh": 0.581,
+    "shoulder_h": 0.246,
+    "knee_h": 0.065
+   },
+   "axes": {
+    "center": -0.108,
+    "waist": -1,
+    "frame": 1
+   },
+   "p1": 0.243024,
+   "photoReasons": [
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.965,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.126,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_08",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_08.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.137,
+    "waist_hip": 0.78,
+    "knee_thigh": 0.653,
+    "shoulder_h": 0.224,
+    "knee_h": 0.0648
+   },
+   "axes": {
+    "center": -0.96,
+    "waist": 0.151,
+    "frame": -0.777
+   },
+   "p1": 0.478736,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.885,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.098,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_09",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_09.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.152,
+    "waist_hip": 0.832,
+    "knee_thigh": 0.59,
+    "shoulder_h": 0.226,
+    "knee_h": 0.0596
+   },
+   "axes": {
+    "center": -0.463,
+    "waist": 0.974,
+    "frame": -0.494
+   },
+   "p1": -0.105798,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.941,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.205,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_wave_10",
+   "set": "set1",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s1_wave_10.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.147,
+    "waist_hip": 0.752,
+    "knee_thigh": 0.701,
+    "shoulder_h": 0.23,
+    "knee_h": 0.07
+   },
+   "axes": {
+    "center": 0.318,
+    "waist": -0.579,
+    "frame": -1
+   },
+   "p1": 0.304157,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.874,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.209,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_01",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.142,
+    "waist_hip": 0.848,
+    "knee_thigh": 0.647,
+    "shoulder_h": 0.235,
+    "knee_h": 0.0692
+   },
+   "axes": {
+    "center": -0.001,
+    "waist": 0.959,
+    "frame": -0.353
+   },
+   "p1": -0.312428,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.937,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.089,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_02",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.172,
+    "waist_hip": 0.749,
+    "knee_thigh": 0.598,
+    "shoulder_h": 0.235,
+    "knee_h": 0.0645
+   },
+   "axes": {
+    "center": 0.247,
+    "waist": -0.315,
+    "frame": 0.777
+   },
+   "p1": -0.128418,
+   "photoReasons": [
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.909,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.144,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_03",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_03.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.188,
+    "waist_hip": 0.709,
+    "knee_thigh": 0.597,
+    "shoulder_h": 0.231,
+    "knee_h": 0.0607
+   },
+   "axes": {
+    "center": 0.815,
+    "waist": -0.936,
+    "frame": 0.212
+   },
+   "p1": 0.00587,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. "
+   },
+   "quality": {
+    "min_visibility": 0.937,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.095,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_04",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_04.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.164,
+    "waist_hip": 0.742,
+    "knee_thigh": 0.631,
+    "shoulder_h": 0.229,
+    "knee_h": 0.0617
+   },
+   "axes": {
+    "center": -0.037,
+    "waist": -0.424,
+    "frame": -0.071
+   },
+   "p1": 0.198155,
+   "photoReasons": [
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.949,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.207,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_05",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_05.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.157,
+    "waist_hip": 0.821,
+    "knee_thigh": 0.584,
+    "shoulder_h": 0.233,
+    "knee_h": 0.0637
+   },
+   "axes": {
+    "center": -0.285,
+    "waist": 0.803,
+    "frame": 0.494
+   },
+   "p1": -0.306202,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.964,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.5,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_06",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_06.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.195,
+    "waist_hip": 0.904,
+    "knee_thigh": 0.618,
+    "shoulder_h": 0.24,
+    "knee_h": 0.0634
+   },
+   "axes": {
+    "center": 1,
+    "waist": 1,
+    "frame": 1
+   },
+   "p1": -1,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.943,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.203,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_07",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_07.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.207,
+    "waist_hip": 0.725,
+    "knee_thigh": 0.589,
+    "shoulder_h": 0.229,
+    "knee_h": 0.06
+   },
+   "axes": {
+    "center": 1,
+    "waist": -0.688,
+    "frame": -0.071
+   },
+   "p1": -0.110864,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.962,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.257,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_08",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_08.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.133,
+    "waist_hip": 0.793,
+    "knee_thigh": 0.666,
+    "shoulder_h": 0.234,
+    "knee_h": 0.0733
+   },
+   "axes": {
+    "center": 0.389,
+    "waist": -0.128,
+    "frame": -1
+   },
+   "p1": 0.095606,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. "
+   },
+   "quality": {
+    "min_visibility": 0.877,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.232,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_09",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_09.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.196,
+    "waist_hip": 0.899,
+    "knee_thigh": 0.594,
+    "shoulder_h": 0.232,
+    "knee_h": 0.0614
+   },
+   "axes": {
+    "center": 1,
+    "waist": 1,
+    "frame": 0.353
+   },
+   "p1": -0.870621,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.94,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.063,
+    "tips": []
+   }
+  },
+  {
+   "id": "s1_natural_10",
+   "set": "set1",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s1_natural_10.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.16,
+    "waist_hip": 0.724,
+    "knee_thigh": 0.615,
+    "shoulder_h": 0.243,
+    "knee_h": 0.0686
+   },
+   "axes": {
+    "center": 0.531,
+    "waist": -0.936,
+    "frame": 0.918
+   },
+   "p1": -0.021776,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. 웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.878,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.107,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_01",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.082,
+    "waist_hip": 0.88,
+    "knee_thigh": 0.614,
+    "shoulder_h": 0.239,
+    "knee_h": 0.0722
+   },
+   "axes": {
+    "center": -1,
+    "waist": 1,
+    "frame": -0.494
+   },
+   "p1": 0.09887,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. "
+   },
+   "quality": {
+    "min_visibility": 0.926,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.021,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_02",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.106,
+    "waist_hip": 0.814,
+    "knee_thigh": 0.633,
+    "shoulder_h": 0.243,
+    "knee_h": 0.0719
+   },
+   "axes": {
+    "center": -0.818,
+    "waist": 0.291,
+    "frame": 0.071
+   },
+   "p1": 0.196537,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.937,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.099,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_03",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_03.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.018,
+    "waist_hip": 0.882,
+    "knee_thigh": 0.655,
+    "shoulder_h": 0.264,
+    "knee_h": 0.087
+   },
+   "axes": {
+    "center": -1,
+    "waist": 0.493,
+    "frame": -0.636
+   },
+   "p1": 0.280261,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.963,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.294,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_04",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_04.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.105,
+    "waist_hip": 0.729,
+    "knee_thigh": 0.64,
+    "shoulder_h": 0.253,
+    "knee_h": 0.0752
+   },
+   "axes": {
+    "center": -0.285,
+    "waist": -1,
+    "frame": 0.636
+   },
+   "p1": 0.386903,
+   "photoReasons": [
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.966,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.095,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_05",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_05.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 0.978,
+    "waist_hip": 0.838,
+    "knee_thigh": 0.651,
+    "shoulder_h": 0.26,
+    "knee_h": 0.0893
+   },
+   "axes": {
+    "center": -1,
+    "waist": -0.33,
+    "frame": -1
+   },
+   "p1": 0.688526,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.93,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.072,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_06",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_06.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 0.979,
+    "waist_hip": 0.822,
+    "knee_thigh": 0.636,
+    "shoulder_h": 0.275,
+    "knee_h": 0.0905
+   },
+   "axes": {
+    "center": -1,
+    "waist": -0.641,
+    "frame": -0.071
+   },
+   "p1": 0.768154,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.977,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.071,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_07",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_07.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.003,
+    "waist_hip": 0.836,
+    "knee_thigh": 0.65,
+    "shoulder_h": 0.281,
+    "knee_h": 0.0924
+   },
+   "axes": {
+    "center": -0.889,
+    "waist": -0.532,
+    "frame": 0.353
+   },
+   "p1": 0.636183,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.975,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.205,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_08",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_08.jpg",
+   "bodyLevel": "중간",
+   "ratios": {
+    "shoulder_hip": 1.042,
+    "waist_hip": 0.831,
+    "knee_thigh": 0.634,
+    "shoulder_h": 0.255,
+    "knee_h": 0.0778
+   },
+   "axes": {
+    "center": -1,
+    "waist": 0.213,
+    "frame": 0.353
+   },
+   "p1": 0.296016,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.953,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.07,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_09",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_09.jpg",
+   "bodyLevel": "중간",
+   "ratios": {
+    "shoulder_hip": 1.006,
+    "waist_hip": 0.769,
+    "knee_thigh": 0.609,
+    "shoulder_h": 0.264,
+    "knee_h": 0.0813
+   },
+   "axes": {
+    "center": -1,
+    "waist": -0.952,
+    "frame": 0.777
+   },
+   "p1": 0.747171,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.974,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.017,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_wave_10",
+   "set": "set2",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/s2_wave_10.jpg",
+   "bodyLevel": "중간",
+   "ratios": {
+    "shoulder_hip": 1.039,
+    "waist_hip": 0.844,
+    "knee_thigh": 0.636,
+    "shoulder_h": 0.265,
+    "knee_h": 0.0838
+   },
+   "axes": {
+    "center": -1,
+    "waist": 0.073,
+    "frame": 0.212
+   },
+   "p1": 0.37521,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "보통",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.975,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.123,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_01",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.139,
+    "waist_hip": 0.906,
+    "knee_thigh": 0.631,
+    "shoulder_h": 0.239,
+    "knee_h": 0.0689
+   },
+   "axes": {
+    "center": -0.179,
+    "waist": 1,
+    "frame": 0.212
+   },
+   "p1": -0.370949,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.971,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.223,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_02",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.112,
+    "waist_hip": 0.877,
+    "knee_thigh": 0.619,
+    "shoulder_h": 0.246,
+    "knee_h": 0.0713
+   },
+   "axes": {
+    "center": -0.711,
+    "waist": 1,
+    "frame": 0.636
+   },
+   "p1": -0.242703,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.972,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.069,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_03",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_03.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.075,
+    "waist_hip": 0.841,
+    "knee_thigh": 0.624,
+    "shoulder_h": 0.254,
+    "knee_h": 0.0753
+   },
+   "axes": {
+    "center": -1,
+    "waist": 0.508,
+    "frame": 0.777
+   },
+   "p1": 0.041309,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. "
+   },
+   "quality": {
+    "min_visibility": 0.957,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.213,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_04",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_04.jpg",
+   "bodyLevel": "중간",
+   "ratios": {
+    "shoulder_hip": 1.056,
+    "waist_hip": 0.918,
+    "knee_thigh": 0.618,
+    "shoulder_h": 0.263,
+    "knee_h": 0.0789
+   },
+   "axes": {
+    "center": -1,
+    "waist": 1,
+    "frame": 1
+   },
+   "p1": -0.130435,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.97,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.011,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_05",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_05.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.054,
+    "waist_hip": 0.864,
+    "knee_thigh": 0.64,
+    "shoulder_h": 0.272,
+    "knee_h": 0.085
+   },
+   "axes": {
+    "center": -0.356,
+    "waist": 0.322,
+    "frame": 0.918
+   },
+   "p1": -0.048188,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. 웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.968,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.142,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_06",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_06.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.02,
+    "waist_hip": 0.895,
+    "knee_thigh": 0.661,
+    "shoulder_h": 0.284,
+    "knee_h": 0.0935
+   },
+   "axes": {
+    "center": -0.072,
+    "waist": 0.322,
+    "frame": 0.494
+   },
+   "p1": -0.150714,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.975,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.142,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_07",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_07.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.033,
+    "waist_hip": 0.918,
+    "knee_thigh": 0.672,
+    "shoulder_h": 0.289,
+    "knee_h": 0.0961
+   },
+   "axes": {
+    "center": 0.851,
+    "waist": 0.539,
+    "frame": 0.636
+   },
+   "p1": -0.690983,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.985,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.091,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_08",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_08.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.057,
+    "waist_hip": 0.82,
+    "knee_thigh": 0.608,
+    "shoulder_h": 0.246,
+    "knee_h": 0.0712
+   },
+   "axes": {
+    "center": -1,
+    "waist": 0.415,
+    "frame": 0.636
+   },
+   "p1": 0.106831,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.96,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.102,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_09",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_09.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.028,
+    "waist_hip": 0.793,
+    "knee_thigh": 0.645,
+    "shoulder_h": 0.276,
+    "knee_h": 0.0879
+   },
+   "axes": {
+    "center": -0.782,
+    "waist": -0.952,
+    "frame": 0.777
+   },
+   "p1": 0.75212,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.981,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.048,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_straight_10",
+   "set": "set2",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/s2_straight_10.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.04,
+    "waist_hip": 0.874,
+    "knee_thigh": 0.639,
+    "shoulder_h": 0.28,
+    "knee_h": 0.0886
+   },
+   "axes": {
+    "center": -0.214,
+    "waist": 0.275,
+    "frame": 1
+   },
+   "p1": -0.098277,
+   "photoReasons": [
+    "정면 사진에서 뚜렷하게 치우친 특징이 없음"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. 웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.982,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.167,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_01",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.132,
+    "waist_hip": 0.855,
+    "knee_thigh": 0.612,
+    "shoulder_h": 0.244,
+    "knee_h": 0.0698
+   },
+   "axes": {
+    "center": -0.25,
+    "waist": 1,
+    "frame": 0.777
+   },
+   "p1": -0.455545,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.969,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.144,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_02",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.154,
+    "waist_hip": 0.823,
+    "knee_thigh": 0.604,
+    "shoulder_h": 0.24,
+    "knee_h": 0.0653
+   },
+   "axes": {
+    "center": -0.285,
+    "waist": 0.788,
+    "frame": 1
+   },
+   "p1": -0.40112,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.967,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.095,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_03",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_03.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.103,
+    "waist_hip": 0.888,
+    "knee_thigh": 0.623,
+    "shoulder_h": 0.255,
+    "knee_h": 0.0757
+   },
+   "axes": {
+    "center": -0.25,
+    "waist": 1,
+    "frame": 0.777
+   },
+   "p1": -0.455545,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.985,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.121,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_04",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_04.jpg",
+   "bodyLevel": "중간",
+   "ratios": {
+    "shoulder_hip": 1.097,
+    "waist_hip": 0.914,
+    "knee_thigh": 0.636,
+    "shoulder_h": 0.275,
+    "knee_h": 0.0824
+   },
+   "axes": {
+    "center": 0.709,
+    "waist": 1,
+    "frame": 1
+   },
+   "p1": -0.873439,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.979,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.066,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_05",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_05.jpg",
+   "bodyLevel": "중간",
+   "ratios": {
+    "shoulder_hip": 1.05,
+    "waist_hip": 0.908,
+    "knee_thigh": 0.634,
+    "shoulder_h": 0.269,
+    "knee_h": 0.0834
+   },
+   "axes": {
+    "center": -0.782,
+    "waist": 1,
+    "frame": 0.918
+   },
+   "p1": -0.214516,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.957,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.099,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_06",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_06.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.024,
+    "waist_hip": 0.933,
+    "knee_thigh": 0.664,
+    "shoulder_h": 0.283,
+    "knee_h": 0.0939
+   },
+   "axes": {
+    "center": 0.141,
+    "waist": 0.897,
+    "frame": 0.212
+   },
+   "p1": -0.497338,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.981,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.166,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_07",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_07.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.068,
+    "waist_hip": 0.862,
+    "knee_thigh": 0.636,
+    "shoulder_h": 0.286,
+    "knee_h": 0.0862
+   },
+   "axes": {
+    "center": 0.354,
+    "waist": 0.229,
+    "frame": 1
+   },
+   "p1": -0.340784,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.973,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.346,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_08",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_08.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.1,
+    "waist_hip": 0.895,
+    "knee_thigh": 0.599,
+    "shoulder_h": 0.259,
+    "knee_h": 0.0736
+   },
+   "axes": {
+    "center": -0.711,
+    "waist": 1,
+    "frame": 1
+   },
+   "p1": -0.315584,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.974,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.138,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_09",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_09.jpg",
+   "bodyLevel": "살집",
+   "ratios": {
+    "shoulder_hip": 1.052,
+    "waist_hip": 0.828,
+    "knee_thigh": 0.64,
+    "shoulder_h": 0.277,
+    "knee_h": 0.087
+   },
+   "axes": {
+    "center": -0.072,
+    "waist": -0.346,
+    "frame": 1
+   },
+   "p1": 0.124616,
+   "photoReasons": [
+    "허리가 잘록한 곡선형"
+   ],
+   "photoOnly": {
+    "type": "wave",
+    "conf": "낮음",
+    "note": ""
+   },
+   "quality": {
+    "min_visibility": 0.98,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.172,
+    "tips": []
+   }
+  },
+  {
+   "id": "s2_natural_10",
+   "set": "set2",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/s2_natural_10.jpg",
+   "bodyLevel": "중간",
+   "ratios": {
+    "shoulder_hip": 1.08,
+    "waist_hip": 0.829,
+    "knee_thigh": 0.641,
+    "shoulder_h": 0.271,
+    "knee_h": 0.0825
+   },
+   "axes": {
+    "center": 0.141,
+    "waist": -0.082,
+    "frame": 1
+   },
+   "p1": -0.156124,
+   "photoReasons": [
+    "정면 사진에서 뚜렷하게 치우친 특징이 없음"
+   ],
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   },
+   "quality": {
+    "min_visibility": 0.969,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.31,
+    "tips": []
+   }
+  },
+  {
+   "id": "v4_straight_01",
+   "set": "v4",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/v4_straight_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.122,
+    "waist_hip": 0.827,
+    "knee_thigh": 0.598,
+    "shoulder_h": 0.249,
+    "knee_h": 0.0693
+   },
+   "axes": {
+    "center": -0.711,
+    "waist": 0.633,
+    "frame": 1
+   },
+   "p1": -0.168605,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "quality": {
+    "min_visibility": 0.964,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.129,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   }
+  },
+  {
+   "id": "v4_straight_02",
+   "set": "v4",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/v4_straight_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.079,
+    "waist_hip": 0.851,
+    "knee_thigh": 0.597,
+    "shoulder_h": 0.241,
+    "knee_h": 0.0704
+   },
+   "axes": {
+    "center": -1,
+    "waist": 0.943,
+    "frame": 0.212
+   },
+   "p1": -0.019636,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리 굴곡이 적은 일자형"
+   ],
+   "quality": {
+    "min_visibility": 0.943,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.104,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "1단계(웨이브 여부)가 경계입니다. 웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   }
+  },
+  {
+   "id": "v4_straight_03",
+   "set": "v4",
+   "label": "straight",
+   "labelKor": "스트레이트",
+   "image": "images/v4_straight_03.jpg",
+   "bodyLevel": "중간",
+   "ratios": {
+    "shoulder_hip": 1.112,
+    "waist_hip": 0.904,
+    "knee_thigh": 0.619,
+    "shoulder_h": 0.257,
+    "knee_h": 0.076
+   },
+   "axes": {
+    "center": 0.105,
+    "waist": 1,
+    "frame": 1
+   },
+   "p1": -0.611057,
+   "photoReasons": [
+    "허리 굴곡이 적은 일자형"
+   ],
+   "quality": {
+    "min_visibility": 0.972,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.098,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   }
+  },
+  {
+   "id": "v4_wave_01",
+   "set": "v4",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/v4_wave_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 0.988,
+    "waist_hip": 0.637,
+    "knee_thigh": 0.538,
+    "shoulder_h": 0.225,
+    "knee_h": 0.0637
+   },
+   "axes": {
+    "center": -1,
+    "waist": -1,
+    "frame": -0.636
+   },
+   "p1": 0.927119,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "quality": {
+    "min_visibility": 0.956,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.019,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   }
+  },
+  {
+   "id": "v4_wave_02",
+   "set": "v4",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/v4_wave_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.059,
+    "waist_hip": 0.642,
+    "knee_thigh": 0.568,
+    "shoulder_h": 0.229,
+    "knee_h": 0.0641
+   },
+   "axes": {
+    "center": -1,
+    "waist": -1,
+    "frame": -0.071
+   },
+   "p1": 0.814124,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형"
+   ],
+   "quality": {
+    "min_visibility": 0.925,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.027,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   }
+  },
+  {
+   "id": "v4_wave_03",
+   "set": "v4",
+   "label": "wave",
+   "labelKor": "웨이브",
+   "image": "images/v4_wave_03.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.073,
+    "waist_hip": 0.635,
+    "knee_thigh": 0.572,
+    "shoulder_h": 0.229,
+    "knee_h": 0.0664
+   },
+   "axes": {
+    "center": -1,
+    "waist": -1,
+    "frame": -0.494
+   },
+   "p1": 0.89887,
+   "photoReasons": [
+    "골반 대비 어깨가 좁은 하체 중심 체형",
+    "허리가 잘록한 곡선형",
+    "키 대비 어깨 프레임이 가녀린 편"
+   ],
+   "quality": {
+    "min_visibility": 0.932,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.063,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": "wave",
+    "conf": "높음",
+    "note": ""
+   }
+  },
+  {
+   "id": "v4_natural_01",
+   "set": "v4",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/v4_natural_01.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.221,
+    "waist_hip": 0.803,
+    "knee_thigh": 0.596,
+    "shoulder_h": 0.236,
+    "knee_h": 0.0621
+   },
+   "axes": {
+    "center": 1,
+    "waist": 0.524,
+    "frame": 0.918
+   },
+   "p1": -0.793151,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "quality": {
+    "min_visibility": 0.941,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.304,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   }
+  },
+  {
+   "id": "v4_natural_02",
+   "set": "v4",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/v4_natural_02.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.247,
+    "waist_hip": 0.815,
+    "knee_thigh": 0.625,
+    "shoulder_h": 0.245,
+    "knee_h": 0.0639
+   },
+   "axes": {
+    "center": 1,
+    "waist": 0.71,
+    "frame": 1
+   },
+   "p1": -0.884081,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "quality": {
+    "min_visibility": 0.942,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.244,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   }
+  },
+  {
+   "id": "v4_natural_03",
+   "set": "v4",
+   "label": "natural",
+   "labelKor": "내추럴",
+   "image": "images/v4_natural_03.jpg",
+   "bodyLevel": "슬림",
+   "ratios": {
+    "shoulder_hip": 1.263,
+    "waist_hip": 0.799,
+    "knee_thigh": 0.582,
+    "shoulder_h": 0.24,
+    "knee_h": 0.0605
+   },
+   "axes": {
+    "center": 1,
+    "waist": 0.462,
+    "frame": 1
+   },
+   "p1": -0.784687,
+   "photoReasons": [
+    "골반 대비 어깨가 넓은 상체 중심 체형",
+    "허리 굴곡이 적은 일자형",
+    "키 대비 어깨 프레임이 큰 편"
+   ],
+   "quality": {
+    "min_visibility": 0.958,
+    "ok": true,
+    "runs": 6,
+    "p1_spread": 0.232,
+    "tips": []
+   },
+   "photoOnly": {
+    "type": null,
+    "conf": "낮음",
+    "note": "웨이브는 아닙니다. 스트레이트/내추럴 구분은 설문이 필요합니다."
+   }
+  }
+ ]
+}

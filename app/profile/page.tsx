@@ -13,6 +13,6 @@ export default async function ProfilePage() {
     <header className="topbar"><a className="brand" href="/">ondo<sup>°</sup></a><div className="header-actions"><Link href="/">오늘의 코디</Link>{signedIn ? <><Link href="/mypage">마이페이지</Link><span className="signed-in">로그인됨</span></> : <Link href="/login">로그인</Link>}</div></header>
     <section className="profile-intro"><p className="eyebrow">FIND YOUR BALANCE</p><h1>나의 스타일 분석</h1><p>퍼스널컬러, 골격 스타일, 취향을 바탕으로 오늘의 날씨에 어울리는 색과 핏을 추천합니다.</p></section>
     <ProfileForm />
-    <p className="privacy-note">저장 범위: 최종 퍼스널컬러·골격 유형·취향 선택값. 현재 사진은 서버에 저장하지 않으며, 신체 치수와 문항별 세부 응답도 저장하지 않습니다.</p>
+    <p className="privacy-note">저장 범위: 최종 퍼스널컬러·골격 판정 결과·취향 선택값과 재확인에 필요한 설문 코드입니다. 현재 사진 원본과 신체 치수는 서버에 저장하지 않습니다.</p>
   </main>;
 }

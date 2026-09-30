@@ -8,6 +8,20 @@ export type ProductLink = {
   category?: ProductCategory;
 };
 
+export type CatalogProductCategory = "outer" | "top" | "bottom" | "shoes" | "bag";
+
+export type CatalogProductRecommendation = {
+  productId: string;
+  variantId: string;
+  category: CatalogProductCategory;
+  name: string;
+  subtype: string;
+  colorName: string;
+  imagePath: string;
+  score: number;
+  reasons: string[];
+};
+
 export type Outfit = {
   id: string;
   title: string;
@@ -21,6 +35,7 @@ export type Outfit = {
   reason: string;
   items: string[];
   products?: ProductLink[];
+  catalogProducts?: CatalogProductRecommendation[];
 };
 
 export type SavedLookSnapshot = Pick<Outfit, "id" | "title" | "subtitle" | "styleTag" | "situation" | "imageUrl" | "colors" | "reason" | "items"> & {

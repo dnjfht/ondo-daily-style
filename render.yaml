@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: ondo-skeleton-ai
+    runtime: docker
+    region: singapore
+    plan: free
+    dockerfilePath: ./ondo_skeleton_api/Dockerfile
+    dockerContext: ./ondo_skeleton_api
+    healthCheckPath: /api/skeleton/health
+    autoDeployTrigger: commit
+
+  - type: web
+    name: ondo-personal-color-ai
+    runtime: docker
+    region: singapore
+    plan: free
+    dockerfilePath: ./ondo_personal_color_api/service/Dockerfile
+    dockerContext: ./ondo_personal_color_api/service
+    healthCheckPath: /health
+    autoDeployTrigger: commit

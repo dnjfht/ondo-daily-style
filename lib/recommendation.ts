@@ -1,4 +1,4 @@
-import type { Outfit, ProductCategory, Situation } from "@/lib/types";
+import type { Outfit, Situation } from "@/lib/types";
 
 export type StyleSignals = {
   personalColor: string | null;
@@ -8,7 +8,6 @@ export type StyleSignals = {
 };
 
 const colorNames: Record<string, string> = { warm: "아이보리·카멜", cool: "네이비·쿨 그레이" };
-const searchColors: Record<string, string> = { warm: "아이보리", cool: "네이비" };
 const imageByMood: Record<string, Record<Situation, string>> = {
   minimal: { daily: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85", work: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=1200&q=85", date: "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=1200&q=85" },
   casual: { daily: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85", work: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1200&q=85", date: "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=1200&q=85" },
@@ -27,13 +26,6 @@ const copy: Record<Situation, { title: string; base: string; top: string; bottom
   date: { title: "여유 있는 무드, 약속 룩", base: "부드러운 인상과 활동성을 함께 고려한 조합", top: "얼굴빛을 살리는 상의", bottom: "움직임이 자연스러운 하의", shoes: "편안한 포인트 슈즈", accessory: "작은 숄더백 또는 액세서리" },
 };
 
-function musinsaSearchUrl(query: string) { return `https://www.musinsa.com/search/goods?keyword=${encodeURIComponent(query)}&keywordType=keyword&gf=A`; }
-function naverShoppingUrl(query: string) { return `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(query)}`; }
-function cmSearchUrl(query: string) { return `https://www.29cm.co.kr/store/search?keyword=${encodeURIComponent(query)}`; }
-function wConceptSearchUrl(query: string) { return `https://display.wconcept.co.kr/search?keyword=${encodeURIComponent(query)}`; }
-function eqlSearchUrl(query: string) { return `https://www.eqlstore.com/public/search/view?searchWord=${encodeURIComponent(query)}&tabContent0=`; }
-function ssfSearchUrl(query: string) { return `https://www.ssfshop.com/search/result?keyword=${encodeURIComponent(query)}`; }
-
 export function recommendOutfit(situation: Situation, temperature: number, profile: StyleSignals | null, variationSeed = 0): Outfit {
   // 날짜를 시드로 삼아 하루 동안에는 같은 결과를 유지하면서, 다음 날에는
   // 날씨 조건을 벗어나지 않는 다른 상품군을 제안합니다.
@@ -43,12 +35,10 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
   const body = profile?.bodyType ?? "balanced";
   const color = profile?.personalColor === "cool" ? "cool" : "warm";
   const silhouette = profile?.stylePreferences?.silhouette ?? "balanced";
-  const audienceQuery = "여성 20대";
   const hasOuter = temperature < 20;
   const climateAdvice = temperature < 12 ? "보온 아우터를 더해" : temperature < 20 ? "가벼운 아우터로 일교차에 대비해" : "아우터 없이 통기성 좋은 상의 중심으로";
   const shape = body === "wave" ? "허리선을 살린" : body === "natural" ? "여유 있는" : body === "straight" ? "정돈된 정핏" : silhouette === "relaxed" ? "여유 있는" : "균형 잡힌";
   const details = copy[situation];
-  // 긴 문장은 검색 결과가 비기 쉬워, 외부 쇼핑몰에는 색상과 실제 상품군만 전달합니다.
   // ONDO의 현재 추천 대상은 20대 여성으로 고정합니다.
   const topCategory = temperature >= 23
     ? pick(["반팔 블라우스", "린넨 셔츠", "니트 반팔"])
@@ -58,7 +48,6 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
     : temperature < 17
       ? pick(["재킷", "트렌치코트", "가죽 재킷"])
       : pick(["가디건", "데님 재킷", "얇은 셔츠 재킷"]);
-  const colorTerm = searchColors[color] ?? searchColors.warm;
   const bottomCategory = situation === "work"
     ? pick(["슬랙스", "세미 와이드 팬츠", "테이퍼드 팬츠"])
     : situation === "date"
@@ -76,23 +65,6 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
       : mood === "street" || mood === "casual"
         ? pick(["볼캡", "나일론 백팩", "크로스백"])
         : pick(["숄더백", "토트백", "버킷백"]);
-  const searchItems: { category: ProductCategory; label: string; term: string }[] = [
-    ...(hasOuter ? [{ category: "outer" as const, label: "아우터", term: outerCategory }] : []),
-    { category: "top", label: "상의", term: topCategory },
-    { category: "bottom", label: "하의", term: bottomCategory },
-    { category: "shoes", label: "신발", term: shoesCategory },
-    { category: "accessory", label: "가방·캡", term: accessoryCategory },
-  ];
-  const naverQuery = (term: string) => `${audienceQuery} ${colorTerm} ${term}`;
-  const simpleQuery = (term: string) => `${colorTerm} ${term}`;
-  const merchants = [
-    { merchant: "네이버 쇼핑", createUrl: naverShoppingUrl, query: naverQuery },
-    { merchant: "무신사", createUrl: musinsaSearchUrl, query: simpleQuery },
-    { merchant: "29CM", createUrl: cmSearchUrl, query: simpleQuery },
-    { merchant: "W컨셉", createUrl: wConceptSearchUrl, query: simpleQuery },
-    { merchant: "EQL", createUrl: eqlSearchUrl, query: simpleQuery },
-    { merchant: "SSF샵", createUrl: ssfSearchUrl, query: simpleQuery },
-  ];
   return {
     // 저장 키에는 날짜와 도시도 포함되므로, 룩 ID는 기존 저장 항목과 호환되게 유지합니다.
     id: `personal-${situation}-${mood}-${color}-${body}-${temperature < 20 ? "cool" : "warm"}`,
@@ -102,11 +74,8 @@ export function recommendOutfit(situation: Situation, temperature: number, profi
     colors: color === "warm" ? ["#F1E9DC", "#C79D76", "#62554B", "#314536"] : ["#EDF0F2", "#9EAFBE", "#34465E", "#2D3340"],
     reason: `${details.base}이에요. 20대 여성 기준과 현재 ${temperature}°에는 ${climateAdvice} 조절해 보세요.`,
     items: [hasOuter ? `${outerCategory} · ${shape} 핏` : "아우터 없이 가볍게", `${topCategory} · ${colorNames[color] ?? colorNames.warm}`, `${bottomCategory} · ${shape} 실루엣`, shoesCategory, accessoryCategory],
-    products: merchants.flatMap(({ merchant, createUrl, query }) => searchItems.map(({ category, label, term }) => ({
-      merchant,
-      category,
-      label: `${label} · ${term} 검색 결과`,
-      url: createUrl(query(term)),
-    }))),
+    // 실제 상품 선택은 catalog-recommendations API의 내부 카탈로그 점수로 처리합니다.
+    // 이 객체는 룩의 설명과 저장 키를 유지하기 위한 프레젠테이션 메타데이터만 담습니다.
+    products: [],
   };
 }
