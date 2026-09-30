@@ -44,6 +44,11 @@ function PhotoSlot({
 const colorTitle: Record<string, string> = { warm: "웜", cool: "쿨" };
 const moodTitle: Record<string, string> = { minimal: "미니멀", casual: "캐주얼", classic: "클래식", street: "스트리트", unknown: "인기 룩 우선" };
 
+function personalColorApiUrl() {
+  const isLocal = typeof window !== "undefined" && ["localhost", "127.0.0.1"].includes(window.location.hostname);
+  return isLocal ? "http://127.0.0.1:8001/predict" : "https://ondo-personal-color-ai.onrender.com/predict";
+}
+
 export function ProfileForm() {
   const [state, formAction, pending] = useActionState(saveProfile, initialState);
   const [color, setColor] = useState(""); const [skeletonSelection, setSkeletonSelection] = useState<SkeletonSelection | null>(null);
@@ -55,12 +60,12 @@ export function ProfileForm() {
   const clearWarning = () => setValidationMessage("");
   async function analyzeFacePhoto(file: File) {
     setFaceAnalysisStatus("loading");
-    setFaceAnalysisMessage("사진을 이 기기의 분석 서버에서 확인하고 있어요...");
+    setFaceAnalysisMessage("사진을 AI 분석 서비스에서 확인하고 있어요...");
     if (personalColorSource === "ai") setColor("");
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const response = await fetch("http://127.0.0.1:8001/predict", { method: "POST", body: formData });
+      const response = await fetch(personalColorApiUrl(), { method: "POST", body: formData });
       const payload = await response.json() as { prediction?: string; probabilities?: Record<string, number>; detail?: string };
       if (!response.ok || (payload.prediction !== "warm" && payload.prediction !== "cool")) throw new Error(payload.detail || "사진 분석 결과를 확인하지 못했습니다.");
       const prediction = payload.prediction;
@@ -82,7 +87,7 @@ export function ProfileForm() {
   }
   return <form action={formAction} className="analysis-form" onSubmit={(event) => { if (!hasAnsweredAll) { event.preventDefault(); setValidationMessage("색상·골격 진단 결과·취향·지역을 모두 선택한 뒤 저장해 주세요."); return; } clearWarning(); }}>
     <input type="hidden" name="personalColor" value={color} /><input type="hidden" name="personalColorSource" value={personalColorSource} /><input type="hidden" name="personalColorAiResult" value={personalColorSource === "ai" ? color : ""} /><input type="hidden" name="skeletonSelection" value={JSON.stringify(skeletonSelection)} />
-    <section className="analysis-section photo-intake"><div className="analysis-heading"><p className="eyebrow">00 / PHOTO OPTIONAL</p><h2>사진으로 시작하는 나의 스타일</h2><p>자연광 셀카를 선택하면 이 기기의 로컬 AI가 웜·쿨을 분석합니다. 사진을 선택하지 않으면 아래 셀프 체크만으로 결과를 정할 수 있어요. 전신 사진 분석은 아래 골격 설문에서 별도로 진행합니다.</p></div><div className="photo-grid"><PhotoSlot type="face" title="자연광 셀카" description="필터·메이크업 없이, 얼굴이 잘 보이게" onFileSelected={analyzeFacePhoto} analysisStatus={faceAnalysisStatus} analysisMessage={faceAnalysisMessage} /></div><p className="fine-print">JPG · PNG · WEBP / 최대 10MB / 셀카는 127.0.0.1의 이 기기 분석 서버에만 일회성으로 전달되며, 원본·경로는 저장하지 않습니다.</p></section>
+    <section className="analysis-section photo-intake"><div className="analysis-heading"><p className="eyebrow">00 / PHOTO OPTIONAL</p><h2>사진으로 시작하는 나의 스타일</h2><p>자연광 셀카를 선택하면 AI가 웜·쿨을 분석합니다. 사진을 선택하지 않으면 아래 셀프 체크만으로 결과를 정할 수 있어요. 전신 사진 분석은 아래 골격 설문에서 별도로 진행합니다.</p></div><div className="photo-grid"><PhotoSlot type="face" title="자연광 셀카" description="필터·메이크업 없이, 얼굴이 잘 보이게" onFileSelected={analyzeFacePhoto} analysisStatus={faceAnalysisStatus} analysisMessage={faceAnalysisMessage} /></div><p className="fine-print">JPG · PNG · WEBP / 최대 10MB / 셀카는 일회성 분석에만 사용되며, 원본·경로는 저장하지 않습니다.</p></section>
     <section className="analysis-section"><div className="analysis-heading"><p className="eyebrow">01 / COLOR</p><h2>나에게 어울리는 색</h2><p>퍼스널컬러 결과는 웜과 쿨 두 가지로만 안내합니다. 사진 분석 결과가 있으면 자동 반영되며, 사진이 없거나 직접 선택하려면 아래 셀프 체크를 사용해 주세요.</p></div><div className="choice-grid two">{[["warm", "웜", "골드 주얼리와 아이보리에서 얼굴이 편안해 보여요."], ["cool", "쿨", "실버 주얼리와 퓨어 화이트가 더 선명해 보여요."]].map(([value, title, copy]) => <button key={value} className={color === value ? "choice selected" : "choice"} onClick={() => { setColor(value); setPersonalColorSource("survey"); clearWarning(); }} type="button"><b>{title}</b><span>{copy}</span></button>)}</div>{personalColorSource === "ai" && <p className="analysis-source">사진 분석 결과가 선택되어 있습니다. 직접 고르면 셀프 체크 결과로 저장됩니다.</p>}</section>
     <SkeletonAnalysis onChange={(selection) => { setSkeletonSelection(selection); clearWarning(); }} />
     <section className="analysis-section"><div className="analysis-heading"><p className="eyebrow">03 / TASTE</p><h2>오늘의 취향을 알려주세요</h2><p>패션 취향을 잘 모르겠다면 ‘잘 모르겠음’을 선택해 주세요. 이 항목은 인기 있는 기본 룩을 먼저 추천합니다.</p></div><div className="taste-fields">

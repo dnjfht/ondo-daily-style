@@ -50,7 +50,13 @@ function surveyOnlyPersona(): SkeletonPersona {
 }
 
 const acceptedImageTypes = new Set(["image/jpeg", "image/png"]);
-const apiUrl = "http://127.0.0.1:8000/api/skeleton/analyze";
+
+function skeletonApiUrl() {
+  const isLocal = typeof window !== "undefined" && ["localhost", "127.0.0.1"].includes(window.location.hostname);
+  return isLocal
+    ? "http://127.0.0.1:8000/api/skeleton/analyze"
+    : "https://ondo-skeleton-ai.onrender.com/api/skeleton/analyze";
+}
 
 function isPhotoPersona(value: unknown): value is SkeletonPersona {
   if (!value || typeof value !== "object") return false;
@@ -109,7 +115,7 @@ export function SkeletonAnalysis({ onChange }: { onChange: (selection: SkeletonS
     try {
       const body = new FormData();
       body.append("image", file);
-      const response = await fetch(apiUrl, { method: "POST", body });
+      const response = await fetch(skeletonApiUrl(), { method: "POST", body });
       const payload: unknown = await response.json().catch(() => null);
       const responseData = payload && typeof payload === "object" ? payload as { ok?: unknown; error?: unknown; message?: unknown; persona?: unknown } : null;
       const message = typeof responseData?.message === "string" ? responseData.message : "사진 분석에 실패해 설문만으로 판정합니다.";
