@@ -1,0 +1,6 @@
+# AI models run on Render, not in Vercel serverless functions.
+ondo_skeleton_api/
+ondo_personal_color_api/
+Dockerfile
+.dockerignore
+render.yaml
