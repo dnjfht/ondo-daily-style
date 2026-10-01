@@ -184,6 +184,7 @@ export function recommendCatalogProducts(products: CatalogProductRow[], signals:
       if (signals.bodyType && body > 0) reasons.push(`${signals.bodyType === "straight" ? "스트레이트" : signals.bodyType === "wave" ? "웨이브" : "내추럴"} 체형 가점`);
       return {
         productId: product.id,
+        sourceProductId: product.source_product_id,
         variantId: variant.id,
         category: product.category,
         name: product.name,

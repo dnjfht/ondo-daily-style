@@ -157,11 +157,11 @@ export function SkeletonAnalysis({ onChange }: { onChange: (selection: SkeletonS
 
   return <section className="analysis-section skeleton-section">
     <Script src="/skeleton/skeleton.js" strategy="afterInteractive" onLoad={() => setModuleReady(Boolean(window.ONDO_SKELETON))} onError={() => setLoadError("골격 진단 모듈을 불러오지 못했습니다.")} />
-    <div className="analysis-heading"><p className="eyebrow">02 / BODY BALANCE</p><h2>나에게 맞는 핏</h2><p>아래 11문항으로 골격을 확인합니다. 모든 문항은 처음에 ‘잘 모르겠다’로 선택되어 있으며, 사진 없이도 설문 결과를 볼 수 있습니다.</p></div>
+    <div className="analysis-heading"><p className="eyebrow">03 / BODY BALANCE</p><h2>나에게 맞는 핏</h2><p>아래 11문항으로 골격을 확인합니다. 모든 문항은 처음에 ‘잘 모르겠다’로 선택되어 있으며, 사진 없이도 설문 결과를 볼 수 있습니다.</p></div>
     <div className={photoPreview ? "skeleton-photo-intake has-preview" : "skeleton-photo-intake"}>
       <div><b>전신 사진 올리기 <em>(선택)</em></b><div className="skeleton-shooting-guide"><strong>촬영 가이드</strong><p>정면으로 서서 머리부터 발끝까지 모두 나오게 촬영해 주세요.</p><ul><li>몸에 붙는 옷을 입고, 머리카락은 어깨선 밖으로 넘겨 주세요.</li><li>카메라는 허리 높이에 두고, 팔은 몸에서 살짝 떼어 주세요.</li><li>밝은 단색 배경에서 원본 화질 그대로 찍어 주세요.</li></ul></div><small>JPG · PNG / 최대 10MB · 사진 원본은 분석 후 저장하지 않습니다.</small></div>
-      {photoPreview && <figure className="skeleton-photo-preview"><img src={photoPreview} alt="선택한 전신 사진 미리보기" /><figcaption>분석할 전신 사진</figcaption>{photoPersona?.quality?.tips?.length ? <div className="skeleton-quality-tips"><b>이렇게 다시 찍으면 더 정확해요</b><ul>{photoPersona.quality.tips.map((tip) => <li key={tip}>{tip}</li>)}</ul></div> : null}</figure>}
-      <label className="skeleton-photo-button"><input type="file" accept="image/jpeg,image/png" onChange={(event) => void analyzePhoto(event.target.files?.[0])} />사진 선택</label>
+      <div className="skeleton-photo-side">{photoPreview && <figure className="skeleton-photo-preview"><img src={photoPreview} alt="선택한 전신 사진 미리보기" /><figcaption>분석할 전신 사진</figcaption>{photoPersona?.quality?.tips?.length ? <div className="skeleton-quality-tips"><b>이렇게 다시 찍으면 더 정확해요</b><ul>{photoPersona.quality.tips.map((tip) => <li key={tip}>{tip}</li>)}</ul></div> : null}</figure>}
+      <label className="skeleton-photo-button"><input type="file" accept="image/jpeg,image/png" onChange={(event) => void analyzePhoto(event.target.files?.[0])} />{photoPreview ? "사진 변경" : "사진 선택"}</label></div>
     </div>
     {photoFileName && <p className={photoStatus === "success" ? "notice success skeleton-photo-status" : "notice skeleton-photo-status"}>{photoStatus === "analyzing" ? "사진 분석 중… 정확도 측정을 위해 잠시만 기다려 주세요." : <>{photoMessage}{photoError === "not_full_body" ? <small> 설문만으로 결과를 계속 볼 수 있어요.</small> : null}</>}</p>}
     {!result && photoStatus === "success" && photoPersona?.photoReasons.length ? <div className="skeleton-photo-observation"><b>사진에서 보인 특징</b><ul>{photoPersona.photoReasons.map((reason) => <li key={reason}>{reason}</li>)}</ul></div> : null}

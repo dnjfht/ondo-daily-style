@@ -12,6 +12,7 @@ export type CatalogProductCategory = "outer" | "top" | "bottom" | "shoes" | "bag
 
 export type CatalogProductRecommendation = {
   productId: string;
+  sourceProductId: string;
   variantId: string;
   category: CatalogProductCategory;
   name: string;

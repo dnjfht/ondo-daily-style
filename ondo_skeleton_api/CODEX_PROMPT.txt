@@ -1,0 +1,23 @@
+[Codex에 붙여 넣을 답변]
+
+골격 Python API를 ondo_skeleton_api 폴더로 추가했어. README.md를 먼저 읽어줘. 질문에 대한 답은 아래와 같아.
+
+1) URL: http://127.0.0.1:8000/api/skeleton/analyze  (이 노트북에서만 도는 로컬 서버, 외부 전송 아님)
+2) 요청: POST multipart/form-data, 이미지 필드명 image (JPG/PNG, 10MB 이하)
+3) 응답 예시:
+{"ok": true, "persona": {"p1": -0.545465, "axes": {"center": 0.427, "waist": 0.565, "frame": 1.0},
+ "bodyLevel": "중간", "photoReasons": ["골반 대비 어깨가 넓은 상체 중심 체형", "허리 굴곡이 적은 일자형"],
+ "ratios": {...}, "quality": {"min_visibility": 0.967, "ok": true}}}
+ 실패 시: {"ok": false, "error": "no_person", "message": "사람을 찾지 못했습니다. 정면 전신 사진을 올려 주세요."}
+ 응답의 persona를 그대로 ONDO_SKELETON.diagnose(persona, answers)에 넣으면 돼.
+
+4) 승인: 전신 사진을 위 로컬 URL(127.0.0.1)로 일회성 분석 요청에만 보내는 것을 승인해.
+   - 사진은 서버에서 저장하지 않고, 사이트 쪽에서도 분석 후 원본을 보관하지 말아줘 (body_photo_path에 저장하지 않기).
+   - 퍼스널컬러 셀카는 지금처럼 전송하지 마.
+
+구현 요청:
+- "나에게 맞는 핏"의 설문 위에 '전신 사진 올리기(선택)' 칸을 추가해줘. 정면 전신 촬영 안내(몸에 붙는 옷, 팔은 몸에서 조금 떼기, 머리~발끝)도 보여줘.
+- 사진을 올리면 API를 호출하고, 성공하면 photoReasons를 미리 보여줘. 실패하면 message를 보여주고 설문만으로 진행해.
+- API 서버가 꺼져 있으면(연결 실패) "사진 분석 서버가 꺼져 있어 설문만으로 판정합니다"라고 안내하고 설문만으로 판정해.
+- 결과 저장 시 body_type_source는 사진+설문이면 'ai', 설문만이면 'survey'로 저장해줘.
+- skeleton.js와 personas.json, ondo_skeleton_api 안의 계산 코드는 수정하지 마.

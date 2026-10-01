@@ -37,3 +37,22 @@ outputs/
 Thumbs.db
 
 .vercel
+
+# Local-only helpers and heavy assets (kept out of git)
+start-ondo-dev.cmd
+__pycache__/
+*.pyc
+.venv/
+*.zip
+tmp/
+output/
+export_for_review/
+skeleton_dataset_v4/
+ondo_personal_color_api/service/dataset/
+ondo_personal_color_api/service/ONDO/
+ondo_personal_color_api/퍼스널컬러 인공지능 모델/
+*.docx
+ondo_virtual_tryon_api/catvton/
+ondo_virtual_tryon_api/kaggle_runs/
+ondo_virtual_tryon_api/kaggle_kit/catalog-v3/
+ondo_virtual_tryon_api/kaggle_kit/avatars/
