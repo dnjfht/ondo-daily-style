@@ -95,7 +95,9 @@ export function ProfileForm() {
   }
   return <form action={formAction} className="analysis-form" onSubmit={(event) => { if (!hasAnsweredAll) { event.preventDefault(); setValidationMessage("색상·골격 진단 결과·취향·지역을 모두 선택한 뒤 저장해 주세요."); return; } clearWarning(); }}>
     <input type="hidden" name="personalColor" value={color} /><input type="hidden" name="personalColorSource" value={personalColorSource} /><input type="hidden" name="personalColorAiResult" value={personalColorSource === "ai" ? color : ""} /><input type="hidden" name="skeletonSelection" value={JSON.stringify(skeletonSelection)} />
-    <div className="save-result profile-summary"><div><p className="eyebrow">YOUR STYLE PROFILE</p><h2>{colorTitle[color] ?? "색 선택"} · {skeletonSelection?.result.typeKor ?? "골격 진단"} · {moodTitle[mood] ?? "취향 선택"}</h2><p>사진·설문과 취향을 채운 뒤 이곳에서 결과를 저장해 오늘의 코디에 반영하세요.</p></div><button className="primary" disabled={pending} type="submit">{pending ? "저장 중..." : "내 결과 저장하기"} ↗</button></div>
+    <div className="profile-form-layout">
+      <aside className="save-result profile-summary"><div><p className="eyebrow">YOUR STYLE PROFILE</p><h2>{colorTitle[color] ?? "색 선택"} · {skeletonSelection?.result.typeKor ?? "골격 진단"} · {moodTitle[mood] ?? "취향 선택"}</h2><p>선택 내용은 즉시 여기에 반영됩니다. 모두 고른 뒤 저장해 오늘의 코디에 적용하세요.</p></div><button className="primary" disabled={pending} type="submit">{pending ? "저장 중..." : "내 결과 저장하기"} ↗</button></aside>
+      <div className="profile-form-content">
     <section className="analysis-section photo-intake"><div className="analysis-heading"><p className="eyebrow">00 / PHOTO OPTIONAL</p><h2>사진으로 시작하는 나의 스타일</h2><p>자연광 셀카를 선택하면 AI가 웜·쿨을 분석합니다. 사진을 선택하지 않으면 아래 셀프 체크만으로 결과를 정할 수 있어요. 전신 사진 분석은 아래 골격 설문에서 별도로 진행합니다.</p></div><div className="photo-grid"><PhotoSlot type="face" title="자연광 셀카" description="필터·메이크업 없이, 얼굴이 잘 보이게" onFileSelected={analyzeFacePhoto} analysisStatus={faceAnalysisStatus} analysisMessage={faceAnalysisMessage} /></div><p className="fine-print">JPG · PNG · WEBP / 최대 10MB / 셀카는 일회성 분석에만 사용되며, 원본·경로는 저장하지 않습니다.</p></section>
     <section className="analysis-section"><div className="analysis-heading"><p className="eyebrow">01 / COLOR</p><h2>나에게 어울리는 색</h2><p>퍼스널컬러 결과는 웜과 쿨 두 가지로만 안내합니다. 사진 분석 결과가 있으면 자동 반영되며, 사진이 없거나 직접 선택하려면 아래 셀프 체크를 사용해 주세요.</p></div><div className="choice-grid two">{[["warm", "웜", "골드 주얼리와 아이보리에서 얼굴이 편안해 보여요."], ["cool", "쿨", "실버 주얼리와 퓨어 화이트가 더 선명해 보여요."]].map(([value, title, copy]) => <button key={value} className={color === value ? "choice selected" : "choice"} onClick={() => { setColor(value); setPersonalColorSource("survey"); clearWarning(); }} type="button"><b>{title}</b><span>{copy}</span></button>)}</div>{personalColorSource === "ai" && <p className="analysis-source">사진 분석 결과가 선택되어 있습니다. 직접 고르면 셀프 체크 결과로 저장됩니다.</p>}</section>
     <SkeletonAnalysis onChange={(selection) => { setSkeletonSelection(selection); clearWarning(); }} />
@@ -106,6 +108,8 @@ export function ProfileForm() {
       <label>평소 활동량<select name="activity" value={activity} onChange={(event) => { setActivity(event.target.value); clearWarning(); }}><option value="" disabled>선택해 주세요</option><option value="low">낮음</option><option value="medium">보통</option><option value="high">높음</option></select></label>
       <label>주요 지역<select name="city" value={city} onChange={(event) => { setCity(event.target.value); clearWarning(); }}><option value="" disabled>선택해 주세요</option><option value="seoul">서울</option><option value="busan">부산</option><option value="daegu">대구</option><option value="jeju">제주</option></select></label>
     </div></section>
+      </div>
+    </div>
     {(validationMessage || state.message) && <p className={state.success ? "notice success" : "notice"}>{validationMessage || state.message}</p>}
   </form>;
 }
