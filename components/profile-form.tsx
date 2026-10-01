@@ -49,6 +49,10 @@ function personalColorApiUrl() {
   return isLocal ? "http://127.0.0.1:8001/predict" : "https://ondo-personal-color-ai.onrender.com/predict";
 }
 
+function personalColorHealthUrl() {
+  return personalColorApiUrl().replace("/predict", "/health");
+}
+
 export function ProfileForm() {
   const [state, formAction, pending] = useActionState(saveProfile, initialState);
   const [color, setColor] = useState(""); const [skeletonSelection, setSkeletonSelection] = useState<SkeletonSelection | null>(null);
@@ -58,6 +62,10 @@ export function ProfileForm() {
   const [faceAnalysisMessage, setFaceAnalysisMessage] = useState("");
   const hasAnsweredAll = Boolean(color && skeletonSelection && mood && silhouette && colorDepth && activity && city);
   const clearWarning = () => setValidationMessage("");
+  useEffect(() => {
+    // 사진 선택 전에 유휴 상태의 배포 모델을 미리 준비해 체감 대기 시간을 줄인다.
+    void fetch(personalColorHealthUrl(), { cache: "no-store" }).catch(() => undefined);
+  }, []);
   async function analyzeFacePhoto(file: File) {
     setFaceAnalysisStatus("loading");
     setFaceAnalysisMessage("사진을 AI 분석 서비스에서 확인하고 있어요...");

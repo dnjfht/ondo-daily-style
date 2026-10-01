@@ -58,6 +58,10 @@ function skeletonApiUrl() {
     : "https://ondo-skeleton-ai.onrender.com/api/skeleton/analyze";
 }
 
+function skeletonHealthUrl() {
+  return skeletonApiUrl().replace("/api/skeleton/analyze", "/api/skeleton/health");
+}
+
 function isPhotoPersona(value: unknown): value is SkeletonPersona {
   if (!value || typeof value !== "object") return false;
   const candidate = value as Partial<SkeletonPersona>;
@@ -81,6 +85,11 @@ export function SkeletonAnalysis({ onChange }: { onChange: (selection: SkeletonS
   const survey = typeof window !== "undefined" ? window.ONDO_SKELETON?.SURVEY ?? [] : [];
 
   useEffect(() => () => { if (photoPreview) URL.revokeObjectURL(photoPreview); }, [photoPreview]);
+
+  useEffect(() => {
+    // Render의 유휴 인스턴스는 사진을 고른 뒤가 아니라 화면 진입 시 미리 기동한다.
+    void fetch(skeletonHealthUrl(), { cache: "no-store" }).catch(() => undefined);
+  }, []);
 
   useEffect(() => {
     if (moduleReady && answers.length === 0) setAnswers((window.ONDO_SKELETON?.SURVEY ?? []).map(() => 4));
@@ -154,7 +163,7 @@ export function SkeletonAnalysis({ onChange }: { onChange: (selection: SkeletonS
       {photoPreview && <figure className="skeleton-photo-preview"><img src={photoPreview} alt="선택한 전신 사진 미리보기" /><figcaption>분석할 전신 사진</figcaption>{photoPersona?.quality?.tips?.length ? <div className="skeleton-quality-tips"><b>이렇게 다시 찍으면 더 정확해요</b><ul>{photoPersona.quality.tips.map((tip) => <li key={tip}>{tip}</li>)}</ul></div> : null}</figure>}
       <label className="skeleton-photo-button"><input type="file" accept="image/jpeg,image/png" onChange={(event) => void analyzePhoto(event.target.files?.[0])} />사진 선택</label>
     </div>
-    {photoFileName && <p className={photoStatus === "success" ? "notice success skeleton-photo-status" : "notice skeleton-photo-status"}>{photoStatus === "analyzing" ? "사진 분석 중… (약 5초)" : <>{photoMessage}{photoError === "not_full_body" ? <small> 설문만으로 결과를 계속 볼 수 있어요.</small> : null}</>}</p>}
+    {photoFileName && <p className={photoStatus === "success" ? "notice success skeleton-photo-status" : "notice skeleton-photo-status"}>{photoStatus === "analyzing" ? "사진 분석 중… 정확도 측정을 위해 잠시만 기다려 주세요." : <>{photoMessage}{photoError === "not_full_body" ? <small> 설문만으로 결과를 계속 볼 수 있어요.</small> : null}</>}</p>}
     {!result && photoStatus === "success" && photoPersona?.photoReasons.length ? <div className="skeleton-photo-observation"><b>사진에서 보인 특징</b><ul>{photoPersona.photoReasons.map((reason) => <li key={reason}>{reason}</li>)}</ul></div> : null}
     {loadError && <p className="notice">{loadError}</p>}
     {!moduleReady && !loadError && <p className="catalog-status">골격 진단 모듈을 불러오는 중이에요…</p>}

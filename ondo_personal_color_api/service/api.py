@@ -1,4 +1,5 @@
 from pathlib import Path
+import threading
 
 import cv2
 import joblib
@@ -105,6 +106,20 @@ model = joblib.load(
     MODEL_PATH
 )
 
+# 요청마다 Face Landmarker를 다시 만들지 않아, 같은 판정 로직을 더 빠르게 실행한다.
+BaseOptions = mp.tasks.BaseOptions
+FaceLandmarker = mp.tasks.vision.FaceLandmarker
+FaceLandmarkerOptions = mp.tasks.vision.FaceLandmarkerOptions
+RunningMode = mp.tasks.vision.RunningMode
+face_landmarker = FaceLandmarker.create_from_options(
+    FaceLandmarkerOptions(
+        base_options=BaseOptions(model_asset_path=str(LANDMARK_MODEL_PATH)),
+        running_mode=RunningMode.IMAGE,
+        num_faces=1,
+    )
+)
+face_landmarker_lock = threading.Lock()
+
 
 # =========================================================
 # 기본 확인 API
@@ -186,28 +201,8 @@ async def predict(
             data=rgb_image
         )
 
-        BaseOptions = mp.tasks.BaseOptions
-        FaceLandmarker = mp.tasks.vision.FaceLandmarker
-        FaceLandmarkerOptions = (
-            mp.tasks.vision.FaceLandmarkerOptions
-        )
-        RunningMode = mp.tasks.vision.RunningMode
-
-        options = FaceLandmarkerOptions(
-            base_options=BaseOptions(
-                model_asset_path=str(
-                    LANDMARK_MODEL_PATH
-                )
-            ),
-            running_mode=RunningMode.IMAGE,
-            num_faces=1
-        )
-
-        with FaceLandmarker.create_from_options(
-            options
-        ) as landmarker:
-
-            result = landmarker.detect(mp_image)
+        with face_landmarker_lock:
+            result = face_landmarker.detect(mp_image)
 
     except Exception as error:
         raise HTTPException(
