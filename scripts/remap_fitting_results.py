@@ -3,7 +3,7 @@ usage: python3 remap_results.py <results_dir> <orig_jobs.csv> <catalog_fix.json>
 import csv, json, os, shutil, sys
 res, jobs_csv, fix_json, out = sys.argv[1:5]
 fix = json.load(open(fix_json)); remap = fix["remap_shoes"]
-hide = set(fix["hide_no_image"]["shoes"] + fix["hide_no_image"]["bag"])
+hide = set(fix["hide_no_image"]["shoes"] + fix["hide_no_image"]["bag"]) | set(fix.get("regenerated_drop_old_results", []))
 jobs = list(csv.DictReader(open(jobs_csv, encoding="utf-8")))
 slug = lambda r: r["image_path"].split("/")[2]
 vinfo = {r["variant_id"]: r for r in jobs}

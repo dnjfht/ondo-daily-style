@@ -30,20 +30,20 @@
   "bow-slingback-heels": "ribbon-pointed-slingback"
  },
  "hide_no_image": {
-  "shoes": [
-   "square-maryjane-platform",
-   "quilted-padded-mules",
-   "fauxfur-slide-slippers"
-  ],
-  "bag": [
-   "boxy-top-handle",
-   "daily-hobo",
-   "drawstring-bucket",
-   "knit-crochet",
-   "net-shoulder",
-   "round-saddle",
-   "rounded-bucket",
-   "structured-bucket"
-  ]
- }
+  "shoes": [],
+  "bag": []
+ },
+ "regenerated_drop_old_results": [
+  "boxy-top-handle",
+  "daily-hobo",
+  "drawstring-bucket",
+  "knit-crochet",
+  "net-shoulder",
+  "round-saddle",
+  "rounded-bucket",
+  "structured-bucket",
+  "square-maryjane-platform",
+  "quilted-padded-mules",
+  "fauxfur-slide-slippers"
+ ]
 }
