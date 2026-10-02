@@ -41,6 +41,7 @@ export function OndoDashboard({ outfits, signedIn, styleProfile, savedLookEntrie
   const [weather, setWeather] = useState<Weather>({ temperature: 25, apparent: 26, humidity: 59, wind: 2.16, precipitation: 0, precipitationProbability: 0, min: 19, max: 28, city: "서울" });
   const [weatherLoading, setWeatherLoading] = useState(false);
   const [catalogGroups, setCatalogGroups] = useState<Record<CatalogProductCategory, CatalogProductRecommendation[]>>({ outer: [], top: [], bottom: [], shoes: [], bag: [] });
+  const [catalogTab, setCatalogTab] = useState<CatalogProductCategory>("outer"); // 화면 구성 전용: 한 번에 한 카테고리만 보여준다
   const [catalogLoading, setCatalogLoading] = useState(true);
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const catalogRequestId = useRef(0);
@@ -195,8 +196,9 @@ export function OndoDashboard({ outfits, signedIn, styleProfile, savedLookEntrie
 
     <MainVisualSlider />
 
+    <div className="today-intro">
     <section className="hero">
-      <div><p className="eyebrow">YOUR EVERYDAY, WELL DRESSED</p><h1>오늘, 뭐 입을까?</h1><p className="intro">날씨에 맞게, 나답게. 오늘의 코디를 만나보세요.</p></div>
+      <div><p className="eyebrow">YOUR EVERYDAY, WELL DRESSED</p><h1>오늘, 어떤 무드로 입을까?</h1><p className="intro">날씨에 맞게, 나답게. 오늘의 코디를 만나보세요.</p></div>
       <div className={`city ${cityOpen ? "is-open" : ""}`}>
         <span aria-hidden="true">⌖</span>
         <button className="city-trigger" type="button" aria-haspopup="listbox" aria-expanded={cityOpen} onClick={() => setCityOpen((open) => !open)}>{cityNames[city]}<span className="city-chevron" aria-hidden="true" /></button>
@@ -204,7 +206,8 @@ export function OndoDashboard({ outfits, signedIn, styleProfile, savedLookEntrie
       </div>
     </section>
 
-    <nav className="tabs" aria-label="ONDO 메뉴"><a className="active" href="#today">☼ 오늘의 코디</a><Link href="/profile">⌁ 나의 스타일 분석</Link></nav>
+    <section className="make-yours"><div><p className="mood-label">오늘의 무드 선택</p><div className="situation-picker" role="group" aria-label="코디 상황">{(Object.keys(labels) as Situation[]).map((key) => <button className={situation === key ? "selected" : ""} key={key} onClick={() => setSituation(key)} type="button">{labels[key]}</button>)}</div></div><div className="profile-status"><span>퍼스널컬러 유형 <b>{hasAnalysis ? `${colorLabels[personalColor ?? ""] ?? "미설정"} 톤 · ${colorExpertResult ? "전문 진단" : "셀프 체크"}` : "아직 분석 전이에요"}</b></span><span>골격 유형 <b>{hasAnalysis ? `${bodyLabels[bodyType ?? ""] ?? "미설정"} · ${bodyExpertResult ? "전문 진단" : "셀프 체크"}` : "나에게 맞는 핏 찾기"}</b></span></div><Link className="primary" href="/profile">{hasAnalysis ? "내 스타일 재분석하기" : "내 스타일 분석하기"} ↗</Link><p>{popularFallback ? "취향이 ‘잘 모르겠음’인 항목은 인기 있는 기본 룩을 우선 추천해요." : hasAnalysis ? "저장한 셀프 체크 결과를 바탕으로 추천 색상과 핏을 조정해요." : "분석 결과를 적용하면 추천 색상과 핏이 달라져요."}</p></section>
+    </div>
 
     <section id="today" className="today-layout">
       <aside className="weather-card" aria-label="오늘의 날씨">
@@ -212,11 +215,11 @@ export function OndoDashboard({ outfits, signedIn, styleProfile, savedLookEntrie
         <div className="weather-main"><strong>{weather.temperature}°</strong><span>{cityNames[city]} · 가볍게 나서기 좋은 날</span><i aria-hidden="true">☼</i></div>
         <div className="weather-stats"><span><b>{weather.humidity}%</b>습도</span><span><b>{weather.wind} m/s</b>바람</span><span><b>{weather.apparent}°</b>체감온도</span></div>
         <div className="temperature-line"><span>최저 {weather.min}°</span><i /><span>최고 {weather.max}°</span></div>
-        <p className="weather-note"><b>WEATHER NOTE</b>{outerWeatherNote}</p>
+        <div className="weather-note" title={outerWeatherNote}><b>오늘의 옷 제안</b><strong>{weather.apparent >= 24 ? "통기성 좋은 상의" : weather.apparent >= 16 ? "가벼운 재킷 · 가디건" : "아우터 한 겹 더"}</strong><dl><div><dt>체감</dt><dd>{weather.apparent}° · {needsOuter ? "한 겹 걸치기" : "아우터 없이"}</dd></div><div><dt>습도</dt><dd>{weather.humidity}% · 편한 소재</dd></div><div><dt>일교차</dt><dd>{temperatureGap}° · 저녁까지 대응</dd></div></dl></div>
       </aside>
 
       <article className="feature-edit">
-        <div className="feature-heading"><p className="eyebrow">TODAY&apos;S EDIT</p><span>{labels[situation]}</span><h2>오늘의 {labels[situation]} 상품 추천</h2></div><div className="feature-save-row"><button className={isSaved(lead) ? "save-look-button saved" : "save-look-button"} disabled={savingLookId === (savedEntryFor(lead)?.storedKey ?? lookKeyFor(lead))} onClick={() => void toggleSavedLook(lead)} type="button">{savingLookId === (savedEntryFor(lead)?.storedKey ?? lookKeyFor(lead)) ? "저장 중…" : isSaved(lead) ? "저장됨 ✓" : "저장하기 ♡"}</button></div>
+        <div className="feature-heading"><p className="eyebrow">TODAY&apos;S EDIT</p><h2>오늘의 {labels[situation]} 상품 추천</h2><div className="feature-save-row"><button className={isSaved(lead) ? "save-look-button saved" : "save-look-button"} disabled={savingLookId === (savedEntryFor(lead)?.storedKey ?? lookKeyFor(lead))} onClick={() => void toggleSavedLook(lead)} type="button">{savingLookId === (savedEntryFor(lead)?.storedKey ?? lookKeyFor(lead)) ? "저장 중…" : isSaved(lead) ? "저장됨 ✓" : "저장하기 ♡"}</button></div></div>
         {saveError && <p className="save-error" role="status">{saveError}</p>}
         <div className="feature-body">
           <div className="feature-image" style={{ backgroundImage: `url(${lead.imageUrl})` }}><p>EDITORIAL IMAGE · 실제 추천 상품은 아래 목록에서 확인하세요</p></div>
@@ -226,10 +229,11 @@ export function OndoDashboard({ outfits, signedIn, styleProfile, savedLookEntrie
               <div className="swatches catalog-swatches">{lead.colors.map((color) => <i key={color} style={{ background: color }} />)}<span>기본 컬러 조합</span></div>
               {catalogLoading && <p className="catalog-status">상품을 고르고 있어요…</p>}
               {catalogError && <p className="catalog-status error">{catalogError}</p>}
+              {!catalogLoading && !catalogError && <div className="catalog-tabs" role="tablist" aria-label="상품 카테고리">{catalogOrder.map((category) => <button key={category} type="button" role="tab" aria-selected={catalogTab === category} className={catalogTab === category ? "active" : ""} onClick={() => setCatalogTab(category)}>{catalogLabels[category]}<i>{(catalogGroups[category] ?? []).length}</i></button>)}</div>}
               {!catalogLoading && !catalogError && catalogOrder.map((category) => {
                 const products = catalogGroups[category] ?? [];
                 const isWarmOuterFree = category === "outer" && weather.apparent >= 24;
-                return <section className="catalog-category" key={category}><h3>{catalogLabels[category]} <span>{products.length ? "TOP 3" : isWarmOuterFree ? "OUTER FREE" : "조건 확인"}</span></h3>{products.length ? <div className="catalog-products">{products.map((product) => <article className="catalog-product" key={product.variantId}><img src={product.imagePath} alt={`${product.name} ${product.colorName}`} /><div><strong>{product.name}</strong><span>{product.colorName}</span><small>{product.reasons.slice(0, 2).join(" · ")}</small><Link className="catalog-fit-button" href={`/fitting?product=${encodeURIComponent(product.productId)}&source=${encodeURIComponent(product.sourceProductId)}&color=${encodeURIComponent(product.colorName)}&situation=${situation}&apparent=${weather.apparent}&humidity=${weather.humidity}&wind=${weather.wind}&precipitation=${weather.precipitation}&precipitationProbability=${weather.precipitationProbability}&dailyRange=${temperatureGap}`}>AI 피팅 ↗</Link></div></article>)}</div> : <p className="catalog-empty">{isWarmOuterFree ? `체감 ${weather.apparent}°에는 아우터 없이 상의 중심으로 추천해요.` : `현재 날씨 조건에 맞는 ${catalogLabels[category]}를 다시 고르고 있어요.`}</p>}</section>;
+                return <section className={category === catalogTab ? "catalog-category" : "catalog-category is-off"} key={category}><h3>{catalogLabels[category]} <span>{products.length ? "TOP 3" : isWarmOuterFree ? "OUTER FREE" : "조건 확인"}</span></h3>{products.length ? <div className="catalog-products">{products.map((product) => <article className="catalog-product" key={product.variantId}><img src={product.imagePath} alt={`${product.name} ${product.colorName}`} /><div><strong>{product.name}</strong><span>{product.colorName}</span><small>{product.reasons.slice(0, 2).join(" · ")}</small><Link className="catalog-fit-button" href={`/fitting?product=${encodeURIComponent(product.productId)}&source=${encodeURIComponent(product.sourceProductId)}&color=${encodeURIComponent(product.colorName)}&situation=${situation}&apparent=${weather.apparent}&humidity=${weather.humidity}&wind=${weather.wind}&precipitation=${weather.precipitation}&precipitationProbability=${weather.precipitationProbability}&dailyRange=${temperatureGap}`}>AI 피팅 ↗</Link></div></article>)}</div> : <p className="catalog-empty">{isWarmOuterFree ? `체감 ${weather.apparent}°에는 아우터 없이 상의 중심으로 추천해요.` : `현재 날씨 조건에 맞는 ${catalogLabels[category]}를 다시 고르고 있어요.`}</p>}</section>;
               })}
             </section>
           </div>
@@ -237,10 +241,9 @@ export function OndoDashboard({ outfits, signedIn, styleProfile, savedLookEntrie
       </article>
     </section>
 
-    <section className="make-yours"><div><p className="eyebrow">MAKE IT YOURS</p><h2>오늘의 무드는?</h2><div className="situation-picker" role="group" aria-label="코디 상황">{(Object.keys(labels) as Situation[]).map((key) => <button className={situation === key ? "selected" : ""} key={key} onClick={() => setSituation(key)} type="button">{labels[key]}</button>)}</div></div><div className="profile-status"><span>퍼스널컬러 유형 <b>{hasAnalysis ? `${colorLabels[personalColor ?? ""] ?? "미설정"} 톤 · ${colorExpertResult ? "전문 진단" : "셀프 체크"}` : "아직 분석 전이에요"}</b></span><span>골격 유형 <b>{hasAnalysis ? `${bodyLabels[bodyType ?? ""] ?? "미설정"} · ${bodyExpertResult ? "전문 진단" : "셀프 체크"}` : "나에게 맞는 핏 찾기"}</b></span></div><Link className="primary" href="/profile">{hasAnalysis ? "내 스타일 재분석하기" : "내 스타일 분석하기"} ↗</Link><p>{popularFallback ? "취향이 ‘잘 모르겠음’인 항목은 인기 있는 기본 룩을 우선 추천해요." : hasAnalysis ? "저장한 셀프 체크 결과를 바탕으로 추천 색상과 핏을 조정해요." : "분석 결과를 적용하면 추천 색상과 핏이 달라져요."}</p></section>
-
-    <section className="why-look"><p className="eyebrow">WHY THIS LOOK</p><h2>이렇게 입으면 좋아요.</h2><div><p><b>01</b>{needsOuter ? ` 체감온도 ${weather.apparent}°에 맞춰 한 겹 가볍게 걸칠 아이템을 추천해요.` : ` 체감온도 ${weather.apparent}°에는 아우터 없이 통기성 좋은 상의 중심으로 추천해요.`}</p><p><b>02</b> 습도 {weather.humidity}%. 땀과 습기에 편안한 소재를 비교해보세요.</p><p><b>03</b> 오늘의 일교차 {temperatureGap}°. 저녁까지 대응할 수 있는 조합이에요.</p></div></section>
-    <section className="more-looks"><div className="section-heading"><div><p className="eyebrow">MORE FOR TODAY</p><h2>다른 상황의 코디</h2></div><span>TOP 3</span></div><div className="outfit-grid">{liveOutfits.filter((outfit) => outfit.situation !== situation).slice(0, 2).map((outfit) => { const storedKey = savedEntryFor(outfit)?.storedKey ?? lookKeyFor(outfit); return <article className="outfit-card" key={outfit.id}><div className="outfit-image" style={{ backgroundImage: `url(${situationLookImages[outfit.situation] ?? outfit.imageUrl})` }}><em>{outfit.styleTag}</em></div><div className="outfit-copy"><h3>{outfit.title}</h3><p>{outfit.reason}</p><button className={`${isSaved(outfit) ? "save-look-button saved" : "save-look-button"}`} disabled={savingLookId === storedKey} onClick={() => void toggleSavedLook(outfit)} type="button">{savingLookId === storedKey ? "저장 중…" : isSaved(outfit) ? "저장됨 ✓" : "저장하기 ♡"}</button></div></article>; })}</div></section>
+    <div className="home-extra">
+    <section className="more-looks"><div className="section-heading"><div><p className="eyebrow">MORE FOR TODAY</p><h2>다른 상황의 코디</h2></div></div><div className="outfit-grid">{liveOutfits.filter((outfit) => outfit.situation !== situation).slice(0, 2).map((outfit) => { const storedKey = savedEntryFor(outfit)?.storedKey ?? lookKeyFor(outfit); return <article className="outfit-card" key={outfit.id}><div className="outfit-image" style={{ backgroundImage: `url(${situationLookImages[outfit.situation] ?? outfit.imageUrl})` }}><em>{outfit.styleTag}</em></div><div className="outfit-copy"><h3>{outfit.title}</h3><p>{outfit.reason}</p><button className={`${isSaved(outfit) ? "save-look-button saved" : "save-look-button"}`} disabled={savingLookId === storedKey} onClick={() => void toggleSavedLook(outfit)} type="button">{savingLookId === storedKey ? "저장 중…" : isSaved(outfit) ? "저장됨 ✓" : "저장하기 ♡"}</button></div></article>; })}</div></section>
+    </div>
     <footer><Link className="brand" href="/">ondo<sup>°</sup></Link><span>당신의 하루에 어울리는 선택.</span><span>ONDO 내부 카탈로그의 색상·착용 조건을 바탕으로 추천합니다.</span></footer>
   </main>;
 }

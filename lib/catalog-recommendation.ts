@@ -175,7 +175,8 @@ export function recommendCatalogProducts(products: CatalogProductRow[], signals:
     const body = tagScore(tags, "body_type", signals.bodyType, 15);
     const silhouette = tagScore(tags, "silhouette", signals.silhouette, 10);
     const mood = tagScore(tags, "mood", signals.mood, 4);
-    const situation = tagScore(tags, "situation", signals.situation, 6);
+    // 데일리/출근/데이트 선택이 상품 순위에 눈에 띄게 반영되도록 가중치를 ±6에서 ±18로 올렸습니다.
+    const situation = tagScore(tags, "situation", signals.situation, 18);
 
     return variants.map((variant) => {
       const color = colorScore(variant, signals.personalColor);

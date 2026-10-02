@@ -275,3 +275,261 @@ h1,h2,h3 { font-weight:600; letter-spacing:-.03em; }
   .profile-step.is-active>.analysis-section { height:max(520px,var(--profile-step-height)); overflow-y:auto; scrollbar-gutter:stable; }
   .profile-intro { padding:28px 0 22px; }
 }
+
+/* ===== 골격 단계: 사진 → 문항 묶음 단위로 넘기기 (layout only) ===== */
+.skeleton-section { align-content:start; }
+.skeleton-section .is-off { display:none !important; }
+.skeleton-sub { display:grid; gap:22px; }
+.analysis-heading.is-compact>p:not(.eyebrow) { display:none; }
+.skeleton-subnav { display:flex; align-items:center; gap:10px; }
+.skeleton-subnav ol { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; flex:1 1 auto; margin:0; padding:0; list-style:none; border:1px solid var(--line); border-radius:4px; overflow:hidden; background:var(--card); }
+.skeleton-subnav li + li { border-left:1px solid var(--line); }
+.skeleton-subnav ol button { width:100%; border:0; background:transparent; padding:10px 8px; color:#8a837c; font-size:12px; font-weight:700; letter-spacing:-.02em; cursor:pointer; transition:background .15s ease,color .15s ease; }
+.skeleton-subnav ol button:hover { background:#faf8f7; color:var(--ink); }
+.skeleton-subnav ol button.active { background:#f5f2ef; color:var(--forest); box-shadow:inset 0 -2px 0 var(--forest); }
+.skeleton-subnav .subnav-arrow { flex:0 0 auto; width:38px; height:38px; border:1px solid #cfc8c1; border-radius:50%; background:#fff; color:var(--forest); font-size:14px; font-weight:700; cursor:pointer; }
+.skeleton-subnav .subnav-arrow:disabled { opacity:.3; cursor:default; }
+.skeleton-section .skeleton-diagnose { justify-self:start; }
+
+/* ===== 프로필 상단 소개: 한 줄로 압축해서 화면을 아낀다 (layout only) ===== */
+@media (min-width:1060px) {
+  .profile-intro { display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:44px; align-items:end; padding:18px 0 16px; }
+  .profile-intro .eyebrow { grid-column:1; margin:0 0 6px; }
+  .profile-intro h1 { grid-column:1; grid-row:2; font-size:32px; }
+  .profile-intro>p:not(.eyebrow) { grid-column:2; grid-row:1 / span 2; max-width:none; margin:0; align-self:end; font-size:14px; }
+}
+
+/* 소개 영역을 줄인 만큼 단계 칸 높이 기준을 재조정: 한 화면(≈900px)에 단계 UI가 모두 들어오도록 */
+@media (min-width:1060px) {
+  :root { --profile-step-height:calc(100vh - var(--membership-banner-height) - var(--site-header-height) - 330px); }
+  .profile-step.is-active>.analysis-section { height:max(480px,var(--profile-step-height)); }
+}
+
+/* ===== 사진 업로드를 취향·컬러·골격 위로 + 골격 문항 1개씩 (layout only) ===== */
+.profile-photos { display:grid; gap:10px; }
+.profile-photos-head { margin:0; color:var(--muted); font-size:12px; letter-spacing:-.01em; }
+.profile-photos-head b { color:var(--ink); font-size:13px; }
+.profile-photos-head em { color:#7f7872; font-style:normal; }
+.profile-photos-grid { display:grid; grid-template-columns:1fr; gap:12px; align-items:stretch; }
+.profile-photos-grid .photo-intake-row,
+.profile-photos-grid .skeleton-photo-block>.skeleton-photo-intake { margin-top:0; height:100%; padding:14px 16px; }
+.profile-photos-grid .skeleton-photo-block,
+.profile-photos-grid .skeleton-photo-slot { height:100%; }
+.profile-photos-grid .photo-intake-copy p { margin:0; font-size:11px; line-height:1.5; }
+.profile-photos-grid .photo-intake-copy ul { margin:4px 0 0; padding-left:15px; font-size:10px; line-height:1.45; color:#7f7872; }
+.skeleton-photo-block { display:grid; gap:12px; }
+.skeleton-subnav .subnav-count { flex:0 0 auto; min-width:48px; text-align:center; color:#8a837c; font-size:12px; font-weight:700; letter-spacing:.06em; }
+.skeleton-section .skeleton-question-list { grid-template-columns:minmax(0,680px) !important; }
+.skeleton-section .skeleton-question-list fieldset { padding:22px 24px 20px; }
+.skeleton-section .skeleton-question-list legend { font-size:16px; line-height:1.5; }
+.skeleton-section .skeleton-question-list .radio-row { gap:10px; margin-top:14px; }
+.skeleton-section .skeleton-question-list .radio-row label { font-size:14px; line-height:1.5; }
+@media (min-width:1060px) {
+  .profile-photos-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  :root { --profile-step-height:calc(100vh - var(--membership-banner-height) - var(--site-header-height) - 440px); }
+  .profile-step.is-active>.analysis-section { height:max(430px,var(--profile-step-height)); }
+}
+
+/* 한 화면에 최대한 들어오도록 골격 칸을 촘촘하게 (layout only) */
+.skeleton-section { padding:22px 28px; gap:14px; }
+.skeleton-section .analysis-heading.is-compact { display:flex; align-items:baseline; gap:12px; }
+.skeleton-section .analysis-heading.is-compact .eyebrow { margin:0; }
+.skeleton-section .analysis-heading.is-compact h2 { font-size:20px; }
+.skeleton-section .skeleton-question-list fieldset { padding:16px 22px 14px; }
+.skeleton-section .skeleton-question-list legend { font-size:15px; }
+.skeleton-section .skeleton-question-list .radio-row { gap:7px; margin-top:10px; }
+.skeleton-section .skeleton-question-list .radio-row label { font-size:13px; line-height:1.45; }
+.skeleton-section .skeleton-diagnose { padding-top:11px; padding-bottom:11px; }
+.profile-photos-grid .photo-intake-row,
+.profile-photos-grid .skeleton-photo-block>.skeleton-photo-intake { padding:12px 14px; }
+@media (min-width:1060px) {
+  :root { --profile-step-height:calc(100vh - var(--membership-banner-height) - var(--site-header-height) - 520px); }
+  .profile-step.is-active>.analysis-section { height:max(400px,var(--profile-step-height)); }
+}
+
+/* ===== 요약 카드: 골격 결과 상세 + 스크롤 따라다니기 + 사진 썸네일 통일 (layout only) ===== */
+.profile-form-layout .profile-summary { display:flex; flex-direction:column; gap:14px; align-items:stretch; }
+.profile-summary .summary-head { display:grid; gap:10px; }
+.profile-summary .summary-head .eyebrow { margin:0; }
+.profile-summary .summary-skeleton { display:grid; gap:2px; padding:12px 14px; border:1px solid var(--line); border-radius:3px; background:#fbfafa; }
+.profile-summary .summary-skeleton small { color:#8a837c; font-size:10px; font-weight:700; letter-spacing:.12em; }
+.profile-summary .summary-skeleton strong { display:flex; align-items:baseline; gap:8px; color:var(--forest); font-size:26px; font-weight:700; letter-spacing:-.05em; line-height:1.15; }
+.profile-summary .summary-skeleton strong em { color:var(--ink); font-size:20px; font-style:normal; font-weight:700; letter-spacing:-.03em; }
+.profile-summary .summary-skeleton span { color:var(--muted); font-size:11px; line-height:1.5; }
+.profile-summary .summary-rows { display:grid; gap:6px; margin:0; }
+.profile-summary .summary-rows div { display:flex; justify-content:space-between; gap:12px; font-size:12px; }
+.profile-summary .summary-rows dt { color:#8a837c; }
+.profile-summary .summary-rows dd { margin:0; color:var(--ink); font-weight:700; }
+.profile-summary .summary-detail { display:grid; gap:12px; flex:1 1 auto; min-height:0; overflow-y:auto; padding-right:4px; border-top:1px solid var(--line); padding-top:12px; scrollbar-gutter:stable; }
+.profile-summary .summary-detail b { display:block; margin-bottom:4px; color:var(--ink); font-size:11px; letter-spacing:.04em; }
+.profile-summary .summary-detail ul { display:grid; gap:3px; margin:0; padding-left:15px; color:var(--muted); font-size:11px; line-height:1.5; }
+.profile-summary .summary-detail p { margin:0; color:var(--muted); font-size:11px; line-height:1.55; }
+.profile-summary .summary-fit { display:grid; gap:6px; margin:0; }
+.profile-summary .summary-fit div { display:grid; grid-template-columns:52px minmax(0,1fr); gap:8px; font-size:11px; line-height:1.5; }
+.profile-summary .summary-fit dt { color:#8a837c; font-weight:700; }
+.profile-summary .summary-fit dd { margin:0; color:var(--ink); }
+.profile-summary .primary { flex:0 0 auto; width:100%; }
+@media (max-width:1059px) { .profile-summary .summary-detail { max-height:240px; } }
+@media (min-width:1060px) {
+  .profile-form-layout { grid-template-columns:minmax(0,1fr) 320px; }
+  .profile-form-layout .profile-summary { overflow:hidden; align-self:start; max-height:calc(100vh - var(--membership-banner-height) - var(--site-header-height) - 40px); }
+}
+/* 업로드한 사진은 같은 크기 틀(3:4)로 확인 */
+.profile-photos-grid .photo-square,
+.profile-photos-grid .skeleton-photo-preview img { width:120px; height:160px; border-radius:3px; }
+.profile-photos-grid .photo-square.face { object-fit:cover; }
+.profile-photos-grid .skeleton-photo-preview img { object-fit:contain; background:#f1efed; }
+.profile-photos-grid .skeleton-photo-preview { width:120px; }
+.profile-photos-grid .skeleton-photo-preview .skeleton-quality-tips { width:200px; }
+
+/* 사진 미리보기는 칸이 커지지 않도록 작은 3:4 틀로 통일 */
+.profile-photos-grid .photo-square,
+.profile-photos-grid .skeleton-photo-preview img { width:90px; height:120px; }
+.profile-photos-grid .skeleton-photo-preview { width:90px; gap:0; }
+.profile-photos-grid .skeleton-photo-preview figcaption { display:none; }
+.profile-photos-grid .photo-intake-side,
+.profile-photos-grid .skeleton-photo-side { gap:7px; }
+.profile-photos-grid .skeleton-photo-preview .skeleton-quality-tips { position:static; width:150px; margin-top:6px; }
+
+/* 취향 문항: 골격과 같은 라디오 카드 + 응답한 번호 표시 (layout only) */
+.skeleton-subnav ol button.answered:not(.active) { color:var(--forest); background:#f3f6f3; }
+.skeleton-subnav ol button.answered:not(.active)::after { content:"✓"; margin-left:3px; font-size:10px; }
+
+/* 요약 카드: 취향 · 퍼스널컬러 · 골격진단을 같은 비중의 네모 3개로 */
+.profile-summary .summary-box { display:grid; gap:2px; padding:11px 14px; border:1px solid var(--line); border-radius:3px; background:#fbfafa; }
+.profile-summary .summary-box small { color:#8a837c; font-size:10px; font-weight:700; letter-spacing:.12em; }
+.profile-summary .summary-box strong { display:flex; align-items:baseline; gap:8px; color:var(--forest); font-size:22px; font-weight:700; letter-spacing:-.05em; line-height:1.2; }
+.profile-summary .summary-box strong em { color:var(--ink); font-size:17px; font-style:normal; font-weight:700; letter-spacing:-.03em; }
+.profile-summary .summary-box span { color:var(--muted); font-size:11px; line-height:1.5; }
+
+/* 취향·골격 문항 탭: 개수와 상관없이 같은 크기의 칸 (layout only) */
+.skeleton-subnav ol { display:flex; flex-wrap:wrap; justify-content:flex-start; gap:5px; border:0; border-radius:0; background:transparent; overflow:visible; grid-auto-flow:unset; }
+.skeleton-subnav li + li { border-left:0; }
+.skeleton-subnav ol button { flex:0 0 auto; width:42px; height:36px; padding:0; border:1px solid var(--line); border-radius:3px; background:var(--card); }
+.skeleton-subnav ol button.active { border-color:var(--forest); }
+
+/* 사진 카드: 핵심 한 줄 + 칩 + 접이식 안내로 읽기 쉽게 (layout only) */
+.profile-photos-grid .photo-tag { display:inline-block; justify-self:start; width:fit-content; padding:2px 8px; border-radius:999px; background:#efe9e3; color:#6f665e; font-size:10px; font-weight:700; letter-spacing:.08em; }
+.profile-photos-grid .photo-intake-copy,
+.profile-photos-grid .skeleton-photo-intake>div:first-child { gap:8px; }
+.profile-photos-grid b { font-size:15px; letter-spacing:-.03em; }
+.profile-photos-grid .photo-intake-copy p.photo-lead,
+.profile-photos-grid .skeleton-photo-intake p.photo-lead { margin:0; color:var(--ink); font-size:12.5px; line-height:1.5; }
+.profile-photos-grid ul.photo-chips { display:flex; flex-wrap:wrap; gap:5px; margin:0; padding:0; list-style:none; }
+.profile-photos-grid ul.photo-chips li { padding:3px 9px; border:1px solid #ddd5cd; border-radius:999px; background:#fff; color:#605a54; font-size:11px; line-height:1.4; }
+.profile-photos-grid details.photo-more { display:grid; gap:6px; }
+.profile-photos-grid details.photo-more>summary { width:fit-content; cursor:pointer; color:#8a837c; font-size:11px; text-decoration:underline; text-underline-offset:3px; list-style:none; }
+.profile-photos-grid details.photo-more>summary::-webkit-details-marker { display:none; }
+.profile-photos-grid details.photo-more>summary::after { content:" ▾"; text-decoration:none; }
+.profile-photos-grid details.photo-more[open]>summary::after { content:" ▴"; }
+.profile-photos-grid details.photo-more[open] { padding-top:2px; }
+
+/* ===== 홈: 상품 카테고리 탭 + 코디 이유/다른 코디 나란히 (layout only) ===== */
+.catalog-tabs { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
+.catalog-tabs button { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:999px; background:#fff; padding:8px 14px; color:#7f7974; font-size:12px; font-weight:700; cursor:pointer; transition:background .15s ease,color .15s ease; }
+.catalog-tabs button i { color:#a39c95; font-size:10px; font-style:normal; }
+.catalog-tabs button:hover { color:var(--ink); }
+.catalog-tabs button.active { border-color:var(--forest); background:var(--forest); color:#fff; }
+.catalog-tabs button.active i { color:rgba(255,255,255,.75); }
+.catalog-category.is-off { display:none; }
+.home-extra { display:block; }
+@media (min-width:1060px) {
+  .home-extra { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:44px; align-items:start; }
+  .home-extra .why-look>div { grid-template-columns:1fr; gap:4px; }
+  .feature-body .feature-image { width:100%; aspect-ratio:auto; min-height:0; height:320px; background-size:cover; background-position:center 30%; }
+}
+
+/* 홈: "이렇게 입으면 좋아요"는 작게, "다른 상황의 코디"는 사진 위 · 글 아래 (layout only) */
+.home-extra .why-look, .home-extra .more-looks { padding-top:34px; }
+.home-extra .why-look h2 { font-size:19px; }
+.home-extra .why-look .eyebrow { margin-bottom:6px; }
+.home-extra .why-look>div { gap:0; margin-top:12px; }
+.home-extra .why-look p { padding-top:9px; padding-bottom:9px; font-size:12px; line-height:1.55; }
+.home-extra .why-look b { display:inline; margin:0 8px 0 0; }
+.home-extra .outfit-card { grid-template-columns:1fr; }
+.home-extra .outfit-image { min-height:0; height:153px; background-position:center 20%; }
+.home-extra .outfit-copy { padding:16px 18px 18px; }
+.home-extra .outfit-copy h3 { font-size:16px; line-height:1.4; }
+.home-extra .outfit-copy p { margin:8px 0 0; }
+
+/* 홈: "오늘, 뭐 입을까?"와 "오늘의 무드는?"의 제목 크기·여백을 맞춰 비중을 비슷하게 (layout only) */
+@media (min-width:821px) {
+  .hero { padding:44px 0 30px; }
+  .hero h1, .make-yours h2 { font-size:32px; line-height:1.2; }
+  .hero .eyebrow, .make-yours .eyebrow { margin-bottom:10px; }
+  .hero .intro { margin-top:10px; }
+  .make-yours { padding:28px 30px 40px; margin-top:0; }
+}
+
+/* 홈: 소개 구획과 무드 구획을 같은 박스·같은 제목 크기·같은 높이로 (layout only) */
+@media (min-width:821px) {
+  .hero { align-items:center; border:1px solid var(--line); border-radius:4px; background:var(--card); padding:28px 30px 40px; min-height:176px; margin-bottom:6px; }
+  .hero h1, .make-yours h2 { font-size:28px; }
+  .make-yours { min-height:176px; }
+}
+
+/* 무드 선택을 소개 박스 바로 아래로 옮겼으니, 아래 탭과 간격 확보 (layout only) */
+.make-yours { margin-bottom:22px; }
+@media (min-width:821px) { .hero { margin-bottom:12px; } }
+
+/* ===== 홈: 재분석 버튼을 눌리는 버튼답게 + 상품 추천을 이미지 옆 세로 목록으로 (layout only) ===== */
+.make-yours a.primary { display:inline-flex; align-items:center; justify-content:center; background:var(--forest); color:#fff; cursor:pointer; text-decoration:none; box-shadow:0 1px 0 rgba(0,0,0,.08); transition:opacity .15s ease, transform .1s ease; }
+.make-yours a.primary:hover { background:var(--forest); opacity:.88; transform:translateY(-1px); }
+.make-yours a.primary:active { opacity:1; transform:translateY(0); }
+
+/* ===== 홈: 옷 제안은 날씨 카드로 합치고, 다른 상황의 코디는 넓고 크게 (layout only) ===== */
+.weather-note p { margin:0; }
+.weather-note ul { display:grid; gap:10px; margin:14px 0 0; padding:0; list-style:none; }
+.weather-note li { position:relative; padding-left:14px; color:#e2ddd8; font-size:12px; line-height:1.6; }
+.weather-note li::before { content:""; position:absolute; left:0; top:.7em; width:5px; height:5px; border-radius:50%; background:#d6cbc1; }
+@media (min-width:1060px) {
+  .home-extra { grid-template-columns:minmax(0,1fr); }
+}
+.home-extra .more-looks { padding-top:40px; }
+.home-extra .outfit-grid { gap:24px; }
+.home-extra .outfit-image { height:320px; background-position:center 22%; }
+.home-extra .outfit-copy { padding:22px 26px 26px; }
+.home-extra .outfit-copy h3 { font-size:20px; line-height:1.4; }
+.home-extra .outfit-copy p { margin:10px 0 0; font-size:13px; line-height:1.7; }
+.home-extra .outfit-copy .save-look-button { margin-top:14px; padding:10px 15px; font-size:12px; }
+
+/* 옷 제안: 글을 줄여서 한눈에 (layout only) */
+.weather-note strong { display:block; margin:2px 0 14px; color:#fff; font-size:18px; font-weight:600; letter-spacing:-.03em; line-height:1.3; }
+.weather-note dl { display:grid; gap:0; margin:0; }
+.weather-note dl div { display:grid; grid-template-columns:44px minmax(0,1fr); gap:8px; align-items:baseline; padding:9px 0; border-top:1px solid rgba(255,255,255,.12); }
+.weather-note dt { color:#b9aea4; font-size:11px; }
+.weather-note dd { margin:0; color:#f1ece7; font-size:13px; }
+
+/* ===== 홈: 소개 + 무드를 카드 하나로 합침 (layout only) ===== */
+.today-intro { border:1px solid var(--line); border-radius:4px; background:var(--card); margin-bottom:22px; }
+.today-intro .hero { border:0; border-radius:0; background:transparent; min-height:0; margin:0; }
+.today-intro .make-yours { border:0; border-top:1px solid var(--line); border-radius:0; background:transparent; min-height:0; margin:0; }
+.today-intro .mood-label { margin:0; color:#8a837c; font-size:11px; font-weight:700; letter-spacing:.12em; }
+.today-intro .situation-picker { margin-top:10px; }
+@media (min-width:821px) {
+  .today-intro .hero { padding:30px 30px 22px; }
+  .today-intro .make-yours { padding:20px 30px 42px; }
+}
+
+/* 프로필: 사진 카드 단순화 - 태그·제목·한 줄 설명·버튼만 (layout only) */
+.profile-photos .photo-chips,
+.profile-photos .photo-more { display:none; }
+
+/* 홈: 오늘의 상품 추천 사진과 다른 상황 코디 사진을 같은 비율(16:9)로 (layout only) */
+@media (min-width:1060px) {
+  .feature-body .feature-image,
+  .home-extra .outfit-image { height:auto; min-height:0; aspect-ratio:16/9; }
+}
+
+/* 홈: 저장하기 버튼을 제목 오른쪽으로 (layout only) */
+.feature-heading>h2 { grid-column:1; grid-row:2; }
+.feature-heading>.feature-save-row { grid-column:2; grid-row:2; margin-top:12px; align-self:center; }
+
+/* 홈: 다른 상황 코디 카드의 저장하기 버튼을 제목 오른쪽으로 (layout only) */
+.home-extra .outfit-copy { display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:14px; align-items:start; }
+.home-extra .outfit-copy h3 { grid-column:1; grid-row:1; }
+.home-extra .outfit-copy .save-look-button { grid-column:2; grid-row:1; margin-top:0; white-space:nowrap; }
+.home-extra .outfit-copy p { grid-column:1/-1; grid-row:2; }
+
+/* 홈: 상황 태그(데일리/출근/데이트) 글자 가운데 정렬 (layout only) */
+.feature-heading>span { display:inline-flex; align-items:center; justify-content:center; text-align:center; }
