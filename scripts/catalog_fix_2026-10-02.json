@@ -1,0 +1,49 @@
+{
+ "remap_shoes": {
+  "western-ankle-boots": "knit-sock-ankle-boots",
+  "satin-bow-mules": "knit-house-slippers",
+  "elastic-chelsea-ankle-boots": "knee-high-riding-boots",
+  "woodsole-buckle-clogs": "laceup-anklestrap-sandals",
+  "buckle-slingback-pumps": "laceup-combat-boots",
+  "laceup-combat-boots": "matte-rain-boots",
+  "fur-lined-winter-boots": "metallic-strap-party-sandals",
+  "metallic-strap-party-sandals": "minimal-leather-clogs",
+  "laceup-anklestrap-sandals": "buckle-slingback-pumps",
+  "knit-sock-ankle-boots": "satin-bow-mules",
+  "knit-house-slippers": "satin-pointed-evening-pumps",
+  "minimal-leather-clogs": "sculptural-curvedheel-mules",
+  "pointed-kitten-pumps": "square-toe-ankle-boots",
+  "square-toe-mid-heel-mules": "slouchy-knee-high-boots",
+  "almond-toe-block-pumps": "elastic-chelsea-ankle-boots",
+  "knee-high-riding-boots": "espadrille-wedge-sandals",
+  "fisherman-chunky-sandals": "woodsole-buckle-clogs",
+  "strap-peep-toe-low-heels": "western-ankle-boots",
+  "platform-knee-high-boots": "cork-platform-sandals",
+  "espadrille-wedge-sandals": "quilted-padded-mules",
+  "cork-platform-sandals": "fauxfur-slide-slippers",
+  "slouchy-knee-high-boots": "fur-lined-winter-boots",
+  "square-toe-ankle-boots": "platform-knee-high-boots",
+  "matte-rain-boots": "fisherman-chunky-sandals",
+  "square-platform-pumps": "square-maryjane-platform",
+  "sculptural-curvedheel-mules": "sculptural-curveheel-mules",
+  "satin-pointed-evening-pumps": "satin-evening-pumps",
+  "bow-slingback-heels": "ribbon-pointed-slingback"
+ },
+ "hide_no_image": {
+  "shoes": [
+   "square-maryjane-platform",
+   "quilted-padded-mules",
+   "fauxfur-slide-slippers"
+  ],
+  "bag": [
+   "boxy-top-handle",
+   "daily-hobo",
+   "drawstring-bucket",
+   "knit-crochet",
+   "net-shoulder",
+   "round-saddle",
+   "rounded-bucket",
+   "structured-bucket"
+  ]
+ }
+}
