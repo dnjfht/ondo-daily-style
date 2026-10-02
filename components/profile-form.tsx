@@ -52,6 +52,11 @@ export function ProfileForm() {
   const [faceAnalysisStatus, setFaceAnalysisStatus] = useState<FaceAnalysisStatus>("idle");
   const [faceAnalysisMessage, setFaceAnalysisMessage] = useState("");
   const hasAnsweredAll = Boolean(color && skeletonSelection && mood && silhouette && colorDepth && activity && city);
+  // 화면 전환형 단계(레이아웃 전용 상태): 모든 섹션은 계속 마운트되어 있어 입력값·저장 로직은 그대로 유지된다.
+  const [step, setStep] = useState(0);
+  const stepDone = [Boolean(mood && silhouette && colorDepth && activity && city), Boolean(color), Boolean(skeletonSelection)];
+  const stepLabels = ["취향", "컬러", "골격"];
+  const goStep = (next: number) => { setStep(Math.max(0, Math.min(2, next))); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); };
   const clearWarning = () => setValidationMessage("");
   useEffect(() => {
     // 사진 선택 전에 유휴 상태의 배포 모델을 미리 준비해 체감 대기 시간을 줄인다.
@@ -89,15 +94,21 @@ export function ProfileForm() {
     <div className="profile-form-layout">
       <aside className="save-result profile-summary"><div><p className="eyebrow">YOUR STYLE PROFILE</p><h2>{colorTitle[color] ?? "색 선택"} · {skeletonSelection?.result.typeKor ?? "골격 진단"} · {moodTitle[mood] ?? "취향 선택"}</h2><p>선택 내용은 즉시 여기에 반영됩니다. 모두 고른 뒤 저장해 오늘의 코디에 적용하세요.</p></div><button className="primary" disabled={pending} type="submit">{pending ? "저장 중..." : "내 결과 저장하기"} ↗</button></aside>
       <div className="profile-form-content">
-    <section className="analysis-section"><div className="analysis-heading"><p className="eyebrow">01 / TASTE</p><h2>오늘의 취향을 알려주세요</h2><p>패션 취향을 잘 모르겠다면 ‘잘 모르겠음’을 선택해 주세요. 이 항목은 인기 있는 기본 룩을 먼저 추천합니다.</p></div><div className="taste-fields">
+    <ol className="profile-stepper">{stepLabels.map((label, index) => <li key={label}><button type="button" className={[index === step ? "active" : "", stepDone[index] ? "done" : ""].join(" ").trim()} aria-current={index === step ? "step" : undefined} onClick={() => goStep(index)}><i>{stepDone[index] ? "✓" : index + 1}</i>{label}</button></li>)}</ol>
+    <div className={step === 0 ? "profile-step is-active" : "profile-step"}><section className="analysis-section"><div className="analysis-heading"><p className="eyebrow">01 / TASTE</p><h2>오늘의 취향을 알려주세요</h2><p>패션 취향을 잘 모르겠다면 ‘잘 모르겠음’을 선택해 주세요. 이 항목은 인기 있는 기본 룩을 먼저 추천합니다.</p></div><div className="taste-fields">
       <label>가장 자주 입는 무드<select name="mood" value={mood} onChange={(event) => { setMood(event.target.value); clearWarning(); }}><option value="" disabled>선택해 주세요</option><option value="minimal">미니멀</option><option value="casual">캐주얼</option><option value="classic">클래식</option><option value="street">스트리트</option><option value="unknown">잘 모르겠음</option></select></label>
       <label>선호 실루엣<select name="silhouette" value={silhouette} onChange={(event) => { setSilhouette(event.target.value); clearWarning(); }}><option value="" disabled>선택해 주세요</option><option value="balanced">균형 잡힌 핏</option><option value="relaxed">여유 있는 핏</option><option value="defined">라인이 드러나는 핏</option><option value="unknown">잘 모르겠음</option></select></label>
       <label>선호 색감<select name="colorDepth" value={colorDepth} onChange={(event) => { setColorDepth(event.target.value); clearWarning(); }}><option value="" disabled>선택해 주세요</option><option value="neutral">뉴트럴 중심</option><option value="soft">부드러운 저채도</option><option value="bold">선명한 포인트</option><option value="unknown">잘 모르겠음</option></select></label>
       <label>평소 활동량<select name="activity" value={activity} onChange={(event) => { setActivity(event.target.value); clearWarning(); }}><option value="" disabled>선택해 주세요</option><option value="low">낮음</option><option value="medium">보통</option><option value="high">높음</option></select></label>
       <label>주요 지역<select name="city" value={city} onChange={(event) => { setCity(event.target.value); clearWarning(); }}><option value="" disabled>선택해 주세요</option><option value="seoul">서울</option><option value="busan">부산</option><option value="daegu">대구</option><option value="jeju">제주</option></select></label>
-    </div></section>
-    <section className="analysis-section"><div className="analysis-heading"><p className="eyebrow">02 / COLOR</p><h2>나에게 어울리는 색</h2><p>퍼스널컬러 결과는 웜과 쿨 두 가지로만 안내합니다. 사진 분석 결과가 있으면 자동 반영되며, 사진이 없거나 직접 선택하려면 아래 셀프 체크를 사용해 주세요.</p></div><FacePhotoIntake onFileSelected={analyzeFacePhoto} analysisStatus={faceAnalysisStatus} analysisMessage={faceAnalysisMessage} /><div className="choice-grid two">{[["warm", "웜", "골드 주얼리와 아이보리에서 얼굴이 편안해 보여요."], ["cool", "쿨", "실버 주얼리와 퓨어 화이트가 더 선명해 보여요."]].map(([value, title, copy]) => <button key={value} className={color === value ? "choice selected" : "choice"} onClick={() => { setColor(value); setPersonalColorSource("survey"); clearWarning(); }} type="button"><b>{title}</b><span>{copy}</span></button>)}</div>{personalColorSource === "ai" && <p className="analysis-source">사진 분석 결과가 선택되어 있습니다. 직접 고르면 셀프 체크 결과로 저장됩니다.</p>}</section>
-    <SkeletonAnalysis onChange={(selection) => { setSkeletonSelection(selection); clearWarning(); }} />
+    </div></section></div>
+    <div className={step === 1 ? "profile-step is-active" : "profile-step"}><section className="analysis-section"><div className="analysis-heading"><p className="eyebrow">02 / COLOR</p><h2>나에게 어울리는 색</h2><p>퍼스널컬러 결과는 웜과 쿨 두 가지로만 안내합니다. 사진 분석 결과가 있으면 자동 반영되며, 사진이 없거나 직접 선택하려면 아래 셀프 체크를 사용해 주세요.</p></div><FacePhotoIntake onFileSelected={analyzeFacePhoto} analysisStatus={faceAnalysisStatus} analysisMessage={faceAnalysisMessage} /><div className="choice-grid two">{[["warm", "웜", "골드 주얼리와 아이보리에서 얼굴이 편안해 보여요."], ["cool", "쿨", "실버 주얼리와 퓨어 화이트가 더 선명해 보여요."]].map(([value, title, copy]) => <button key={value} className={color === value ? "choice selected" : "choice"} onClick={() => { setColor(value); setPersonalColorSource("survey"); clearWarning(); }} type="button"><b>{title}</b><span>{copy}</span></button>)}</div>{personalColorSource === "ai" && <p className="analysis-source">사진 분석 결과가 선택되어 있습니다. 직접 고르면 셀프 체크 결과로 저장됩니다.</p>}</section></div>
+    <div className={step === 2 ? "profile-step is-active" : "profile-step"}><SkeletonAnalysis onChange={(selection) => { setSkeletonSelection(selection); clearWarning(); }} /></div>
+    <nav className="profile-step-actions" aria-label="단계 이동">
+      <button type="button" className="step-prev" disabled={step === 0} onClick={() => goStep(step - 1)}>← 이전</button>
+      <span>{step + 1} / 3</span>
+      {step < 2 ? <button type="button" className="step-next" onClick={() => goStep(step + 1)}>다음 · {stepLabels[step + 1]} →</button> : <span className="step-last">{hasAnsweredAll ? "모두 완료! 오른쪽에서 저장하세요" : "마지막 단계입니다"}</span>}
+    </nav>
       </div>
     </div>
     {(validationMessage || state.message) && <p className={state.success ? "notice success" : "notice"}>{validationMessage || state.message}</p>}
